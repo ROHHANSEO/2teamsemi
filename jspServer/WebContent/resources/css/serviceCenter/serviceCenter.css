@@ -1,0 +1,125 @@
+ #search{
+            background-color: lightgray;
+            width: 80%;
+            text-align: center;
+            margin: auto;
+            margin-bottom: 5%;
+        }
+        .outer{
+        	width:80%;
+        	margin:0 auto;
+        }
+        
+        .serviceCentermiddle{
+            display: flex;
+            flex-wrap: wrap;
+            margin: auto;
+            text-align: center;
+            width: 70%;
+
+        }
+        .serviceCentermiddle .all{
+        	cursor: pointer;
+            border-width: 1px;
+            border-color: black;
+            border-style: solid;
+            line-height: 70px;
+            flex: 1 1 15%;
+            height: 70px;
+            width: 50px;
+        }
+        .serviceCentermiddle .all:hover{
+        	background-color:#993333;
+        	color:white;
+        }
+        
+        .serviceCenterRe{
+            position: relative;
+			left:200px;
+            margin-top: 50px;
+            font-size: x-large;
+        }
+        .serviceCenterArea{
+        	position: relative;
+        	left:205px;
+        	margin-top:50px;        	
+          	height:40px;
+        	width:70%;
+        }
+        .serviceCenterArea .serviceCenterQuestion{
+         	width:90%;
+
+        }
+       
+        
+        .serviceCenterArea .serviceno{
+        	text-align:center;
+        	border-collapse: collapse;
+        	width:960px;
+        	
+        }
+        
+        .serviceCListFinal{
+        	height:40px;
+        	width:70%;
+        	border-bottom: 1px solid black;
+        }
+        .serviceCListFinal tr{
+        	height:32px;
+        }
+        .serviceno th{
+	        text-align:center;
+	        background-color: antiquewhite;
+	        height:40px;
+       
+        }
+        .serviceCListFinal td{
+        	border-bottom: 1px solid black;
+        }
+        .serviceCListtitle{
+        	text-align:left;
+        	padding-left: 50px;
+
+        }
+        .serviceAnswerMiddle2 .serviceAnswerMiddle{
+        	text-align:left;
+        	padding-left: 50px;
+        }
+        
+       	.serviceAnswerList{
+        	display:none;
+        }
+       .serviceCListClick{
+       		color: #333;
+		 	text-decoration: none;
+			position: relative;
+       }
+       .serviceCListClick:after{
+       		background: none repeat scroll 0 0 transparent;
+			bottom: 0;
+			content: "";
+			display: block;
+			height: 2px;
+			left: 50%;
+			position: absolute;
+			background: #993333;
+			transition: width 0.3s ease 0s, left 0.3s ease 0s;
+			width: 0;
+       }
+		.serviceCListClick:hover{
+			cursor: pointer;
+			color:#993333;
+		}
+		.serviceCListClick:hover:after{
+			width: 100%; 
+  			left: 0; 	
+		}
+		.clicked_serviceCListClick:after{
+			width: 100%; 
+  			left: 0; 
+	
+		}
+		.clicked_serviceCListClick{
+			color:#993333;
+		}
+		
