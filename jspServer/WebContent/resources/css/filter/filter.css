@@ -56,3 +56,14 @@
 	#maginleft{
 		margin-left: 3%;
 	}
+	/*카테 고리부분*/
+	#category{
+		width: 40%;
+		height: 10%;
+		border: 1px solid black;
+		padding: 10px;
+	}
+	#categorydiv{
+		display: flex;
+		flex-wrap: wrap;
+	}
