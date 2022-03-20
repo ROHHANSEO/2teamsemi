@@ -91,4 +91,80 @@ public class ServiceCenterDao {
 		return list;
 	}
 
+	public ArrayList<ServiceCenter> findCList(Connection conn, String selectinput, String input) {
+		ArrayList<ServiceCenter> list = null;
+		
+		System.out.println(selectinput + "     serviceDao!!!!!!selectinput값 받아오는 것 ");
+		System.out.println(input + "     serviceDao!!!!!!input값 받아오는 것 ");
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = null;
+		
+		if(selectinput.equals("title")) {
+			sql = prop.getProperty("findTitleCList");
+			System.out.println(sql + "===if문 안의 sql");
+		}else if(selectinput.equals("content")){
+			sql = prop.getProperty("findContentCList");
+			System.out.println(sql + "===if문 안의 sql");
+		}
+		
+		try {
+			
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+input+"%");
+			rset = pstmt.executeQuery();
+
+			System.out.println(sql +"이건 sql문");
+
+			list = new ArrayList<>();
+		
+			while(rset.next()) {
+				list.add(new ServiceCenter(
+										rset.getInt("SERVICE_NO"),
+										rset.getString("SERVICE_TITLE"), 
+										rset.getString("SERVICE_CONTENT")));
+
+			}
+			
+			System.out.println(list +"     serviceCenter 받아온 list 값");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int insertServiceCenter(Connection conn, ServiceCenter sc) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		System.out.println(sc +"==dao에서 sc값 잘 받나 확인");
+		String sql = prop.getProperty("insertServiceCenter");
+		//category, title, content, writer
+		//INSERT INTO SERVICE_CENTER VALUES(SEQ_NNO.NEXTVAL, ?, ?, ?, SYSDATE, DEFAULT, DEFAULT,?)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sc.getCategory());//카테고리
+			pstmt.setString(2, sc.getServiceTitle());//제목
+			pstmt.setString(3, sc.getServiceContent());//내용
+			pstmt.setInt(4, Integer.parseInt(sc.getServiceWriter()));//작성자 번호는 perseint해줘야 한다.
+			
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
+
+	
+
+
 }

@@ -14,16 +14,16 @@ import com.uni.serviceCenter.model.service.ServiceCenterService;
 import com.uni.serviceCenter.model.vo.ServiceCenter;
 
 /**
- * Servlet implementation class serviceCenterCListServlet
+ * Servlet implementation class findServiceCenterListServlet
  */
-@WebServlet("/serviceCenterCList.do")
-public class serviceCenterCListServlet extends HttpServlet {
+@WebServlet("/findserviceCenter.do")
+public class findServiceCenterListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public serviceCenterCListServlet() {
+    public findServiceCenterListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,32 +32,16 @@ public class serviceCenterCListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		
 		String input = request.getParameter("input");
-		System.out.println(input +"serviceCListServlet==========");
-		int result = 0;
-		switch(input) {
-		case "운영정책" : result = 1;break;
-		case "계정/인증" : result = 2;break;
-		case "구매/판매" : result = 3;break;
-		case "거래 품목" : result = 4;break;
-		case "거래 매너" : result = 5;break;
-		case "이벤트" : result = 6;break;
-		case "이용 제재" :result = 7;break;
-		case "커뮤니티" : result = 8; break;
-		case "경매" : result = 9;break;
-		case "채팅" : result = 10;break;
-		case "기타" : result = 11; break;
-		}
-		System.out.println(result +"serviceCListServlet result!");
+		String selectinput = request.getParameter("selectinput");
+
+		System.out.println("입력값selectinput findserviceCenterLIstServlet =====" + selectinput);
+		System.out.println("입력값input findserviceCenterLIstServlet =====" + input.replaceAll("\u0020", "&nbsp;"));
 		
-		ArrayList<ServiceCenter> list = new ServiceCenterService().selectCList(result);
-
-		System.out.println("serviceCenterCList  ====="+list);
-
+		
+		ArrayList<ServiceCenter> list = new ServiceCenterService().findCList(selectinput,input.replaceAll("\u0020", "&nbsp;"));
+		System.out.println("list 값을 받아와야 한다 findserviceCenterLIstServlet ====="+ list);
 		response.setContentType("application/json; charset = utf-8");
-		
 		new Gson().toJson(list, response.getWriter());
 		
 	}

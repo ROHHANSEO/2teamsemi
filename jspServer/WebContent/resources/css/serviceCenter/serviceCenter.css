@@ -8,12 +8,66 @@
         .outer{
         	width:80%;
         	margin:0 auto;
+        	height: 1000px;
+        	position:relative;
+        }
+        .gotoenrollFormServiceCenter{
+       	 	background-color:antiquewhite;
+        	text-align:center;
+        	width:100px;
+        	height:30px;
+        	line-height:30px;
+        	margin-bottom:3%;
+        	border-radius:15px;
+        	position:absolute;
+        	right:10%;
         }
         
+        .gotoenrollFormServiceCenter:hover{
+        	background-color: #993333;
+        	color:white;
+        }
+        .gotoenrollFormServiceCenter a:hover{
+        
+        	color:white;
+        }
+        .formgroupmiddle{
+        	width:80%;
+        	margin-top:3%;
+ 			margin-bottom:3%;
+ 			left:50%;
+ 			transform:translateX(-50%);
+ 			position:relative;
+        	height:50px;
+        	background-color:lightgray;
+        }
+        .seacrchidichinput{
+        	display: inline-block ;
+        	position:absolute;
+        	left:50%;
+        	transform:translateX(-50%);
+        	line-height:50px;
+        	height:35px;
+			width:550px;
+        }
+		.optionserachCList{
+        	height:30px;
+        	width:50px;
+        	
+        }
+        .seacrchinput{
+        	height:30px;
+			width:400px;
+        }
+        .form-controlsearchbutton{
+        	height:33px;
+        	width:60px;
+        }
+
         .serviceCentermiddle{
             display: flex;
             flex-wrap: wrap;
-            margin: auto;
+            margin: 100px auto 0 auto;
             text-align: center;
             width: 70%;
 
@@ -41,7 +95,8 @@
         }
         .serviceCenterArea{
         	position: relative;
-        	left:205px;
+       		left:50%;
+ 			transform:translateX(-50%);
         	margin-top:50px;        	
           	height:40px;
         	width:70%;
@@ -55,7 +110,7 @@
         .serviceCenterArea .serviceno{
         	text-align:center;
         	border-collapse: collapse;
-        	width:960px;
+        	width:100%;
         	
         }
         
@@ -67,7 +122,7 @@
         .serviceCListFinal tr{
         	height:32px;
         }
-        .serviceno th{
+        .serviceno thead tr th{
 	        text-align:center;
 	        background-color: antiquewhite;
 	        height:40px;
@@ -79,6 +134,7 @@
         .serviceCListtitle{
         	text-align:left;
         	padding-left: 50px;
+        	border:1px solid;
 
         }
         .serviceAnswerMiddle2 .serviceAnswerMiddle{
@@ -121,5 +177,8 @@
 		}
 		.clicked_serviceCListClick{
 			color:#993333;
+		}
+		.serviceHiddenNo{
+			visibility: hidden;
 		}
 		

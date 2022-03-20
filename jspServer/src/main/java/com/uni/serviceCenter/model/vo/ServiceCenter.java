@@ -13,12 +13,26 @@ public class ServiceCenter {
 	private String serviceWriter;//고객센터 작성자(번호)
 	private int numberCount;//조회카운트 번호
 	
+	//검색 필터
+	private String type; //검색 타입
+	private String keyword; //검색 내용
+	
 	public ServiceCenter() {
 	
 	}
 
 	
 	
+	public ServiceCenter(String category, String serviceTitle, String serviceContent, String serviceWriter) {
+		super();
+		this.category = category;
+		this.serviceTitle = serviceTitle;
+		this.serviceContent = serviceContent;
+		this.serviceWriter = serviceWriter;
+	}
+
+
+
 	public ServiceCenter(int serviceNo, String serviceTitle, String serviceContent) {
 		super();
 		this.serviceNo = serviceNo;
