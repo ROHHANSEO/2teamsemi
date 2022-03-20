@@ -10,7 +10,7 @@ public class User {
 	private String phone;
 	private String nickName;
 	private String email;
-	private char gender;
+	private String gender;
 	private char adminStatus;
 	private char status;
 	private int banCount;
@@ -19,7 +19,7 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String userId, String userPwd, String userName, String citiNo, String phone, char gender) {
+	public User(String userId, String userPwd, String userName, String citiNo, String phone, String gender) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -30,7 +30,7 @@ public class User {
 	}
 
 	public User(String userId, String userPwd, String userName, String citiNo, String phone, String nickName,
-			String email, char gender) {
+			String email, String gender) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -106,11 +106,11 @@ public class User {
 		this.email = email;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
