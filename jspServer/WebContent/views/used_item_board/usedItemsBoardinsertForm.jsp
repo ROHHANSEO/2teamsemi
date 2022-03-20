@@ -109,7 +109,7 @@
 						</span>
 						<textarea id="" cols="30" rows="10" placeholder="내용을 입력하세요." maxlength="2000"></textarea>
 					</div>
-					<p style="text-align: end;"><a id="counter">0</a>/2000</p> rrrr
+					<p style="text-align: end;"><a id="counter">0</a>/2000</p> 
 				</div>
 				<div class="but">
 					<input id="ret" type="button" value="취소하기"> <input id="add" type="button" value="작성하기" onclick="location.href='<%= request.getContextPath() %>/usedInsertBoard.do'">
