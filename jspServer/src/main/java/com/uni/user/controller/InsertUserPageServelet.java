@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class InsertUserServelet
  */
 @WebServlet("/sign_up")
-public class InsertUserServelet extends HttpServlet {
+public class InsertUserPageServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertUserServelet() {
+    public InsertUserPageServelet() {
         super();
         // TODO Auto-generated constructor stub
     }
