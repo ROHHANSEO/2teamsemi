@@ -36,6 +36,22 @@ public class UsedItemsBoard {
 		this.status = status;
 	}
 
+	public UsedItemsBoard(int usedBoardNo, int categorycode, String usedBoardTitle, String usedBoardWriter,
+			String usedBoardContent, int price, String saleStatus, String itemCondition, String paymentOne,
+			String paymentTwo) {
+		super();
+		this.usedBoardNo = usedBoardNo;
+		this.categorycode = categorycode;
+		this.usedBoardTitle = usedBoardTitle;
+		this.usedBoardWriter = usedBoardWriter;
+		this.usedBoardContent = usedBoardContent;
+		this.price = price;
+		this.saleStatus = saleStatus;
+		this.itemCondition = itemCondition;
+		this.paymentOne = paymentOne;
+		this.paymentTwo = paymentTwo;
+	}
+
 
 	public UsedItemsBoard(int usedBoardNo, int category, int categorycode, String usedBoardTitle,
 			String usedBoardWriter, String usedBoardContent, int price, String saleStatus, String itemCondition,
