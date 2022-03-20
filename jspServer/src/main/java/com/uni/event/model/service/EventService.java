@@ -20,4 +20,12 @@ public class EventService {
 		return list;
 	}
 
+	public ArrayList<Event> service(String pt) throws Exception{
+		EventDao dao = new EventDao();
+		return dao.list(pt);
+	}
+
+	
+	
+	
 }

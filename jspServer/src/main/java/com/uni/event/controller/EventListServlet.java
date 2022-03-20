@@ -35,10 +35,15 @@ public class EventListServlet extends HttpServlet {
 		
 		ArrayList<Event> list = new EventService().selectList();
 		
-		request.setAttribute("list", list);
+		if(list != null) {
+			
+			request.setAttribute("list", list);
+			
+			RequestDispatcher view = request.getRequestDispatcher("views/EventNotice/EventNoticePage.jsp");
+			view.forward(request, response);
+			
+		}
 		
-		RequestDispatcher view = request.getRequestDispatcher("views/EventNotice/EventNoticePage.jsp");
-		view.forward(request, response);
 	}
 
 	/**

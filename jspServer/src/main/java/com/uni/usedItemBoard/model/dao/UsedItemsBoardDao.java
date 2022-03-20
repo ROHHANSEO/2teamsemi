@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.uni.usedItemBoard.model.vo.PageInfo;
+import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 import static com.uni.common.JDBCTemplate.*;
@@ -107,6 +108,58 @@ public class UsedItemsBoardDao {
 		
 		
 		return list;
+	}
+
+	public int insertUsedBoard(Connection conn, UsedItemsBoard ub) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("insertUsedBoard"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setString(1, ub.getUsedBoardTitle()); // 쿼리에 담긴 물음표의 순서에 맞게 제목을 담는다
+			pstmt.setString(2, ub.getUsedBoardContent()); // 위와 같이 하여 내용을 담는다
+			pstmt.setInt(3, Integer.parseInt(ub.getUsedBoardWriter())); 
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public int insertUsedAttachment(Connection conn, ArrayList<UsedAttachment> fileList) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("insertAttachment"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		try {
+			for(int i = 0 ; i < fileList.size() ; i++) {
+				UsedAttachment at = fileList.get(i);
+				
+				pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+				
+				pstmt.setString(1, at.getOriginName()); 
+				pstmt.setString(2, at.getChangeName()); 
+				pstmt.setString(3, at.getFilePath());
+				
+				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
+				System.out.println("Dao result => " + result); // 임의 확인
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
 	}
 
 }

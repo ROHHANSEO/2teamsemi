@@ -32,6 +32,8 @@ public class serviceCenterCListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		
 		String input = request.getParameter("input");
 		System.out.println(input +"serviceCListServlet==========");
 		int result = 0;
@@ -51,10 +53,13 @@ public class serviceCenterCListServlet extends HttpServlet {
 		System.out.println(result +"serviceCListServlet result!");
 		
 		ArrayList<ServiceCenter> list = new ServiceCenterService().selectCList(result);
-		
+
 		System.out.println("serviceCenterCList  ====="+list);
+
 		response.setContentType("application/json; charset = utf-8");
+		
 		new Gson().toJson(list, response.getWriter());
+		
 	}
 
 	/**

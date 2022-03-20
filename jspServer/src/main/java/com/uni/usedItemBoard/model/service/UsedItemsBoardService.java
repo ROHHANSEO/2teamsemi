@@ -7,6 +7,7 @@ import static com.uni.common.JDBCTemplate.*;
 
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.PageInfo;
+import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 public class UsedItemsBoardService {
@@ -33,6 +34,22 @@ public class UsedItemsBoardService {
 		close(conn);
 		return list;
 		
+	}
+
+	public int insertUsedBoard(UsedItemsBoard ub, ArrayList<UsedAttachment> fileList) {
+		Connection conn = getConnection();
+		
+		int result1 = new UsedItemsBoardDao().insertUsedBoard(conn, ub);
+		int result2 = new UsedItemsBoardDao().insertUsedAttachment(conn, fileList);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1*result2;
 	}
 	
 }
