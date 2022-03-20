@@ -23,8 +23,7 @@
 				<option value="소분류">소분류</option>
 			</select>
 			<button id="filter-Apply" type="button">필터 적용</button>
-		</div>	
-		<%-- if문을 집어넣어 아래 내용을 히든을 해주고싶은 부분 --%>
+		</div>
 		<div id="detaildiv">
 			<br>
 			<div class="f-1">
