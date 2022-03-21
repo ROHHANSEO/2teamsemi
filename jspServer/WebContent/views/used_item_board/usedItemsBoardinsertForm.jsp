@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.usedItemBoard.model.vo.*"%>
+<%
+	ArrayList<Category> cList = (ArrayList<Category>)request.getAttribute("category");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,9 +29,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background-color: gray;
-		width: 100px;
-		height: 100px;
+		background-color: #efefef;
+		width: 200px;
+		height: 200px;
 		text-align: center;
 	}
 	.article{
@@ -39,8 +42,8 @@
 	}
 	#contentImg1, #contentImg2, #contentImg3, #contentImg4, #contentImg5, 
 	#contentImg6, #contentImg7, #contentImg8, #contentImg9, #titleImg{
-		width: 100px;
-		height: 100px;
+		width: 200px;
+		height: 200px;
 		margin-top: 0;
 		display: none;
 	}
@@ -101,6 +104,26 @@
 		resize: none;
 		width: 40vw;
 	}
+	/*카테 고리부분*/
+	#category{
+		width: 40%;
+		height: 10%;
+		border: 1px solid black;
+		padding: 10px;
+	}
+	#categorydiv{
+		display: flex;
+		flex-wrap: wrap;
+	}
+	#large, #middle, #small{
+		margin-left: 70px;
+		margin-right: 5%;
+		width: 15%;
+		height: 10%;
+	}
+	#large, #middle{
+		margin-right: 0;
+	}
 </style>
 </head>
 <body>
@@ -126,9 +149,20 @@
 					<div class="categoryline">
 						<h3>카테고리<a style="color: red;">*</a></h3>
 					</div>
-					<%@ include file="../common/category.jsp" %>
+					<div id="category">
+						<div id="categorydiv">
+							<select id="large">
+								<option value="대분류">대분류</option>
+							</select>
+							<select id="middle">
+								<option value="중분류">중분류</option>
+							</select>
+							<select id="small">
+								<option value="소분류">소분류</option>
+							</select>
+						</div>
+					</div>
 				</div>
-				
 				<div class="whole">
 					<div class="info">
 						<h3>이미지 선택<a style="color: red;">*</a></h3>
@@ -173,7 +207,6 @@
 						<input type="radio" id="new" value="새상품" name="productStatus" checked> 새상품 <input type="radio" value="중고상품" name="productStatus" id="used"> 중고 상품 
 					</div>
 				</div>
-				
 				<div class="whole">
 					<div class="priceline">
 						<h3>가격<a style="color: red;">*</a></h3>
@@ -224,6 +257,7 @@
 		</form>
 	</div>
 	<script>
+	
 		//결제 방식을 두가지 모드 체크 해제 했을 경우 알림
 		$("#one").click(function(){
 			if($("#one").is(':checked') == false & $("#two").is(':checked') == false){
