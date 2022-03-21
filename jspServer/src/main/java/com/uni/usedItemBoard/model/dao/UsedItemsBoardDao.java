@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
@@ -160,6 +161,40 @@ public class UsedItemsBoardDao {
 		}
 		
 		return result; // int로 반환
+	}
+
+	public ArrayList<Category> selectCategory(Connection conn) {
+		ArrayList<Category> cList = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectCategory");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				cList.add(new Category(rset.getString("CATEGORYCODE"), 
+									  Integer.parseInt(rset.getString("CATEGORY_NO")), 
+									  rset.getString("CATEGORYNAME"), 
+									  rset.getString("CAT_LEVEL"), 
+									  rset.getString("CATEGORYDEREF"), 
+									  rset.getString("CATEGORYDEREF2")));
+				System.out.println("다오 category => "+cList);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return cList;
 	}
 
 }
