@@ -1,0 +1,16 @@
+
+# Created by https://www.toptal.com/developers/gitignore/api/windows,eclipse,java,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,eclipse,java,visualstudiocode
+
+### Eclipse ###
+.metadata
+
+
+### VisualStudioCode ###
+.metadata
+
+
+# End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java,visualstudiocode
+jspServer/WebContent/WEB-INF/.gitignore
+jspServer/src/main/java/sql/driver/driver.properties
+jspServer/WebContent/META-INF/context.xml
