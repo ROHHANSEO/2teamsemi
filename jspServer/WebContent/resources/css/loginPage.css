@@ -23,7 +23,7 @@
     display: inline-block;
 }
 
-input[type=text]{
+input[type=text],input[name=password]{
     width: 200px;
     height: 30px;
 }

@@ -61,6 +61,13 @@ ul { list-style: none; }
     font-weight: 900;
 }
 
+/*로그인 후 header_top_right*/
+#header_top_right span {
+	display: inherit;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 
 /* header > nav */
 #main_nav {

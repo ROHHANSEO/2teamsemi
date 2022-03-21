@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "com.uni.user.model.vo.User" %>
+<%
+	User user = (User)session.getAttribute("user");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,11 +19,20 @@
             <div id="search">
                 
             </div>
+            <%if(user==null) { %>
             <div id="header_top_right">
                 <a href="<%=request.getContextPath()%>/loginPage" class="login_page">로그인</a>
                 /
                 <a href="<%=request.getContextPath()%>/sign_up" class="insert_user">회원가입</a>
             </div>
+            <%} else { %>
+            <div id="header_top_right">
+            	<span><%=user.getUserName()%>님 어서오세요</span>
+                <a href="<%=request.getContextPath()%>/logout" class="login_page">로그아웃</a>
+                /
+                <a href="<%=request.getContextPath()%>/mypage" class="insert_user">마이페이지</a>
+            </div>
+            <%} %>
         </div>
         <nav id="main_nav">
             <div class="nav">
