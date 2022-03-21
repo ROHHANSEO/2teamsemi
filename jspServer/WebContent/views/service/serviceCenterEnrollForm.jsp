@@ -64,22 +64,7 @@
      	height:70%;
      	width:30%;
      }
-  		/*카테고리 select 부분*/
-     .categoryList{
-     	width: 200px; /* 가로 사이즈 */
-	    padding: 8px; /* 내부여백 */
-	    padding-left: 12px;
-	    border: 1px solid #ddd;
-	    background: url(./arrow_down_18dp.png) no-repeat right 50%; /* 화살표 위치 */
-	    background-size: 30px; /* 화살표 크기 */
-	    border-radius: 4px;
-	    box-sizing: border-box;
-	    font-size: 12px;
-	    color: #000;
-	    outline:none;
-	    height:35px;
-     }
-     
+  	
      /*enrollcontentsection:내용 div 부분*/
      .enrollcontentsection{
      	display:flex;
@@ -89,27 +74,25 @@
      /*등록하기 버튼*/
      .gotoSubmitbutton, .gobackServiceCenterMain{
 	    position: relative;
-	    border: none;
 	    display: inline-block;
-	    padding: 10px 15px;
-	    border-radius: 15px;
-	    font-family: "paybooc-Light", sans-serif;
-	    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-	    text-decoration: none;
-	    font-weight: 600;
-	    transition: 0.25s;
-     	border: 2px solid #993333;
      	margin-top:15px;
-    	color: black;
      }
-     .gotoSubmitbutton:hover, .gobackServiceCenterMain:hover{
-     	 background-color: #993333;
-    	 color: white;
+    
+  	/*카테고리 select 부분*/
+     .categoryList{
+     	width: 200px; /* 가로 사이즈 */
+	    padding: 8px; /* 내부여백 */
+	    padding-left: 12px;
+	    border: 1px solid #ddd;
+	    background: no-repeat right 50%; /* 화살표 위치 */
+	    background-size: 30px; /* 화살표 크기 */
+	    border-radius: 4px;
+	    box-sizing: border-box;
+	    font-size: 12px;
+	    color: #000;
+	    outline:none;
+	    height:35px;
      }
-     .countContentlength{
-     	
-     }
-	
      
 </style>
 </head>
@@ -122,10 +105,10 @@
 	
 	<div class="underheaderenrollF"></div><!-- 라인 부분 -->
 	
-	<form class="enrollServiceCenterForm" action="<%=request.getContextPath()%>/insertServiceCenter.do" method="post">
+	<form name="serviceCenterForm" class="enrollServiceCenterForm" action="<%=request.getContextPath()%>/insertServiceCenter.do" method="post">
 	<div class="enrollTitlesection"><!-- 제목 div -->
 		<span class="titleNamepart"> 제목<span class="dotpoint">*</span></span>
-		<input type="text" name="title" class="counttitlename" placeholder="제목을 입력해주세요" maxlength="40" required>
+		<input type="text" name="title" class="counttitlename" placeholder="제목을 입력해주세요" maxlength="40" required >
 		<span class="counttitlelength">0 / 40</span>
 	</div>
 	<div class="enrollTitlesection"><!-- 카테고리 선택 div -->
@@ -155,13 +138,50 @@
 	</div>
 	
 	<div class="deleteorsubmit" align="right"><!-- 삭제, 등록버튼 -->
-		<button type="submit" class="gotoSubmitbutton"> 등록하기 </button>
-		<button type="button" class="gobackServiceCenterMain" onclick="location.href='<%=request.getContextPath()%>/serviceCenter.do'"> 취소하기 </button>
+		<button type="submit" class="commonsubmit gotoSubmitbutton" > 등록하기 </button>
+		<button type="button" class="commonsubmit gobackServiceCenterMain" onclick="askcancel();"> 취소하기 </button>
 	</div>
 	</form>
 	
 	</div>
-	<script>
+	<script type ="text/javascript">
+		//게시글 체크 
+		$(".gotoSubmitbutton").click(function(){
+			console.log($("#title").text())
+			console.log($("#content").text())
+			theForm = document.serviceCenterForm;
+			if(confirm("글을 등록하시겠습니까?")== true){
+				if(theForm.title.value == "" && theForm.content.value == ""){
+					
+					alert("제목과 내용을 입력해주셔야 등록이 됩니다.")
+					
+				}else if(theForm.title.value == ""){
+					alert("제목을 입력해주셔야 합니다.")
+				}else if(theForm.content.value == ""){
+					alert("내용을 입력해주셔야 합니다.")
+				}
+				if(theForm.title.value != "" && theForm.content.value != ""){
+					
+					alert("등록이 완료 되었습니다.")
+					
+				}
+				
+				//https://runtoyourdream.tistory.com/203
+				
+			}else{
+				return;
+			}
+		})
+		
+
+		function askcancel(){
+			var cancel = confirm("글 작성을 취소하시겠습니까?");
+			if(cancel){
+				 location.href="<%=request.getContextPath()%>/serviceCenter.do";
+			}else{
+				return;
+			}
+		}
 		//제목 40자 미만으로 설정
 		$(document).ready(function(){
 			$(".counttitlename").on('keyup',function(){
@@ -180,7 +200,7 @@
 				$(".countContentlength").html(($(this).val().length+" / 2000"));
 				
 				if($(this).val().length>2000){
-					alert("제목은 40자 이하로 적어주세요")
+					alert("내용은 2000자 이하로 적어주세요")
 					$(this).val($(this).val().substring(0, 2000));
 		            $('.countContentlength').html("(2000 / 2000)");
 				}
