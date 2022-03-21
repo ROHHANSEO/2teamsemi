@@ -82,7 +82,7 @@ public class InsertUsedBoardServlet extends HttpServlet {
 					}
 					
 					// 보드 객체생성
-					UsedItemsBoard ub = new UsedItemsBoard
+					UsedItemsBoard ub = new UsedItemsBoard();
 					
 					// 어레이리스트 생성
 					ArrayList<UsedAttachment> fileList = new ArrayList<>();

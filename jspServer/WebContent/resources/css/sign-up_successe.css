@@ -37,7 +37,7 @@ input[type="text"],input[type="password"]{
 #input_container {
     width: 400px;
     margin: 200px auto 0 auto;
-    height: 820px;
+    height: 520px;
 }
 
 .id_input .input[name="userId"]{
@@ -72,15 +72,35 @@ textarea {
     height: 30px;
     position: absolute;
     left: 50%;
-    transform: translateX(-62%);
+    top: 300px;
+    transform: translateX(-50%);
 }
 
 .content_box {
     border: 1px solid black;
-    height: 800px;
+    height: 400px;
     width: 350px;
+    position: relative;
+    text-align: center;
 }
 
+input[type="text"]:focus,input[type="password"]:focus{
+    outline: 2px solid #993333;
+}
+
+.pwd_check{
+    outline: 2px solid blue !important;
+}
+
+.content_text {
+    font-size: 20px;
+    position: relative;
+    top: 100px;
+}
+
+.sign-up_name .name {
+    color: pink;
+}
 
 
 

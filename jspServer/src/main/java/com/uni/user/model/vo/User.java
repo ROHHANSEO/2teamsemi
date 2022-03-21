@@ -11,13 +11,23 @@ public class User {
 	private String nickName;
 	private String email;
 	private String gender;
-	private char adminStatus;
-	private char status;
+	private String adminStatus;
+	private String status;
 	private int banCount;
 	
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public User(String userId, String userPwd) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+	}
+
+
 
 	public User(String userId, String userPwd, String userName, String citiNo, String phone, String gender) {
 		super();
@@ -41,6 +51,27 @@ public class User {
 		this.email = email;
 		this.gender = gender;
 	}
+	
+	
+
+	public User(int userNo, String userId, String userPwd, String userName, String citiNo, String phone,
+			String nickName, String email, String gender, String adminStatus, String status, int banCount) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.citiNo = citiNo;
+		this.phone = phone;
+		this.nickName = nickName;
+		this.email = email;
+		this.gender = gender;
+		this.adminStatus = adminStatus;
+		this.status = status;
+		this.banCount = banCount;
+	}
+
+
 
 	public int getUserNo() {
 		return userNo;
@@ -114,19 +145,19 @@ public class User {
 		this.gender = gender;
 	}
 
-	public char getAdminStatus() {
+	public String getAdminStatus() {
 		return adminStatus;
 	}
 
-	public void setAdminStatus(char adminStatus) {
+	public void setAdminStatus(String adminStatus) {
 		this.adminStatus = adminStatus;
 	}
 
-	public char getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(char status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

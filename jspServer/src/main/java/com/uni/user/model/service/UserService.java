@@ -24,4 +24,25 @@ public class UserService {
 		
 	}
 
+	public int idCheck(String userId) {
+		Connection conn = getConnection();
+		
+		int result = new UserDao().idCheck(conn,userId);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;	
+	}
+
+	public User loginUser(User user) {
+		Connection conn = getConnection();
+		
+		User loginUser = new UserDao().loginUser(conn, user);
+		close(conn);
+		return loginUser;
+	}
+
 }
