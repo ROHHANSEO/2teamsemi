@@ -12,3 +12,11 @@
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java,visualstudiocode
 jspServer/WebContent/WEB-INF/.gitignore
+jspServer/src/main/java/sql/driver/driver.properties
+jspServer/WebContent/META-INF/context.xml
+jspwork/
+classes/
+Servers/
+context.xml
+driver.properties
+server.xml
