@@ -59,7 +59,7 @@
      	vertical-align: 5px;
      }
      /*counttitlelength : count하는 부분*/
-     .counttitlelength{
+     .counttitlelength, .countContentlength{
      	margin-left:15px;
      	height:70%;
      	width:30%;
