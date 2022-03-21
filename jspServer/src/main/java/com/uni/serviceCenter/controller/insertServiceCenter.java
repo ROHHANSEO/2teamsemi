@@ -44,10 +44,9 @@ public class insertServiceCenter extends HttpServlet {
 		System.out.println(category + "===insertservlet category들어왔나");
 		
 		int result = new ServiceCenterService().insertServiceCenter(sc);
-		
 		if(result > 0) {
-			request.getSession().setAttribute("msg", "고객센터 글이 성공적으로 등록되었습니다.");
-			request.getRequestDispatcher("views/service/serviceCenter.jsp").forward(request, response);
+			request.getSession().setAttribute("msg", "게시글 등록 성공");
+			response.sendRedirect("serviceCenter.do");
 		}else {
 			request.setAttribute("msg","고객센터 글 작성이 실패하였습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

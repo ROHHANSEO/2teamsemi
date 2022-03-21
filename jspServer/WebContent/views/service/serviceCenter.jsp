@@ -7,9 +7,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="../../resources/css/common/common.css">
 <link rel="stylesheet" href="../../resources/css/serviceCenter/serviceCenter.css">
+<link rel="stylesheet" href="../../resources/library/animate.css">
 </head>
 <body>
+	
 	<%@include file="../common/header.jsp" %>
+	<div class="wrapper">
 	<div class = "outer">
 	
     <br>
@@ -26,8 +29,13 @@
     		<button class="form-controlsearchbutton" onclick="searchFunction();" type="button">검색</button>
     	</div>
     </div>
+    <div class = "questionenroll">
+    <div class = "questioneach"> 
+    	<a href="#" onclick="serviceCenterQtoA();" class= "animation"> 1:1 문의하기 </a>
+    </div>
     <div class="gotoenrollFormServiceCenter">
-    	<a href="<%=request.getContextPath()%>/enrollFormServiceCenter.do">글 작성</a>
+    	<button class="commonwritebutton serviceCenterwrite" onclick="writeFunction();" type="button">글 작성</button>
+    </div>
     </div>
     <div  class ="serviceCentermiddle">
        	<div class = "all"> 자주 묻는 질문 </div>
@@ -64,12 +72,13 @@
 	
 	
     </div>
-    <div class = "questioneach"> 
-    	<a href="#" onclick="serviceCenterQtoA();"> 1:1 문의하기 </a>
-    </div>
     </div>
     <%@ include file = "../common/footer.jsp" %>
+    </div>
     <script type="text/javascript">
+ 		function writeFunction(){//글작성하기 버튼
+ 			location.href="<%=request.getContextPath()%>/enrollFormServiceCenter.do";
+ 		}
     	function serviceCenterQtoA(){//1:1문의하기
     		window.open("<%= request.getContextPath()%>/serviceCenterQtoA.do","1:1문의 창", "width=500, height=300, top=350, left=600");
     	}
@@ -92,14 +101,15 @@
     				
 					if(list.length ==0){
        					var tt2 = $("<th colspan='2'>").text("존재하는 공지사항이 없습니다.");
-       					
+       					$(".outer").css("height", "800")
        					var tt = $("<tr>").append(tt2);
        					$(".serviceCListFinal").append(tt);
        					
 					}else if(list.length !=0){
        					var number = 1;
+       					$(".outer").css("height", "800")
        				$.each(list, function(index, obj){
-       					
+       					heightChange(list);
        					var serviceNo = $("<td>").text(number++).addClass("serviceCListt");
        					var serviceTd = $("<td>").html(obj.serviceTitle).addClass("serviceCListtitle");
        					var servicehidden = $("<td><div>").text(obj.serviceNo).addClass("serviceHiddenNo");
@@ -116,6 +126,7 @@
        					
        				});
        				//number, title, count
+       				
        			}
     			}
     		})
@@ -147,6 +158,7 @@
  		
     	function selectCList(input){
        		$(".serviceCListFinal").empty();
+       		
        		$.ajax({
        			url:"serviceCenterCList.do", 
        			data:{
@@ -159,7 +171,7 @@
     
        				if(list.length ==0){
        					
-           				
+       					$(".outer").css("height", "800")
        					var tt2 = $("<th colspan='2'>").text("존재하는 공지사항이 없습니다.");
        					
        					var tt = $("<tr>").append(tt2);
@@ -167,8 +179,11 @@
        					
        				}else if(list.length !=0){
        					console.log("여기로 들어가나 보자")
+       					$(".outer").css("height", "800")
        					var number = 1;
+       					
        				$.each(list, function(index, obj){
+       					heightChange(list);
        					console.log(list.length +" list의 길이를 알아보자")
        					var serviceNo = $("<td>").text(number++).addClass("serviceCListt");
        					var serviceTd = $("<td>").html(obj.serviceTitle).addClass("serviceCListtitle");
@@ -194,15 +209,29 @@
        			
        		})
        	}
+       	var k=0;
+       	function heightChange(list){
+       		
+       		k = $(".outer").height();
+			$(".outer").css("height",k*1.018);
+			console.log(k)
+       	}
        	
      	$(document).on("click",".serviceCListClick",function(){
+     		$(".outer").css("height", k)
      		$(".serviceCListClick").removeClass("clicked_serviceCListClick")
      		if($(this).next().hasClass("serviceAnswerList") ){
      			$(this).addClass("clicked_serviceCListClick")
      			$(".serviceAnswerMiddle2").addClass("serviceAnswerList")
          		$(this).next().removeClass("serviceAnswerList")
+         		var h = $(".outer").height();
+       			var t = $(this).next().height();
+       			console.log(t)
+				$(".outer").css("height",h+t);
+				console.log(h)
      		}else{
      			$(this).next().addClass("serviceAnswerList")
+     			$(".outer").css("height", k)
      		}
      		
 		})
@@ -214,6 +243,5 @@
        	})
 		
     </script>
-	
 </body>
 </html>
