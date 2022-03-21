@@ -20,3 +20,4 @@ Servers/
 context.xml
 driver.properties
 server.xml
+*.zip
