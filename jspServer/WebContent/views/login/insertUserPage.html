@@ -20,29 +20,29 @@
         <form id="input_box" action="" method="post">
             <div class="content_box">
                 <div class="id_input">
-                    <input class="input" type="text" name="userId" placeholder="아이디" required>
+                    <input class="input" type="text" name="userId" placeholder="아이디" maxlength="15" required>
                     <button id="userIdCheck" class="input" type="button">중복확인</button>
                 </div>
                 <div>
-                    <input type="password" name="userPwd" placeholder="비밀번호" required>
+                    <input class="userPwd" type="password" name="userPwd" placeholder="비밀번호 6자리~12자리" maxlength="12" required>
                 </div>
                 <div>
-                    <input type="password" name="userPwdCheck" placeholder="비밀번호확인" required>
+                    <input class="userPwdCheck" type="password" name="userPwdCheck" placeholder="비밀번호확인 6자리~12자리" maxlength="12" required>
                 </div>
                 <div>
-                    <input type="text" name="name" placeholder="이름" required>
+                    <input type="text" name="name" placeholder="이름" maxlength="5" required>
                 </div>
                 <div>
-                    <input type="text" name="citiNumber" placeholder="주민등록번호(-없이)" required>
+                    <input type="text" name="citiNumber" placeholder="주민등록번호(-없이)" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="13" required>
                 </div>
                 <div>
-                    <input type="text" name="phone" placeholder="전화번호(-없이)" required>
+                    <input type="text" name="phone" placeholder="전화번호(-없이)" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="11" required>
                 </div>
                 <div>
-                    <input type="text" name="nickName" placeholder="닉네임">
+                    <input type="text" name="nickName" placeholder="닉네임" maxlength="10">
                 </div>
                 <div>
-                    <input type="text" name="email" placeholder="이메일">
+                    <input type="text" name="email" placeholder="이메일" maxlength="50">
                 </div>
                 <div>
                     <input id="male" type="radio" name="gender" checked><label for="male">남자</label>

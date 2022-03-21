@@ -1,11 +1,13 @@
 package com.uni.user.model.dao;
 
+import static com.uni.common.JDBCTemplate.close;
+
 import java.io.FileNotFoundException;
-import static com.uni.common.JDBCTemplate.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -55,5 +57,70 @@ public class UserDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int idCheck(Connection conn, String userId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("idCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		
+		return result;
+		
+	}
+
+	public User loginUser(Connection conn, User user) {
+		User loginUser = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("loginUser");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getUserPwd());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				loginUser = new User(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("CITI_NO"),
+						rset.getString("PHONE"),
+						rset.getString("NICK_NAME"),
+						rset.getString("EMAIL"),
+						rset.getString("GENDER"),
+						rset.getString("ADMIN_STATUS"),
+						rset.getString("STATUS"),
+						rset.getInt("BAN_COUNT")
+						);
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return loginUser;
 	}
 }

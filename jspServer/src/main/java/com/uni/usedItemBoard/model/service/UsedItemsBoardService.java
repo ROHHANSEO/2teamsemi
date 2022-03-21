@@ -1,11 +1,15 @@
 package com.uni.usedItemBoard.model.service;
 
-import java.util.ArrayList;
+import static com.uni.common.JDBCTemplate.close;
+import static com.uni.common.JDBCTemplate.commit;
+import static com.uni.common.JDBCTemplate.getConnection;
+import static com.uni.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
-import static com.uni.common.JDBCTemplate.*;
+import java.util.ArrayList;
 
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
+import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
@@ -51,5 +55,16 @@ public class UsedItemsBoardService {
 		close(conn);
 		return result1*result2;
 	}
+
+	public ArrayList<Category> selectCategory() {
+		Connection conn = getConnection();
+		
+		ArrayList<Category> cList = new UsedItemsBoardDao().selectCategory(conn);
+		System.out.println("서비스 category => "+cList);
+		close(conn);
+		
+		return cList;
+	}
+
 	
 }
