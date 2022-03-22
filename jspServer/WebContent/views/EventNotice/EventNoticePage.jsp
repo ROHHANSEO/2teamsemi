@@ -32,9 +32,18 @@
 		<br>
 		<h2 align="center">이벤트&공지사항</h2>
 		<br>
-		<h4>공지사항 리스트</h4>
-		<script type="text/javascript">
 		
+		<h4>이벤트&공지사항 리스트</h4>
+		<select name="menulist" onchange="handleOnChange(this)" align="">
+	  		<option>전체보기</option>
+	  		<option>공지사항</option>
+	  		<option>이벤트</option>
+		</select>
+		<div id='result'></div>
+		
+		
+		
+		<script type="text/javascript">
 		</script>
 		<a href="<%=request.getContextPath() %>/eventpage.do?pt=all"><button style='<%= (pt.equals("all"))? style : " " %>'>전체</button></a>
 		<a href="<%=request.getContextPath() %>/eventpage.do?pt=now"><button style='<%= (pt.equals("now"))? style : " " %>'>현재</button></a>
@@ -72,21 +81,32 @@
 			</tbody>
 			
 		</table>
+		
 	
-	<form class="searchArea" align="center">
-			<select id="condition" name="condition">
-				<option value="writer">작성자</option>
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-			</select>
+	<div class="container" align="center">
+		<div class="row">
+			<form method="post" name="search" action="searchEvent.jsp">
+				<table class="pull-right">
+					<tr>
+						<td><select class="form-control" name="searchField">
+								<option value="0">선택</option>
+								<option value="bbsTitle">제목</option>
+								<option value="userID">작성자</option>
+						</select></td>
+						<td><input type="text" class="form-control"
+							placeholder="검색어 입력" name="searchText" maxlength="100"></td>
+						<td><button type="submit" class="btn btn-success">검색</button></td>
+					</tr>
+					
+				</table>
+			</form>
+		</div>
+	</div>
+	<div align="right">
+		<input type="button" id="inse" value="글 작성하기" onclick="location.href='<%= request.getContextPath() %>/insertEventPage.do'">	
+	</div>
 			
-			
-			
-			<input type="search" name="search">
-			<button type="submit">검색하기</button>
-			
-			<input type="button" id="inse" value="글 작성하기" onclick="location.href='<%= request.getContextPath() %>/insertEventPage.do'">	
-		</form>
+		
 		
 		
 		<br><br>
@@ -94,11 +114,7 @@
 		
 		</div>
 		
-		<div class="banner">
-			<img alt="choose me please" src="../../resources/images/cat.gif">
-			고양이도 엄청 좋아하는 새지마 마켓 사이트 
-			<a href="#aa">닫기</a>
-		</div>
+		
 		
 	<div id="page">
 		
@@ -170,9 +186,19 @@
 				<p class="credit"><strong>글쓴이 이름</strong><br><em>"노한서","김태연","조현","최윤종"</em><br>발표시키지마조</p>
 			</blockquote>
 			</section>	
+		<script>
 		
+		function handleOnChange(e) {
+			  // 선택된 데이터 가져오기
+			  const value = e.value;
+			  
+			}
+		
+		
+		</script>
 		
 	</div>
+	
 	<div>
     	<%@ include file = "../common/footer.jsp" %>
     </div>

@@ -183,4 +183,35 @@ ul { list-style: none; }
     height: 150px;
 }
 
+/*공유 버튼 */
 
+ /* 글 작성 버튼 */
+.commonwritebutton{
+ 	background-color:antiquewhite;
+	text-align:center;
+	border-radius:15px;
+	border:0;
+	font-size: 16px;
+	
+ }
+/* 글작성 버튼을 hover 했을시 적용*/
+.commonwritebutton:hover{
+	background-color: #993333;
+	color:white;
+}
+
+/*게시글 등록 중 등록하기(수정하기), 취소하기 버튼 통합*/
+.commonsubmit{
+    padding: 10px 15px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+   	border: 2px solid #993333;
+   	color: black;
+}
+.commonsubmit:hover{
+	background-color: #993333;
+ 	color: white;
+}
