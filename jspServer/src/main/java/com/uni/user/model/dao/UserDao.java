@@ -62,18 +62,23 @@ public class UserDao {
 	public int idCheck(Connection conn, String userId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		String sql = prop.getProperty("idCheck");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
 			
-			result = pstmt.executeUpdate();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			close(rset);
 			close(pstmt);
 		}
 
@@ -122,5 +127,92 @@ public class UserDao {
 		}
 		
 		return loginUser;
+	}
+
+	public User idSearch(Connection conn, User user) {
+		User idSearch = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("idSearch");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUserName());
+			pstmt.setString(2, user.getCitiNo());
+			pstmt.setString(3, user.getPhone());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				idSearch = new User(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("CITI_NO"),
+						rset.getString("PHONE"),
+						rset.getString("NICK_NAME"),
+						rset.getString("EMAIL"),
+						rset.getString("GENDER"),
+						rset.getString("ADMIN_STATUS"),
+						rset.getString("STATUS"),
+						rset.getInt("BAN_COUNT")
+						);
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return idSearch;
+	}
+
+	public User pwdSearch(Connection conn, User user) {
+		User pwdSearch = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("pwdSearch");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getUserName());
+			pstmt.setString(3, user.getCitiNo());
+			pstmt.setString(4, user.getPhone());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				pwdSearch = new User(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("CITI_NO"),
+						rset.getString("PHONE"),
+						rset.getString("NICK_NAME"),
+						rset.getString("EMAIL"),
+						rset.getString("GENDER"),
+						rset.getString("ADMIN_STATUS"),
+						rset.getString("STATUS"),
+						rset.getInt("BAN_COUNT")
+						);
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return pwdSearch;
 	}
 }
