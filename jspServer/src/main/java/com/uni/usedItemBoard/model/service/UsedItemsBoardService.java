@@ -66,5 +66,25 @@ public class UsedItemsBoardService {
 		return cList;
 	}
 
+	public ArrayList<Category> selectMiddle(String large) {
+		Connection conn = getConnection();
+		
+		ArrayList<Category> cList = new UsedItemsBoardDao().selectMiddle(conn, large);
+		System.out.println("서비스 middle => " + cList);
+		close(conn);
+		
+		return cList;
+	}
+
+	public ArrayList<Category> selectSmall(String middle) {
+		Connection conn = getConnection();
+		
+		ArrayList<Category> cList = new UsedItemsBoardDao().selectSmall(conn, middle);
+		System.out.println("서비스 small => " + cList);
+		close(conn);
+		
+		return cList;
+	}
+
 	
 }

@@ -12,6 +12,15 @@ public class Category {
 	public Category() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Category(String name) {
+		super();
+		this.name = name;
+	}
+
+
 
 	public Category(String code, int cateNo, String level, String name, String ref1, String ref2) {
 		super();

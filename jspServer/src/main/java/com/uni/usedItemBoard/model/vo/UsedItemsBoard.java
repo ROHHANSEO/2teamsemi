@@ -5,7 +5,7 @@ import java.util.Date;
 public class UsedItemsBoard {
 	private int usedBoardNo;		// 게시글 고유 번호
 	private int category;			// 카테고리 분류번호
-	private int categorycode;		// 고유코드(소분류)
+	private String categorycode;		// 고유코드(최대 소분류)
 	private String usedBoardTitle;	// 게시글 제목
 	private String usedBoardWriter;	// 게시글 작성자 (번호 또는 이름)
 	private String usedBoardContent;// 게시글 내용
@@ -14,8 +14,8 @@ public class UsedItemsBoard {
 	private String itemCondition;	// 상품 상태
 	private int likeCount;			// 게시글 찜 수
 	private Date createDate;		// 게시글 작성일
-	private String paymentOne;		// 만나서 결제 (Y, N)
-	private String paymentTwo;		// 직접 결제 (Y, N)
+	private String paymentOne;		// 직접 결제 (Y, N)
+	private String paymentTwo;		// 만나서 결제 (Y, N)
 	private String status;			// 게시글 상태값(Y, N)
 	private String titleImg;		// 게시글의 타이틀 이미지 (실제 서버에 업로드되어있는 이름)
 	
@@ -23,10 +23,26 @@ public class UsedItemsBoard {
 	public UsedItemsBoard() {
 		
 	}
+	
+	
+
+	public UsedItemsBoard(String categorycode, String usedBoardTitle, String usedBoardWriter, String usedBoardContent,
+			int price, String saleStatus, String paymentOne, String paymentTwo) {
+		super();
+		this.categorycode = categorycode;
+		this.usedBoardTitle = usedBoardTitle;
+		this.usedBoardWriter = usedBoardWriter;
+		this.usedBoardContent = usedBoardContent;
+		this.price = price;
+		this.saleStatus = saleStatus;
+		this.paymentOne = paymentOne;
+		this.paymentTwo = paymentTwo;
+	}
+
 
 
 	public UsedItemsBoard(int usedBoardNo, String usedBoardTitle, int price, String saleStatus, int likeCount,
-			String status) {
+			String status, String titleImg) {
 		super();
 		this.usedBoardNo = usedBoardNo;
 		this.usedBoardTitle = usedBoardTitle;
@@ -34,9 +50,10 @@ public class UsedItemsBoard {
 		this.saleStatus = saleStatus;
 		this.likeCount = likeCount;
 		this.status = status;
+		this.titleImg = titleImg;
 	}
 
-	public UsedItemsBoard(int usedBoardNo, int categorycode, String usedBoardTitle, String usedBoardWriter,
+	public UsedItemsBoard(int usedBoardNo, String categorycode, String usedBoardTitle, String usedBoardWriter,
 			String usedBoardContent, int price, String saleStatus, String itemCondition, String paymentOne,
 			String paymentTwo) {
 		super();
@@ -53,7 +70,7 @@ public class UsedItemsBoard {
 	}
 
 
-	public UsedItemsBoard(int usedBoardNo, int category, int categorycode, String usedBoardTitle,
+	public UsedItemsBoard(int usedBoardNo, int category, String categorycode, String usedBoardTitle,
 			String usedBoardWriter, String usedBoardContent, int price, String saleStatus, String itemCondition,
 			int likeCount, Date createDate, String paymentOne, String paymentTwo, String status, String titleImg) {
 		super();
@@ -95,12 +112,12 @@ public class UsedItemsBoard {
 	}
 
 
-	public int getCategorycode() {
+	public String getCategorycode() {
 		return categorycode;
 	}
 
 
-	public void setCategorycode(int categorycode) {
+	public void setCategorycode(String categorycode) {
 		this.categorycode = categorycode;
 	}
 

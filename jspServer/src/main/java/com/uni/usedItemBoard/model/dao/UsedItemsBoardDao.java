@@ -95,7 +95,8 @@ public class UsedItemsBoardDao {
 									rset.getInt("PRICE"),
 									rset.getString("SALE_STATUS"),
 									rset.getInt("LIKE_COUNT"),
-									rset.getString("STATUS")
+									rset.getString("STATUS"),
+									rset.getString("CHANGE_NAME")
 									));
 			}
 			System.out.println("다오 => "+list);
@@ -116,13 +117,20 @@ public class UsedItemsBoardDao {
 		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
 		String sql = prop.getProperty("insertUsedBoard"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
 		
+		System.out.println("다오왔다감");
 		try {
 			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
 			
-			pstmt.setString(1, ub.getUsedBoardTitle()); // 쿼리에 담긴 물음표의 순서에 맞게 제목을 담는다
-			pstmt.setString(2, ub.getUsedBoardContent()); // 위와 같이 하여 내용을 담는다
-			pstmt.setInt(3, Integer.parseInt(ub.getUsedBoardWriter())); 
+			pstmt.setString(1, ub.getCategorycode()); // 고유코드
+			pstmt.setString(2, ub.getUsedBoardTitle()); // 제목
+			pstmt.setInt(3, Integer.parseInt(ub.getUsedBoardWriter())); // 회원번호
+			pstmt.setString(4, ub.getUsedBoardContent()); // 내용
+			pstmt.setInt(5, ub.getPrice());					// 가격
+			pstmt.setString(6, ub.getSaleStatus()); // 상품상태
+			pstmt.setString(7, ub.getPaymentOne());	// 직접결제(Y,N)
+			pstmt.setString(8, ub.getPaymentTwo()); // 만나서결제(Y,N)
 			
+			System.out.println("다오왔다감");
 			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
 			System.out.println("Dao result => " + result); // 임의 확인
 		} catch (SQLException e) {
@@ -180,12 +188,84 @@ public class UsedItemsBoardDao {
 			while(rset.next()) {
 				cList.add(new Category(rset.getString("CATEGORYCODE"), 
 									  Integer.parseInt(rset.getString("CATEGORY_NO")), 
-									  rset.getString("CATEGORYNAME"), 
 									  rset.getString("CAT_LEVEL"), 
+									  rset.getString("CATEGORYNAME"), 
 									  rset.getString("CATEGORYDEREF"), 
 									  rset.getString("CATEGORYDEREF2")));
-				System.out.println("다오 category => "+cList);
 			}
+			System.out.println("다오 category => "+cList);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return cList;
+	}
+
+	public ArrayList<Category> selectMiddle(Connection conn, String large) {
+		ArrayList<Category> cList = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectMiddle");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, large);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				cList.add(new Category(rset.getString("CATEGORYCODE"), 
+									  Integer.parseInt(rset.getString("CATEGORY_NO")), 
+									  rset.getString("CAT_LEVEL"), 
+									  rset.getString("CATEGORYNAME"), 
+									  rset.getString("CATEGORYDEREF"), 
+									  rset.getString("CATEGORYDEREF2")));
+			}
+			System.out.println("다오 category => "+cList);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return cList;
+	}
+
+	public ArrayList<Category> selectSmall(Connection conn, String middle) {
+		ArrayList<Category> cList = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectSmall");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, middle);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				cList.add(new Category(rset.getString("CATEGORYCODE"), 
+									  Integer.parseInt(rset.getString("CATEGORY_NO")), 
+									  rset.getString("CAT_LEVEL"), 
+									  rset.getString("CATEGORYNAME"), 
+									  rset.getString("CATEGORYDEREF"), 
+									  rset.getString("CATEGORYDEREF2")));
+			}
+			System.out.println("다오 category => "+cList);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

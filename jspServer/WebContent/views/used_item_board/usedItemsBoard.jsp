@@ -58,6 +58,16 @@
 						<div><%= b.getCreateDate() %></div>
 					<%} %>
 				<%} %>
+				<%for(UsedItemsBoard b : list){ %>
+					<div class="thumbnail" align="center">
+						<input type="hidden" value="<%=b.getUsedBoardNo()%>">
+						<img src="<%= request.getContextPath() %>/resouces/board_upfiles/<%= b.getTitleImg() %>" width="200px" height="150px"> <br>
+						<p>
+							No.<%= b.getUsedBoardNo() %>  <%=b.getUsedBoardTitle() %> <br>
+							조회수 : <%=b.getLikeCount() %>
+						</p>
+					</div>
+				<%} %>
 		    </div>
 	    	<div class="item"></div>
 	    </div>
