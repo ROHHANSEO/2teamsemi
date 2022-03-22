@@ -1,7 +1,6 @@
 package com.uni.user.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,18 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.uni.user.model.service.UserService;
+import com.uni.user.model.vo.User;
 
 /**
- * Servlet implementation class IdCheckServlet
+ * Servlet implementation class idSearchServlet
  */
-@WebServlet("/idCheck")
-public class IdCheckServlet extends HttpServlet {
+@WebServlet("/idSearch")
+public class idSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IdCheckServlet() {
+    public idSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,19 +30,21 @@ public class IdCheckServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
-		System.out.println(userId);
-		int result = new UserService().idCheck(userId);
+		String name = request.getParameter("name");
+		String citiNo = request.getParameter("citiNumber");
+		String phone = request.getParameter("phone");
 		
-		PrintWriter out = response.getWriter();
-		System.out.println(result);
-		if(result > 0) {
-			out.print("fail");
+		User user = new UserService().idSearch(new User(name,citiNo,phone));
+		
+		if(user != null) {
+			request.setAttribute("user", user);
+			request.setAttribute("msg", "아이디 찾기");
+			request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
 		} else {
-			out.print("success");
+			request.setAttribute("msg", "아이디 찾기");
+			request.setAttribute("msg2", "등록된 정보가 일치하지 않습니다.");
+			request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
 		}
-		out.flush();
-		out.close();
 	}
 
 	/**

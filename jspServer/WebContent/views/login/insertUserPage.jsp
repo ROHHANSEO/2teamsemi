@@ -17,7 +17,7 @@
     </header>
     <div id="input_container">
         <form id="input_box" action="<%=request.getContextPath() %>/insertUser" method="post">
-             <div class="content_box">
+            <div class="content_box">
                 <div class="id_input">
                     <input class="input" type="text" name="userId" placeholder="아이디" maxlength="15" required>
                     <button id="userIdCheck" class="input" type="button">중복확인</button>
@@ -44,8 +44,8 @@
                     <input type="text" name="email" placeholder="이메일" maxlength="50">
                 </div>
                 <div>
-                    <input id="male" type="radio" name="gender" checked><label for="male">남자</label>
-                    <input id="female" type="radio" name="gender"><label for="female">여자</label>
+                    <input id="male" type="radio" name="gender" value="M" checked><label for="male">남자</label>
+                    <input id="female" type="radio" name="gender" value="F"><label for="female">여자</label>
                 </div>
                 <div>
                     <input id="consent" type="checkbox" name="consent"><label for="consent">개인정보제공 동의</label>

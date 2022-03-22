@@ -28,11 +28,6 @@ public class UserService {
 		Connection conn = getConnection();
 		
 		int result = new UserDao().idCheck(conn,userId);
-		if(result > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
 		close(conn);
 		return result;	
 	}
@@ -43,6 +38,22 @@ public class UserService {
 		User loginUser = new UserDao().loginUser(conn, user);
 		close(conn);
 		return loginUser;
+	}
+
+	public User idSearch(User user) {
+		Connection conn = getConnection();
+		
+		User idSearch = new UserDao().idSearch(conn, user);
+		close(conn);
+		return idSearch;
+	}
+
+	public User pwdSearch(User user) {
+		Connection conn = getConnection();
+		
+		User pwdSearch = new UserDao().pwdSearch(conn, user);
+		close(conn);
+		return pwdSearch;
 	}
 
 }

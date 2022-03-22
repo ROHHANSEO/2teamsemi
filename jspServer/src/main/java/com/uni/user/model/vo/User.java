@@ -27,7 +27,19 @@ public class User {
 		this.userPwd = userPwd;
 	}
 
-
+	
+	public User(String userName, String citiNo, String phone) {
+		this.userName = userName;
+		this.citiNo = citiNo;
+		this.phone = phone;
+	}
+	
+	public User(String userId, String userName, String citiNo, String phone) {
+		this.userId = userId;
+		this.userName = userName;
+		this.citiNo = citiNo;
+		this.phone = phone;
+	}
 
 	public User(String userId, String userPwd, String userName, String citiNo, String phone, String gender) {
 		super();

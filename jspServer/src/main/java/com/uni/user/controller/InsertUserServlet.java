@@ -45,7 +45,8 @@ public class InsertUserServlet extends HttpServlet {
 		
 		if(result > 0) {
 			request.setAttribute("name", name);
-			request.getRequestDispatcher("views/login/insertUserSuccsse.jsp").forward(request, response);
+			request.setAttribute("msg", " 간편 회원가입");
+			request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
 		} else {
 			request.setAttribute("mag", "회원가입 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
