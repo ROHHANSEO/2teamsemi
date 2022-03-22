@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.uni.serviceCenter.model.dao.ServiceCenterDao;
+import com.uni.serviceCenter.model.vo.QtoA;
 import com.uni.serviceCenter.model.vo.ServiceCenter;
 
 public class ServiceCenterService {
@@ -45,6 +46,21 @@ public class ServiceCenterService {
 		Connection conn = getConnection();
 		
 		int result = new ServiceCenterDao().insertServiceCenter(conn,sc);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+
+	public int insertQtoA(QtoA qa) {
+		Connection conn = getConnection();
+		
+		int result = new ServiceCenterDao().insertQtoA(conn,qa);
 		
 		if(result > 0) {
 			commit(conn);

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.uni.serviceCenter.model.vo.QtoA;
 import com.uni.serviceCenter.model.vo.ServiceCenter;
 
 public class ServiceCenterDao {
@@ -151,6 +152,31 @@ public class ServiceCenterDao {
 			pstmt.setString(2, sc.getServiceTitle());//제목
 			pstmt.setString(3, sc.getServiceContent());//내용
 			pstmt.setInt(4, Integer.parseInt(sc.getServiceWriter()));//작성자 번호는 perseint해줘야 한다.
+			
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertQtoA(Connection conn, QtoA qa) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		System.out.println(qa +"==dao에서 sc값 잘 받나 확인");
+		String sql = prop.getProperty("insertQtoA");
+		//category, title, content, writer
+		//insertQtoA=INSERT INTO SERVICE_Q VALUES (SEQ_Q.NEXTVAL, ?, ?, ?, DEFAULT, ?);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(qa.getUserNo()));//회원번호
+			pstmt.setString(2, qa.getQuestionTitle());//제목
+			pstmt.setString(3, qa.getQuestionContent());//내용
+			pstmt.setInt(4, Integer.parseInt(qa.getCategory()));//카테고리
 			
 			result=pstmt.executeUpdate();
 		} catch (SQLException e) {
