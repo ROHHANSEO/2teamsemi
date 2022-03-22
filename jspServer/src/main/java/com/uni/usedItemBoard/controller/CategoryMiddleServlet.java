@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.uni.usedItemBoard.model.service.UsedItemsBoardService;
 import com.uni.usedItemBoard.model.vo.Category;
 
 /**
- * Servlet implementation class UsedItemsInsertBoardServlet
+ * Servlet implementation class CategoryMiddleServlet
  */
-@WebServlet("/insertUsedBoard.do")
-public class UsedItemsInsertBoardServlet extends HttpServlet {
+@WebServlet("/largeSelect.do")
+public class CategoryMiddleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UsedItemsInsertBoardServlet() {
+    public CategoryMiddleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +32,16 @@ public class UsedItemsInsertBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Category> cList = new UsedItemsBoardService().selectCategory();
-		System.out.println("서블렛 category => "+cList);
 		
-		request.setAttribute("category", cList);
+		String large = request.getParameter("large");
+		ArrayList<Category> middle = new UsedItemsBoardService().selectMiddle(large);
 		
-		request.getRequestDispatcher("views/used_item_board/usedItemsBoardinsertForm.jsp").forward(request, response); // 화면 전환
+		System.out.println("서블렛 미들 셀렉트"+middle);
+		if(!middle.isEmpty()) {
+			response.setContentType("application/json; charset=utf-8"); // 꼭 이렇게 응답해야한다
+			new Gson().toJson(middle, response.getWriter()); // 응답할 리스트적기 
+		}
+		
 	}
 
 	/**

@@ -48,6 +48,85 @@
 			})
 		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script>
+			// 대분류 선택시 선택한 카테고리 
+			$("#large").change(function() {
+				let selectcate = $("<div>")+$("#large").text();
+				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
+				$("#selectCategory").append(selectcate, button);
+			})	
+			
+			// 중분류 도출
+			$("#large").change(function() {
+				let large = $("#large").val()
+				console.log(large)
+				
+				$.ajax({
+					url:"largeSelect.do",
+					data:{
+						large : large
+					},
+					type:"get",
+					success:function(list){
+						console.log("Ajax 통신 성공")
+						$("#middle").empty()
+						if(list.length != 0){
+							$("#middle").show(); // 존재하면 보인다
+							$.each(list, function(index, obj){
+								let middle = $("<option>").text(obj.name).attr("value", obj.code)
+								console.log(obj.name)
+								$("#middle").append(middle)
+								
+							})
+						}else if(list.length == 0){// 대분류로 끝날 때
+							$("#middle").hide()
+							$("#small").hide()
+							
+						}
+					},
+					error:function(){
+						console.log("Ajax 통신 실패")
+						
+					}
+				})
+			})
+			
+			// 소분류 도출
+			$("#middle").change(function() {
+				let middle = $("#middle").val()
+				console.log(middle)
+				
+				$.ajax({
+					url:"middleSelect.do",
+					data:{
+						middle : middle
+					},
+					type:"get",
+					success:function(list){
+						console.log("Ajax 통신 성공")
+						$("#small").empty()
+						if(list.length != 0){
+							$("#small").show(); // 존재하면 보인다
+							$.each(list, function(index, obj){
+								console.log(obj.name)
+								let small = $("<option>").text(obj.name).attr("value", obj.name)
+								$("#small").append(small)
+								/*$(".deletecate").html('');
+								$("#categorydiv").appped("<div>"obj.name"<button class='deletecate' type='button' onclick='delete'>"x"</button></div>")*/
+							})
+						}else if(list.length == 0){ // 중분류로 끝날 때
+							$("#small").hide()
+							/*$(".deletecate").html('');
+							$("#categorydiv").appped("<div>"middle"<button class='deletecate' type='button' onclick='delete'>"x"</button></div>")*/
+						}
+					},
+					error:function(){
+						console.log("Ajax 통신 실패")
+						
+					}
+				})
+			})
+		</script>
 	</div>
 </body>
 </html>

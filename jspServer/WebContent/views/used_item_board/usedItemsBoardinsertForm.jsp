@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="../../resources/css/common/common.css">
 <style>
 	.container{
 		display: flex;
@@ -72,19 +73,6 @@
 	.but{
 		text-align: end;
 	}
-	#ret{
-		border: 0px;
-		border-radius: 3px;
-		background-color: gainsboro;
-		height: 25px;
-	}
-	#add{
-		border: 0px;
-		border-radius: 3px;
-		background-color: #993333;
-		color: whitesmoke;
-		height: 25px;
-	}
 	input[type = "file"]{
 		display: none;
 	}
@@ -100,43 +88,37 @@
 		display: flex;
 		flex-direction: column-reverse;
 	}
-	#item-explain{
+	#content{
 		resize: none;
 		width: 40vw;
 	}
 	/*카테 고리부분*/
 	#category{
-		width: 40%;
-		height: 10%;
-		border: 1px solid black;
+		width: 83.9%;
 		padding: 10px;
+		background-color: #efefef;
 	}
 	#categorydiv{
 		display: flex;
 		flex-wrap: wrap;
+	    justify-content: space-around;
 	}
 	#large, #middle, #small{
-		margin-left: 70px;
-		margin-right: 5%;
-		width: 15%;
-		height: 10%;
-	}
-	#large, #middle{
-		margin-right: 0;
+		width: 20%;
 	}
 </style>
 </head>
 <body>
 	<%@include file = "../common/header.jsp" %>
 	<div class="container">
-		<form class="item" action="insertUsed.do" method="post" enctype="multipart/form-data">
+		<form name="useditemform" class="item" action="<%=request.getContextPath()%>/insertUsed.do" method="post" enctype="multipart/form-data">
 			<h1>중고거래 등록하기</h1>
 			<div>
 				<div class="whole">
 					<div class="titleline">
 						<h3>제목<a style="color: red;">*</a></h3>
 					</div>
-					<input type="text" id="title" placeholder="제목을 입력하세요" maxlength="40">
+					<input type="text" name="title" id="title" placeholder="제목을 입력하세요" maxlength="40" required>
 					<div>ㅤ</div>
 					<div class="count">
 						<div>
@@ -151,14 +133,17 @@
 					</div>
 					<div id="category">
 						<div id="categorydiv">
-							<select id="large">
+							<select id="large" name="large">
 								<option value="대분류">대분류</option>
+								<% for(int i = 0 ; i < cList.size() ; i++){ %>
+									<option value="<%= cList.get(i).getCode() %>"><%= cList.get(i).getName() %></option>
+								<% } %>
 							</select>
-							<select id="middle">
-								<option value="중분류">중분류</option>
+							<select name="middle" id="middle">
+								<option id="examplemiddle" value="중분류">중분류</option>
 							</select>
-							<select id="small">
-								<option value="소분류">소분류</option>
+							<select id="small" name="small">
+								<option id="examplesmall" value="소분류">소분류</option>
 							</select>
 						</div>
 					</div>
@@ -213,7 +198,7 @@
 					</div>
 					<div class="checkarea">
 						<div>
-							<input type="text" id="price" placeholder="가격을 입력해주세요">원
+							<input type="text" name="price" id="price" placeholder="가격을 입력해주세요" required>원
 						</div>
 						<div class="checkline">
 							<div class="product">
@@ -228,7 +213,7 @@
 							<h3>상품 설명<a style="color: red;">*</a></h3>
 						</div>
 						<div class="itempline">
-							<textarea id="item-explain" cols="30" rows="10" placeholder="내용을 입력하세요." maxlength="2000"></textarea>
+							<textarea name="content" id="content" cols="30" rows="10" placeholder="내용을 입력하세요." maxlength="2000" required></textarea>
 						</div>
 						<div class="count">
 							<div>
@@ -251,12 +236,116 @@
 				</div>	
 				<div>ㅤ</div>
 				<div class="but">
-					<input id="ret" type="button" value="취소하기"> <input id="add" type="submit" value="작성하기" onclick="location.ef='<%= request.getContextPath() %>/usedInsertBoard.do'">
+					<input id="ret" class="commonsubmit" type="button" value="취소하기"> 
+					<input id="add" class="commonsubmit" type="button" value="작성하기" onclick="checkform()">
 				</div>
 			</div>
 		</form>
 	</div>
 	<script>
+		// 게시글 체크
+		function checkform() {
+			
+			// 제목 미설정시 알림
+			if(confirm("글을 등록하시겠습니까?") == true){
+				let theForm = document.useditemform;
+				// 제목과 설명을 적지 않을시
+				if(theForm.title.value == "" && theForm.content.value == ""){
+					alert("제목과 설명을 작성해 주세요")
+					return $("#title").focus();
+				}else if(theForm.title.value == ""){
+					alert("제목을 작성해 주세요.")
+					return $("#title").focus();
+					// 설명을 적지 않을 시
+				}else if(theForm.content.value == ""){
+					alert("상품 설명을 작성해 주세요")
+					return $("#content").focus();
+					// 카테고리 설정 하지 않았을시 알림
+				}else if($("#large").val() == '대분류'){
+					alert("카테고리를 선택해 주세요");
+					return $("#large").focus();
+					// 이미지 미선택시 알림
+				}else if($("#titleImg").is('[src]') == false){
+					alert("이미지는 최소 1장이 필요합니다.")
+					return $("#imagin").focus();
+					// 가격 작성 하지 않을 시 알림
+				}else if(theForm.price.value == ''){
+					alert("가격을 작성해 주세요")
+					return $("#price").focus();
+				}
+
+				theForm.submit();
+			}
+		}
+	
+		// 중분류 도출
+		$("#large").change(function() {
+			let large = $("#large").val()
+			console.log(large)
+			
+			$.ajax({
+				url:"largeSelect.do",
+				data:{
+					large : large
+				},
+				type:"get",
+				success:function(list){
+					console.log("Ajax 통신 성공")
+					$("#middle").empty()
+					$("#small").text()
+					if(list.length != 0){
+						let examplemiddle = $("<option>").text("중분류").attr("value", "중분류")
+						$("#middle").append(examplemiddle)
+						$.each(list, function(index, obj){
+							let middle = $("<option>").text(obj.name).attr("value", obj.code)
+							console.log(obj.name)
+							$("#middle").append(middle)
+						})
+					}else if(list.length == 0){// 대분류로 끝날 때
+						let examplemiddle = $("<option>").text("중분류").attr("value", "중분류")
+						$("#middle").append(examplemiddle)
+					}
+				},
+				error:function(){
+					console.log("Ajax 통신 실패")
+					
+				}
+			})
+		})
+		
+		// 소분류 도출
+		$("#middle").change(function() {
+			let middle = $("#middle").val()
+			console.log(middle)
+			
+			$.ajax({
+				url:"middleSelect.do",
+				data:{
+					middle : middle
+				},
+				type:"get",
+				success:function(list){
+					console.log("Ajax 통신 성공")
+					$("#small").empty()
+					if(list.length != 0){
+						let examplesmall = $("<option>").text("소분류").attr("value", "소분류")
+						$("#small").append(examplesmall)
+						$.each(list, function(index, obj){
+							console.log(obj.name)
+							let small = $("<option>").text(obj.name).attr("value", obj.code)
+							$("#small").append(small)
+						})
+					}else if(list.length == 0){ // 중분류로 끝날 때
+						let examplemiddle = $("<option>").text("소분류").attr("value", "소분류")
+						$("#middle").append(examplemiddle)
+					}
+				},
+				error:function(){
+					console.log("Ajax 통신 실패")
+					
+				}
+			})
+		})
 	
 		//결제 방식을 두가지 모드 체크 해제 했을 경우 알림
 		$("#one").click(function(){
@@ -288,14 +377,14 @@
         
 		// 상품 설명 4000자 제한
 		$(function(){
-            $("#item-explain").keydown(function(){
+            $("#content").keydown(function(){
                 var inputLength = $(this).val().length;
                 var remain = 2000-inputLength
                 $("#counter").html(inputLength)
 
 				if(remain <= 0){
 					alert("제목은 20자만 가능합니다.")
-					$("#item-explain").focus();
+					$("#content").focus();
 				}
             })
         })
