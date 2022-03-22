@@ -80,8 +80,10 @@
  			location.href="<%=request.getContextPath()%>/enrollFormServiceCenter.do";
  		}
     	function serviceCenterQtoA(){//1:1문의하기
-    		window.open("<%= request.getContextPath()%>/serviceCenterQtoA.do","1:1문의 창", "width=500, height=300, top=350, left=600");
+    		window.name = "serviceCenterMain";
+    		 window.open("<%= request.getContextPath()%>/serviceQtoAForm.do","question", "width=500, height=330, top=350, left=600");
     	}
+    	
     	//위에 검색 부분
     	function searchFunction(){
     		//테이블 초기화 
