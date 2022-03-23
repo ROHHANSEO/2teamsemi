@@ -73,6 +73,14 @@ textarea {
     position: absolute;
     left: 50%;
     transform: translateX(-62%);
+    background-color: #993333;
+    color: #fff;
+    border-radius: 20px;
+}
+
+#input_container .button:disabled{
+    background-color: gray;
+    color: black;
 }
 
 .content_box {

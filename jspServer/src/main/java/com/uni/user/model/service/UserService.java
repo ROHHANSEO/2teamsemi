@@ -56,4 +56,17 @@ public class UserService {
 		return pwdSearch;
 	}
 
+	public int pwdChange(User user) {
+		Connection conn = getConnection();
+		
+		int result = new UserDao().pwdChange(conn,user);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;	
+	}
+
 }
