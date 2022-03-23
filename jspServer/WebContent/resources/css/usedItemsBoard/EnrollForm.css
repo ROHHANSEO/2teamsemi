@@ -1,0 +1,125 @@
+@charset "UTF-8";
+.container{
+	display: flex;
+	width: 100vw;
+}
+form{
+	margin: 0 auto;
+   	width: 70vw;
+}
+.whole{
+	display: flex;
+	padding: 15px;
+	border-bottom: 1px solid black;
+}
+.info{
+	margin-right: 30px;
+}
+#imagin{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #efefef;
+	width: 200px;
+	height: 200px;
+	text-align: center;
+}
+.article{
+	display: flex;
+}
+.article1{
+	margin: 10px;
+}
+#contentImg1, #contentImg2, #contentImg3, #contentImg4, #contentImg5, 
+#contentImg6, #contentImg7, #contentImg8, #contentImg9, #titleImg{
+	postiion : relative;
+	width: 200px;
+	height: 200px;
+	margin-top: 0;
+	display: none;
+}
+#contentImg1, #contentImg2, #contentImg3, #contentImg4, #contentImg5,
+#contentImg6, #contentImg7, #contentImg8, #contentImg9{
+	margin-left: 0;
+}
+#title{
+	width: 15em;
+}
+.deleteimg{
+	position: absolute;
+	background: white;
+	border-radius: 5px;
+}
+#delimg1, #delimg2{
+    top: 31.2vw;
+}
+#delimg3, #delimg4, #delimg5{
+	top: 46.2vw;
+}
+#delimg6, #delimg7, #delimg8{
+	top: 61vw;
+}
+#delimg9, #delimg10{
+	top: 75.9vw;
+}
+#delimg1, #delimg4, #delimg8, #delimg10{
+	left: 53.2vw;
+}
+#delimg2, #delimg5, #delimg7{
+	left: 67.8vw;
+}
+#delimg3, #delimg6, #delimg9{
+    left: 38.6vw;
+}
+.titleline{
+	margin-right: 94px;
+}
+.priceline{
+	margin-right: 89px;
+}
+.productline{
+	margin-right: 47px;
+}
+.categoryline{
+	margin-right: 55px;
+}
+.itempline{
+	margin-right: 45px;
+	display: none;
+}
+.but{
+	text-align: end;
+}
+input[type = "file"]{
+	display: none;
+}
+.checkarea{
+	width: 50vw;
+	display: flex;
+	justify-content: space-between;
+}
+.product{
+	font-size: 11px;
+}
+.count{
+	display: flex;
+	flex-direction: column-reverse;
+}
+#content{
+	resize: none;
+	width: 40vw;
+}
+/*카테 고리부분*/
+#category{
+	width: 83.9%;
+	padding: 10px;
+	background-color: #efefef;
+}
+#categorydiv{
+	display: flex;
+	flex-wrap: wrap;
+    justify-content: space-around;
+}
+#large, #middle, #small{
+	width: 20%;
+}

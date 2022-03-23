@@ -18,6 +18,7 @@ import com.uni.common.MyFileRenamePolicy;
 import com.uni.usedItemBoard.model.service.UsedItemsBoardService;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
+import com.uni.user.model.vo.User;
 
 /**
  * Servlet implementation class InsertUsedBoardServlet
@@ -53,14 +54,14 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			
 			System.out.println("savePath : " + savePath);
 			
-			// MultipartRequest객체 생성								요청, 저장하는 경로, 최대 파일크기, 인코딩, 따로 파일의 이름을 정하는?
+			// MultipartRequest객체 생성								요청, 저장하는 경로, 최대 파일크기, 인코딩, 따로 파일의 이름을 정하는 객체
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
 		
 			// 작성자, 제목, 내용 받아오기
-			String writer = "1";//multiRequest.getParameter("writer");
+			String writer = String.valueOf(((User)request.getSession().getAttribute("user")).getUserNo());
 			String title = multiRequest.getParameter("title");
-			String content = multiRequest.getParameter("content"); 
+			String content = multiRequest.getParameter("content").replaceAll("\n", "<br>"); 
 			
 			// 상품상태
 			String productStatus = multiRequest.getParameter("productStatus");
@@ -105,19 +106,19 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			
 			UsedItemsBoard ub = null;
 			// 대분류만 선택시
-			if(categoryMiddle == "중분류") {
+			if(categoryMiddle.equals("중분류")) {
 				// 보드 객체생성 및 담기(아직 안담음)
 				System.out.println("대분류만 선택 되었습니다.");
 				ub = new UsedItemsBoard(categoryLarge, title, writer, content, price, productStatus, paymentOne, paymentTwo);
 				System.out.println("서블렛 ub 객체 생성 =>"+ub);
 			}
-			if(categoryMiddle != "중분류" && categorySmall == "소분류") {
+			if(categoryMiddle.equals("중분류") == false && categorySmall.equals("소분류") == true) {
 				// 중분류만 선택시
 				System.out.println("중분류까지만 선택 되었습니다.");
 				ub = new UsedItemsBoard(categoryMiddle, title, writer, content, price, productStatus, paymentOne, paymentTwo);
 				System.out.println("서블렛 ub 객체 생성 =>"+ub);
 			}
-			if(categoryMiddle != "중분류" && categorySmall != "소분류"){
+			if(categoryMiddle.equals("중분류") == false && categorySmall.equals("소분류") == false){
 				// 소분류 까지 선택시
 				System.out.println("소분류까지 선택 되었습니다.");
 				ub = new UsedItemsBoard(categorySmall, title, writer, content, price, productStatus, paymentOne, paymentTwo);

@@ -86,5 +86,23 @@ public class UsedItemsBoardService {
 		return cList;
 	}
 
+	public UsedItemsBoard selectUsedBoard(int bNo) {
+		Connection conn = getConnection();
+		
+		UsedItemsBoard ub = new UsedItemsBoardDao().selectUsedBoard(conn, bNo);
+		close(conn);
+		
+		return ub;
+	}
+
+	public ArrayList<UsedAttachment> selectAttachment(int bNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<UsedAttachment> ua = new UsedItemsBoardDao().selectAttachment(conn, bNo);
+		close(conn);
+		
+		return ua;
+	}
+
 	
 }
