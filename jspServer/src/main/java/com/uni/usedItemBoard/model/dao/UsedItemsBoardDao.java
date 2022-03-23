@@ -88,16 +88,15 @@ public class UsedItemsBoardDao {
 			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
-
+			
 			while(rset.next()) {
 				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
-									rset.getString("BOARD_TITLE"),
-									rset.getInt("PRICE"),
-									rset.getString("SALE_STATUS"),
-									rset.getInt("LIKE_COUNT"),
-									rset.getString("STATUS"),
-									rset.getString("CHANGE_NAME")
-									));
+											rset.getString("BOARD_TITLE"),
+											rset.getInt("PRICE"),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("CHANGE_NAME")
+											));
 			}
 			System.out.println("다오 => "+list);
 		} catch (SQLException e) {
@@ -275,6 +274,80 @@ public class UsedItemsBoardDao {
 		}
 		
 		return cList;
+	}
+
+	public UsedItemsBoard selectUsedBoard(Connection conn, int bNo) {
+		UsedItemsBoard ub = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectUsedBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				ub = new UsedItemsBoard(rset.getString("CATEGORYCODE"), 
+									  rset.getString("BOARD_TITLE"), 
+									  rset.getString("NICK_NAME"), 
+									  rset.getString("BOARD_CONTENT"), 
+									  rset.getInt("PRICE"), 
+									  rset.getString("SALE_STATUS"),
+									  rset.getString("ITEM_CONDITION"),
+									  rset.getInt("LIKE_COUNT"),
+									  rset.getString("PAYMENT_ONE"),
+									  rset.getString("PAYMENT_TWO"),
+									  rset.getString("PAYMENT_STATUS"));
+			}
+			System.out.println("다오 ub => "+ub);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return ub;
+	}
+
+	public ArrayList<UsedAttachment> selectAttachment(Connection conn, int bNo) {
+		ArrayList<UsedAttachment> ua = new ArrayList<>();
+		UsedAttachment at = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				at = new UsedAttachment(rset.getInt("FILE_NO"), 
+									  rset.getString("ORIGIN_NAME"),
+									  rset.getString("CHANGE_NAME"));
+				ua.add(at);
+			}
+			System.out.println("다오 ua => "+ua);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return ua;
 	}
 
 }

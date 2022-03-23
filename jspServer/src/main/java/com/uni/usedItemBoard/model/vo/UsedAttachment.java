@@ -16,6 +16,17 @@ public class UsedAttachment {
 		
 	}
 	
+	
+	
+	public UsedAttachment(int fileNo, String originName, String changeName) {
+		super();
+		this.fileNo = fileNo;
+		this.originName = originName;
+		this.changeName = changeName;
+	}
+
+
+
 	public UsedAttachment(int fileNo, int refBoardNo, String originName, String changeName, String filePath, Date uploadDate,
 			int fileLevel, String status) {
 		super();

@@ -1,0 +1,50 @@
+#top{
+    display: flex;
+    border: 1px solid black;
+    justify-content: center;
+}
+.container{
+    margin: 0 auto;
+    width: 80vw;
+    border: 1px solid;
+}
+.item{
+    border: 1px solid black;
+}
+#article1{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 50vw;
+}
+#article2{
+    display: flex;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    width: 50vw;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+.firstLine, .secondLine{
+	display: flex;
+	justify-content: space-between;
+}
+.image{
+    width: 10vw;
+    height: 10.5vw;
+}
+.thumbnail{
+    margin: 10px;
+    margin-left: 17.1px;
+    margin-right: 17.1px;
+    border: 1px solid;
+   	width: 10vw;
+    height: 14vw;
+}
+.heart{
+	width: 16px;
+}
+.write{
+	padding: 3px;
+}
