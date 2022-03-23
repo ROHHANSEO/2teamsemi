@@ -23,6 +23,8 @@ public class ServiceCenter {
 
 	
 	
+	
+
 	public ServiceCenter(String category, String serviceTitle, String serviceContent, String serviceWriter) {
 		super();
 		this.category = category;
@@ -63,17 +65,23 @@ public class ServiceCenter {
 		this.serviceWriter = serviceWriter;
 	}
 
-	public ServiceCenter(int serviceNo, String category, String serviceTitle, String serviceContent, Date createDate,
-			String status, String serviceWriter) {
+	public ServiceCenter(int serviceNo, String category, String serviceTitle, String serviceContent, String serviceWriter) {
 		super();
 		this.serviceNo = serviceNo;
 		this.category = category;
 		this.serviceTitle = serviceTitle;
 		this.serviceContent = serviceContent;
-		this.createDate = createDate;
-		this.status = status;
 		this.serviceWriter = serviceWriter;
 	}
+	public int getNumberCount() {
+		return numberCount;
+	}
+
+
+	public void setNumberCount(int numberCount) {
+		this.numberCount = numberCount;
+	}
+
 
 	public int getServiceNo() {
 		return serviceNo;

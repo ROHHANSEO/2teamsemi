@@ -14,16 +14,16 @@ import com.uni.serviceCenter.model.service.ServiceCenterService;
 import com.uni.serviceCenter.model.vo.ServiceCenter;
 
 /**
- * Servlet implementation class serviceCenterReServlet
+ * Servlet implementation class TopListSCServlet
  */
-@WebServlet("/serviceCenterRe.do")
-public class serviceCenterReServlet extends HttpServlet {
+@WebServlet("/topSCList.do")
+public class TopListSCServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public serviceCenterReServlet() {
+    public TopListSCServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +32,11 @@ public class serviceCenterReServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String input = request.getParameter("input");
-		//System.out.println("입력값 serviceCenterReServlet" + input);
+		ArrayList<ServiceCenter> list = new ServiceCenterService().selectTopList();
 		
-		response.setCharacterEncoding("UTF-8");//안해주면 ?? ??나옴
-		response.getWriter().print(input);
-		
-		
-		
+		response.setContentType("application/json; charset=utf-8");
+
+		new Gson().toJson(list, response.getWriter());
 	}
 
 	/**

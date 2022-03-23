@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.uni.serviceCenter.model.service.ServiceCenterService;
 import com.uni.serviceCenter.model.vo.ServiceCenter;
+import com.uni.user.model.vo.User;
 
 /**
  * Servlet implementation class insertServiceCenter
@@ -33,15 +34,15 @@ public class insertServiceCenter extends HttpServlet {
 		String category = request.getParameter("category");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-		String writer = "1";//일단은 wirter = 1로 받는다 
-		//String writer=String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
+		
+		String writer=String.valueOf(((User)request.getSession().getAttribute("user")).getUserNo());
 		
 		System.out.println(title +"   ==insertservlet에서");//제목 성공
-		System.out.println("_____전______ "+ content);
+		//System.out.println("_____전______ "+ content);
 		//category, title,content,writer
 		ServiceCenter sc = new ServiceCenter(category,title.replaceAll("\u0020", "&nbsp;"),content.replaceAll("\n", "<br>").replaceAll("\u0020", "&nbsp;"), writer);
-		System.out.println("_____후______ "+  title.replaceAll("\n", "<br>"));
-		System.out.println(category + "===insertservlet category들어왔나");
+		//System.out.println("_____후______ "+  title.replaceAll("\n", "<br>"));
+		//System.out.println(category + "===insertservlet category들어왔나");
 		
 		int result = new ServiceCenterService().insertServiceCenter(sc);
 		if(result > 0) {

@@ -188,6 +188,125 @@ public class ServiceCenterDao {
 		return result;
 	}
 
+	public ArrayList<ServiceCenter> selectTopList(Connection conn) {
+		ArrayList<ServiceCenter> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectTopList");
+		try {
+			
+			pstmt= conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+
+
+			list = new ArrayList<>();
+		
+			while(rset.next()) {
+				ServiceCenter sc =new ServiceCenter();
+				sc.setServiceNo(rset.getInt("SERVICE_NO"));
+				sc.setServiceTitle(rset.getString("SERVICE_TITLE"));
+				sc.setServiceContent(rset.getString("SERVICE_CONTENT"));
+				
+				list.add(sc);
+				System.out.println(sc + "dao toplist");
+
+			}
+			
+			System.out.println(list +"   serviceCenter 받아온 list 값");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int increaseCount(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		System.out.println(no +"dao에서 보이는 값");
+		String sql = prop.getProperty("increaseCount");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+		
+			result = pstmt.executeUpdate();
+			System.out.println("count 수 증가 dao ===="+result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ServiceCenter selectServiceCenter(Connection conn, int scno) {
+		ServiceCenter sc = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("selectServiceCenter");
+		//SERVICE_NO, CATEGORY, SERVICE_TITLE, SERVICE_CONTENT, CREATE_DATE,COUNT, SERVICE_WRITER
+		
+		try {
+			
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, scno);
+			rset = pstmt.executeQuery();
+
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				sc = new ServiceCenter(rset.getInt("SERVICE_NO"),
+								rset.getString("CATEGORY"), 
+								rset.getString("SERVICE_TITLE"), 
+								rset.getString("SERVICE_CONTENT"), 
+								rset.getDate("CREATE_DATE"), 
+								rset.getInt("COUNT"), 
+								rset.getString("SERVICE_WRITER"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return sc;
+	}
+
+	public int updateSC(Connection conn, ServiceCenter sc) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateSC");
+		//SERVICE_CENTER SET CATEGORY = ?, SERVICE_TITLE=?, SERVICE_CONTENT=?, 
+		//CREATE_DATE=SYSDATE, SERVICE_WRITER=? WHERE SERVICE_NO = ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sc.getCategory());
+			pstmt.setString(2, sc.getServiceTitle());
+			pstmt.setString(3, sc.getServiceContent());
+			pstmt.setInt(4, Integer.parseInt(sc.getServiceWriter()));
+			pstmt.setInt(5, sc.getServiceNo());
+			
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 	
 
 	
