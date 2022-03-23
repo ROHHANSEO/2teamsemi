@@ -1,8 +1,6 @@
-package com.uni.board;
+package com.uni.board.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class communityPageServlet
+ * Servlet implementation class EventInsertServlet
  */
-@WebServlet("/communitypage.do")
-public class communityPageServlet extends HttpServlet {
+@WebServlet("/insertcommunity.do")
+public class communityinsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public communityPageServlet() {
+    public communityinsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,8 +26,8 @@ public class communityPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = request.getRequestDispatcher("views/community/communityPage.jsp");
-		view.forward(request, response);
+		
+		request.getRequestDispatcher("views/community/communityinsert.jsp").forward(request, response);
 	}
 
 	/**
