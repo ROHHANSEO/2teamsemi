@@ -37,7 +37,7 @@ public class idSearchServlet extends HttpServlet {
 		User user = new UserService().idSearch(new User(name,citiNo,phone));
 		
 		if(user != null) {
-			request.setAttribute("user", user);
+			request.setAttribute("userId", user);
 			request.setAttribute("msg", "아이디 찾기");
 			request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
 		} else {

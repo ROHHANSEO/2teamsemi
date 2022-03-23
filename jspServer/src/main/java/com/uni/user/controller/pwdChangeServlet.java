@@ -1,6 +1,7 @@
 package com.uni.user.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +12,16 @@ import com.uni.user.model.service.UserService;
 import com.uni.user.model.vo.User;
 
 /**
- * Servlet implementation class pwdSearchServlet
+ * Servlet implementation class pwdChangeServlet
  */
-@WebServlet("/pwdSearch")
-public class pwdSearchServlet extends HttpServlet {
+@WebServlet("/pwdChange")
+public class pwdChangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public pwdSearchServlet() {
+    public pwdChangeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,21 +30,27 @@ public class pwdSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
-		String name = request.getParameter("name");
-		String citiNo = request.getParameter("citiNumber");
-		String phone = request.getParameter("phone");
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		String pwd = request.getParameter("userPwd");
+		System.out.println(userNo);
+		System.out.println(pwd);
 		
-		User user = new UserService().pwdSearch(new User(userId,name,citiNo,phone));
-		System.out.println(user);
-		if(user != null) {
-			request.setAttribute("userPwd", user);
-			request.setAttribute("msg", "비밀번호 수정");
+		User user = new User();
+		user.setUserNo(userNo);
+		user.setUserPwd(pwd);
+		
+		int result = new UserService().pwdChange(user);
+		
+		if(result > 0) {
+			request.setAttribute("msg", "비밀번호 변경");
+			request.setAttribute("result", "true");
+			request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
 		} else {
-			request.setAttribute("msg", "비밀번호 찾기");
-			request.setAttribute("msg2", "등록된 정보가 일치하지 않습니다.");
+			request.setAttribute("msg", "비밀번호 변경 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+
 		}
-		request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
+		
 	}
 
 	/**

@@ -215,4 +215,27 @@ public class UserDao {
 		
 		return pwdSearch;
 	}
+
+	public int pwdChange(Connection conn, User user) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("pwdChange");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(2, user.getUserNo());
+			pstmt.setString(1, user.getUserPwd());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		
+		return result;
+	}
 }

@@ -17,7 +17,7 @@
         <span id="page_title">비밀번호 찾기</span>
     </header>
     <div id="input_container">
-        <form id="input_box" action="<%=request.getContextPath() %>/idSearch" method="post">
+        <form id="input_box" action="<%=request.getContextPath() %>/pwdSearch" method="post">
             <div class="content_box">
              	<div class="id_input">
                     <input class="input" type="text" name="userId" placeholder="아이디" maxlength="15" required>
