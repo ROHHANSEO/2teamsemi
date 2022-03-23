@@ -185,4 +185,6 @@
 		.serviceHiddenNo{
 			visibility: hidden;
 		}
-		
+		.totalUpdateService{
+			visibility: hidden;
+		}

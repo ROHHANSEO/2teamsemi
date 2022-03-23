@@ -45,7 +45,7 @@ public class LoginUserServlet extends HttpServlet {
 			response.sendRedirect("/");
 		} else {
 			request.setAttribute("msg", "로그인에 실패했습니다");
-			request.getRequestDispatcher("views/common/eroorPage.jsp").forward(request, response);
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			
 		}
 		

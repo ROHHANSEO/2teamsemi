@@ -9,7 +9,7 @@
 a { text-decoration: none !important; color: black;}
 img { border: 0; }
 ul { list-style: none; }
-
+body { overflow-x:hidden}
 
 /* header */
 #main_header {
