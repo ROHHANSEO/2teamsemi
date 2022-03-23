@@ -35,7 +35,7 @@ public class serviceCenterCListServlet extends HttpServlet {
 	
 		
 		String input = request.getParameter("input");
-		System.out.println(input +"serviceCListServlet==========");
+		//System.out.println(input +"serviceCListServlet==========");
 		int result = 0;
 		switch(input) {
 		case "운영정책" : result = 1;break;
@@ -50,11 +50,11 @@ public class serviceCenterCListServlet extends HttpServlet {
 		case "채팅" : result = 10;break;
 		case "기타" : result = 11; break;
 		}
-		System.out.println(result +"serviceCListServlet result!");
+		//System.out.println(result +"serviceCListServlet result!");
 		
 		ArrayList<ServiceCenter> list = new ServiceCenterService().selectCList(result);
 
-		System.out.println("serviceCenterCList  ====="+list);
+		//System.out.println("serviceCenterCList  ====="+list);
 
 		response.setContentType("application/json; charset = utf-8");
 		

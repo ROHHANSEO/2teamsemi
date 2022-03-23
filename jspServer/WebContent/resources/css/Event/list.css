@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+	
+
 	.outer{
 			width:800px;
 			height:500px;
@@ -9,22 +11,42 @@
 			margin-top:30px;
 		}
 	.listArea{
-		border-top:1px solid gray;
+		border-top:1px solid #993333;
 		text-align:center;
 	}
 	.searchArea{
-		margin-top:50px;
+		margin-top:500px;
 	}
 	
 	.listArea>tbody>tr:hover{
 		background:#993333;
+		color:white;
 		cursor:pointer
 	}
 
 	.menubar{
-		background: gray;
+		background: rgb(192, 192, 192)333;
+	}
+	
+	.bts{
+		width: 100px;
+		height:30px;
+	
+	}
+	
+	.bts2{
+		width: 60px;
+		height:25px;
+	
+	}
+	
+	.bts3{
+		width: 60px;
+		height:25px;
+	
 	}
 
+	
 	
 
 

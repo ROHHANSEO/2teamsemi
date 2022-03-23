@@ -111,12 +111,66 @@
 			<textarea name="content" class="QtoAcontent" placeholder="문의 내용을 입력해주세요" style="resize:none;" maxlength="2000" required></textarea>
 		</div>
 		<div class="QtoAbuttondiv"><!-- 1:1문의 버튼 div -->
-			<button type="button" id ="cancelValue" class="QtoAtobutton1">Cancel</button>
+			<button type="button" id ="cancelValue" class="QtoAtobutton1" onclick="askcancel()">Cancel</button>
 			<button type="button" id="sendValue" class="QtoAtobutton2" >OK</button>
 		</div>
 		</form>
 	</div>
 	<script type ="text/javascript">
+	
+	function askcancel(){
+		var cancel = confirm("글 작성을 취소하시겠습니까?");
+		if(cancel){
+			 window.close()
+		}else{
+			return;
+		}
+	}
+		//ok버튼 누를시에 form전송을 하고나서 콘솔창 닫기 
+		$(function(){
+		$("#sendValue").click(function(){
+			console.log($("#title").text())
+			console.log($("#content").text())
+			theForm = document.QtoAform;
+			if(confirm("문의 글을 작성하시겠습니까?") ==true){
+				if(theForm.title.value == "" && theForm.content.value == ""){
+					
+					alert("제목과 내용을 입력해주셔야 등록이 됩니다.")
+					
+				}else if(theForm.title.value == ""){
+					alert("제목을 입력해주셔야 합니다.")
+				}else if(theForm.content.value == ""){
+					alert("내용을 입력해주셔야 합니다.")
+				}
+				if(theForm.title.value != "" && theForm.content.value != ""){
+					var formData = $("#QtoAform").serialize();
+					console.log(formData)
+					$.ajax({
+						type:"POST", 
+						url : "insertQtoAform.do", 
+						data : formData, 
+						success :function(result){
+							console.log(result)
+							if(result != null){
+								alert("등록이 완료되었습니다")
+								parent.opener.location.reload();
+								window.open('', '_self', '').close();
+							}
+							
+						}, 
+						error: function(e){
+							console.log(e)
+						}
+					})
+					
+				}
+				
+			}else{
+				return;
+			}
+			
+		})
+		})
 		
 		
 	</script>

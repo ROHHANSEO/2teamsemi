@@ -1,29 +1,25 @@
-package com.uni.serviceCenter.controller;
+package com.uni.board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.uni.serviceCenter.model.service.ServiceCenterService;
-import com.uni.serviceCenter.model.vo.ServiceCenter;
-
 /**
- * Servlet implementation class serviceCenterReServlet
+ * Servlet implementation class communityPageServlet
  */
-@WebServlet("/serviceCenterRe.do")
-public class serviceCenterReServlet extends HttpServlet {
+@WebServlet("/communitypage.do")
+public class communityPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public serviceCenterReServlet() {
+    public communityPageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +28,8 @@ public class serviceCenterReServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String input = request.getParameter("input");
-		//System.out.println("입력값 serviceCenterReServlet" + input);
-		
-		response.setCharacterEncoding("UTF-8");//안해주면 ?? ??나옴
-		response.getWriter().print(input);
-		
-		
-		
+		RequestDispatcher view = request.getRequestDispatcher("views/community/communityPage.jsp");
+		view.forward(request, response);
 	}
 
 	/**

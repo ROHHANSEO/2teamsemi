@@ -20,6 +20,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" media="screen" href="../../resources/css/Event/list.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../../resources/css/common/common.css">
 <title>이벤트&공지사항</title>
 
 </head>
@@ -39,17 +40,17 @@
 	  		<option>공지사항</option>
 	  		<option>이벤트</option>
 		</select>
-		<div id='result'></div>
+		<div id='result'>
 		
-		
+		<br>
 		
 		<script type="text/javascript">
 		</script>
-		<a href="<%=request.getContextPath() %>/eventpage.do?pt=all"><button style='<%= (pt.equals("all"))? style : " " %>'>전체</button></a>
-		<a href="<%=request.getContextPath() %>/eventpage.do?pt=now"><button style='<%= (pt.equals("now"))? style : " " %>'>현재</button></a>
-		<a href="<%=request.getContextPath() %>/eventpage.do?pt=old"><button style='<%= (pt.equals("old"))? style : " " %>'>지난</button></a>
+		<a  href="<%=request.getContextPath() %>/eventpage.do?pt=all"><button style='<%= (pt.equals("all"))? style : " " %>' class="commonwritebutton bts3" >전체</button></a>
+		<a href="<%=request.getContextPath() %>/eventpage.do?pt=now"><button style='<%= (pt.equals("now"))? style : " " %>' class="commonwritebutton bts3" >현재</button></a>
+		<a href="<%=request.getContextPath() %>/eventpage.do?pt=old"><button style='<%= (pt.equals("old"))? style : " " %>' class="commonwritebutton bts3" >지난</button></a>
 		
-		
+		</div>
 		     
 		<table class="listArea" align="center">
 		 
@@ -82,7 +83,7 @@
 			
 		</table>
 		
-	
+	<br>
 	<div class="container" align="center">
 		<div class="row">
 			<form method="post" name="search" action="searchEvent.jsp">
@@ -95,7 +96,7 @@
 						</select></td>
 						<td><input type="text" class="form-control"
 							placeholder="검색어 입력" name="searchText" maxlength="100"></td>
-						<td><button type="submit" class="btn btn-success">검색</button></td>
+						<td><button type="submit" class="commonwritebutton bts2" >검색</button></td>
 					</tr>
 					
 				</table>
@@ -103,7 +104,7 @@
 		</div>
 	</div>
 	<div align="right">
-		<input type="button" id="inse" value="글 작성하기" onclick="location.href='<%= request.getContextPath() %>/insertEventPage.do'">	
+		<input type="button" class="commonwritebutton bts"   id="inse" value="글작성" onclick="location.href='<%= request.getContextPath() %>/insertEventPage.do'">	
 	</div>
 			
 		

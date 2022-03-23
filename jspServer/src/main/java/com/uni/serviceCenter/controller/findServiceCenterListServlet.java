@@ -35,12 +35,12 @@ public class findServiceCenterListServlet extends HttpServlet {
 		String input = request.getParameter("input");
 		String selectinput = request.getParameter("selectinput");
 
-		System.out.println("입력값selectinput findserviceCenterLIstServlet =====" + selectinput);
-		System.out.println("입력값input findserviceCenterLIstServlet =====" + input.replaceAll("\u0020", "&nbsp;"));
+		//System.out.println("입력값selectinput findserviceCenterLIstServlet =====" + selectinput);
+		//System.out.println("입력값input findserviceCenterLIstServlet =====" + input.replaceAll("\u0020", "&nbsp;"));
 		
 		
 		ArrayList<ServiceCenter> list = new ServiceCenterService().findCList(selectinput,input.replaceAll("\u0020", "&nbsp;"));
-		System.out.println("list 값을 받아와야 한다 findserviceCenterLIstServlet ====="+ list);
+		//System.out.println("list 값을 받아와야 한다 findserviceCenterLIstServlet ====="+ list);
 		response.setContentType("application/json; charset = utf-8");
 		new Gson().toJson(list, response.getWriter());
 		

@@ -17,6 +17,17 @@ public class QtoA {
 	
 	
 
+	public QtoA(int questionNo, String userNo, String questionTitle, String questionContent, Date createDate) {
+		super();
+		this.questionNo = questionNo;
+		this.userNo = userNo;
+		this.questionTitle = questionTitle;
+		this.questionContent = questionContent;
+		this.createDate = createDate;
+	}
+
+
+
 	public QtoA(String userNo, String questionTitle, String questionContent, String category) {
 		super();
 		this.userNo = userNo;

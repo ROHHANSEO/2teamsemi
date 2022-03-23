@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.serviceCenter.model.vo.*"%>
+<%
+	ArrayList<QtoA> list = (ArrayList<QtoA>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +11,44 @@
 <link rel="stylesheet" href="../../resources/css/common/common.css">
 <link rel="stylesheet" href="../../resources/css/serviceCenter/serviceCenter.css">
 <link rel="stylesheet" href="../../resources/library/animate.css">
+<style type="text/css">
+	.testadmin{
+	 	border:1px solid black;
+	 	height:500px;
+	}
+	
+	.questionList thead{
+		width:100%;
+		border-bottom: 1.5px solid black;
+	}
+	/*th 번호 부분*/
+	.questionList .SCQNo{
+	
+		width:2%;
+	}
+	/*th 질문 부분 */
+	.questionList .SCQTitle{
+		
+		width:20%;
+	}
+	.questionList .SCQWriter{
+		
+		width:5%;
+	}
+	.questionList .SCQDatere{
+		
+		width:5%;
+	}
+	.questionList{
+		border-collapse: collapse;
+	}
+	.QtoAlistpoint:hover{
+		cursor: pointer;
+		color:white;
+		background-color:#993333;
+	}
+	
+</style>
 </head>
 <body>
 	
@@ -31,25 +72,29 @@
     </div>
     <div class = "questionenroll">
     <div class = "questioneach"> 
+    	<% if(user != null) { %>
     	<a href="#" onclick="serviceCenterQtoA();" class= "animation"> 1:1 문의하기 </a>
+    	<% } %>
     </div>
     <div class="gotoenrollFormServiceCenter">
+    	<% if(user != null && user.getUserId().equals("admin")) { %>
     	<button class="commonwritebutton serviceCenterwrite" onclick="writeFunction();" type="button">글 작성</button>
+    	<% } %>
     </div>
     </div>
     <div  class ="serviceCentermiddle">
-       	<div class = "all"> 자주 묻는 질문 </div>
-       	<div class = "all">운영정책</div>
-        <div class = "all">계정/인증</div>
-        <div class = "all">구매/판매</div>
-        <div class = "all">거래 품목</div>
-        <div class = "all">거래 매너</div>
-        <div class = "all">이벤트</div>
-        <div class = "all">이용 제재</div>
-        <div class = "all">커뮤니티</div>
-        <div class = "all">경매</div>
-        <div class = "all">채팅</div>
-        <div class = "all">기타</div>
+       	<div class = "all all3" onclick="selectTopList()"> 자주 묻는 질문 </div>
+       	<div class = "all all2">운영정책</div>
+        <div class = "all all2">계정/인증</div>
+        <div class = "all all2">구매/판매</div>
+        <div class = "all all2">거래 품목</div>
+        <div class = "all all2">거래 매너</div>
+        <div class = "all all2">이벤트</div>
+        <div class = "all all2">이용 제재</div>
+        <div class = "all all2">커뮤니티</div>
+        <div class = "all all2">경매</div>
+        <div class = "all all2">채팅</div>
+        <div class = "all all2">기타</div>
     </div>
     <div class="serviceCenterRe"> 자주 묻는 질문 </div><!-- 위에서 받아온 값 -->
 
@@ -62,20 +107,110 @@
 
     		</tr>
     	</thead>
-    	<tbody class="serviceCListFinal">
-    		<tr>
-    			<th></th>
-    			<th colspan="2"> 존재하는 공지사항이 없습니다 </th>
-    		</tr>
+    	<tbody class="serviceCListFinal" >
+    		
     	</tbody>
 	</table>
+	<br><br>
 	
+	<div class = "testadmin">
+	
+		<h3>관리자 상세페이지에서 보여질 창 </h3>
+		<a href="<%= request.getContextPath()%>/listQtoA.do" class="showQList"> 1:1 문의 답변 </a>
+		<table class="questionList" id="questionList" >
+			<thead>
+				<tr>
+					<th class="SCQNo"> 번호 </th>
+					<th class="SCQTitle"> 문의사항 </th>
+					<th class="SCQWriter"> 회원아이디 </th>
+					<th class="SCQDatere"> 작성일 </th>
+				</tr>
+			</thead>
+			<tbody class = "QadminList" id = "QadminList"><!-- 1:1문의사항 나오는 부분 -->
+				<% if(list==null){ %>
+				<tr>
+					<td colspan="4"> 존재하는 문의사항이 없습니다 </td>
+				</tr>
+				<%}else{ %>
+				<%for(QtoA qa : list){ %>
+				<tr class="QtoAlistpoint">
+					<td><%=qa.getQuestionNo()%></td><!-- 문의넘버 -->
+					<td><%=qa.getQuestionTitle() %></td><!-- 문의사항 제목 -->
+					<td><%=qa.getUserNo() %><!-- 문의사항 작성 회원 아이디 -->
+					<td><%=qa.getCreateDate() %><!-- 문의사항 작성일 -->
+				</tr>
+				<% } %>
+				<% } %>
+			</tbody>
+		</table>
+		
+	</div>
 	
     </div>
     </div>
     <%@ include file = "../common/footer.jsp" %>
     </div>
     <script type="text/javascript">
+    	/* 관리자 상세페이지 */
+    	<%if(list != null){%>
+    	$(function(){
+    		$("#questionList>tbody>tr").click(function(){
+    			var scno = $(this).children().eq(0).text();
+    			console.log(scno)
+    			location.href="<%=request.getContextPath()%>/detailQtoA.do?scno="+scno;
+    		})
+    	})
+    	<%}%>
+    	
+    	
+    
+    	/* 고객센터 부분 */
+    	$(function(){
+    		
+    		selectTopList();//기능
+    		
+    		
+    	})
+    	function selectTopList(){
+    		$(".serviceCListFinal").empty();
+    		$.ajax({
+    			url:"topSCList.do", 
+    			type:"get", 
+    			success: function(list){
+   					
+    				var number = 1;
+   					$(".outer").css("height", "800")
+   					
+   				$.each(list, function(index, obj){
+   					console.log(obj.serviceWriter)
+   					
+   					heightChange(list);
+   					var serviceNo = $("<td>").text(number++).addClass("serviceCListt");
+   					var serviceTd = $("<td>").html(obj.serviceTitle).addClass("serviceCListtitle");
+   					var servicehidden = $("<td><div>").text(obj.serviceNo).addClass("serviceHiddenNo");
+   					
+   					var tr = $("<tr>").append(serviceNo, serviceTd, servicehidden).addClass("serviceCListClick");
+   					
+   					
+   					var answerNo = $("<td>").text("Q");
+   					var answerTC = $("<td>").html(obj.serviceContent).addClass("serviceAnswerMiddle");
+   					var totalUpdate = $("<td>").text("수정하기").addClass("totalUpdateService");
+   					
+   					var tr2 = $("<tr>").append(answerNo, answerTC, totalUpdate).addClass("serviceAnswerList").addClass("serviceAnswerMiddle2");
+   					$(".serviceCListFinal").append(tr).append(tr2);
+   					
+   				});
+   				//number, title, count
+   					<%if(user != null && user.getUserId().equals("admin")) {%>
+   					$(".totalUpdateService").css("visibility", "visible");
+   					<%}%>	
+    			}, 
+    			error:function(){
+    				console.log("ajax통신 실패");
+    			}
+    		})
+    	}
+    
  		function writeFunction(){//글작성하기 버튼
  			location.href="<%=request.getContextPath()%>/enrollFormServiceCenter.do";
  		}
@@ -110,7 +245,10 @@
 					}else if(list.length !=0){
        					var number = 1;
        					$(".outer").css("height", "800")
+       					
        				$.each(list, function(index, obj){
+       					console.log(obj.serviceWriter)
+       					
        					heightChange(list);
        					var serviceNo = $("<td>").text(number++).addClass("serviceCListt");
        					var serviceTd = $("<td>").html(obj.serviceTitle).addClass("serviceCListtitle");
@@ -128,13 +266,15 @@
        					
        				});
        				//number, title, count
-       				
+       					<%if(user != null && user.getUserId().equals("admin")) {%>
+       					$(".totalUpdateService").css("visibility", "visible");
+       					<%}%>
        			}
     			}
     		})
     	}
     	
-       	$(".all").click(function(){
+       	$(".all2").click(function(){
    		var input = $(this).text();
    		console.log(input)
    		$.ajax({
@@ -185,10 +325,13 @@
        					var number = 1;
        					
        				$.each(list, function(index, obj){
+       					console.log(obj.serviceWriter)
+       					
        					heightChange(list);
        					console.log(list.length +" list의 길이를 알아보자")
        					var serviceNo = $("<td>").text(number++).addClass("serviceCListt");
        					var serviceTd = $("<td>").html(obj.serviceTitle).addClass("serviceCListtitle");
+       					 
        					var servicehidden = $("<td><div>").text(obj.serviceNo).addClass("serviceHiddenNo");
        				
        					var tr = $("<tr>").append(serviceNo, serviceTd, servicehidden).addClass("serviceCListClick");
@@ -197,11 +340,14 @@
        					var answerNo = $("<td>").text("Q");
        					var answerTC = $("<td>").html(obj.serviceContent).addClass("serviceAnswerMiddle");
        					var totalUpdate = $("<td>").text("수정하기").addClass("totalUpdateService");
-       					
+     					
        					var tr2 = $("<tr>").append(answerNo, answerTC, totalUpdate).addClass("serviceAnswerList").addClass("serviceAnswerMiddle2");
        					$(".serviceCListFinal").append(tr).append(tr2);
        				
        				});
+       				<%if(user != null && user.getUserId().equals("admin")) {%>
+						$(".totalUpdateService").css("visibility", "visible");
+					<%}%>
        				//number, title, count
        				}
        			}, 
@@ -215,11 +361,14 @@
        	function heightChange(list){
        		
        		k = $(".outer").height();
-			$(".outer").css("height",k*1.018);
+			$(".outer").css("height",k*1.018+200);
 			console.log(k)
        	}
        	
      	$(document).on("click",".serviceCListClick",function(){
+     		var no = $(this).children().eq(2).text();
+     		console.log(no)
+     		increaseCount(no);
      		$(".outer").css("height", k)
      		$(".serviceCListClick").removeClass("clicked_serviceCListClick")
      		if($(this).next().hasClass("serviceAnswerList") ){
@@ -236,13 +385,30 @@
      			$(".outer").css("height", k)
      		}
      		
+     		
 		})
+		function increaseCount(no){
+     		
+     		$.ajax({
+     			type:"POST", 
+     			url:"increaseTopsc.do",
+     			data : {
+     	
+     				no:no}, 
+     			success : function(){
+     				console.log("성공")
+     			}, 
+     			error:function(e){
+     				console.log("실패")
+     			}
+     		})
+     	}
        	$(document).on("click", ".totalUpdateService", function(){
        		var scno =$(this).parent().prev().children().eq(2).text();//serviceNo(선택한 글의 primary key값)
        		console.log(scno)
        		
        		location.href="<%=request.getContextPath()%>/updateTotalServiceList.do?scno="+scno;
-       	})
+       	}) 
 		
     </script>
 </body>

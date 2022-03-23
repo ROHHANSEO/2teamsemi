@@ -11,18 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.uni.serviceCenter.model.service.ServiceCenterService;
 import com.uni.serviceCenter.model.vo.ServiceCenter;
+import com.uni.user.model.vo.User;
 
 /**
- * Servlet implementation class updateTotalServiceList
+ * Servlet implementation class ServiceCenterUpdate
  */
-@WebServlet("/updateTotalServiceList.do")//수정하기 버튼을 눌렀을 시에 나오는 창
-public class updateTotalServiceList extends HttpServlet {
+@WebServlet("/updateServiceCenter.do")
+public class ServiceCenterUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public updateTotalServiceList() {
+    public ServiceCenterUpdate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,19 +32,34 @@ public class updateTotalServiceList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String category = request.getParameter("category");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		int scno = Integer.parseInt(request.getParameter("scno"));
-		System.out.println(scno +" 수정하기 버튼 눌렀을 시에 서블렛updateTotalserviceList");
+		String writer=String.valueOf(((User)request.getSession().getAttribute("user")).getUserNo());
+		System.out.println(title +"   ==insertservlet에서");//제목 성공
 		
-		ServiceCenter sc = new ServiceCenterService().selectServiceCenter(scno);
+		System.out.println("_____전______ "+ content);
+		//category, title,content,writer
+		ServiceCenter updateSC = new ServiceCenter();
+		updateSC.setCategory(category);
+		updateSC.setServiceTitle(title.replaceAll("\u0020", "&nbsp;"));
+		updateSC.setServiceContent(content.replaceAll("\n", "<br>").replaceAll("\u0020", "&nbsp;"));
+		updateSC.setServiceNo(scno);
+		updateSC.setServiceWriter(writer);
+		System.out.println("updateSC 알아보기 "+updateSC);
+		int result =  new ServiceCenterService().updateSC(updateSC);
 		
-		if(sc != null) {
-			request.setAttribute("sc", sc);
-			request.getRequestDispatcher("views/service/updateServiceForm.jsp").forward(request, response);
+		
+		if(result >0) {
+			request.getSession().setAttribute("msg", "성공적으로 글을 수정하였습니다.");
+			
+			response.sendRedirect("serviceCenter.do");
 		}else {
-			request.setAttribute("msg","수정할 게시글을 불러오는데 실패했습니다.");
+			request.setAttribute("msg", "글 수정에 실패하였습니다.");
+			
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		
 	}
 
 	/**
