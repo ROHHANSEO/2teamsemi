@@ -32,4 +32,26 @@ public class QtoAService {
 		return qa;
 	}
 
+	public ArrayList<Reply> selectRList(int scno) {
+		Connection conn = getConnection();
+		
+		ArrayList<Reply> list = new QtoADao().selectRlist(conn, scno);
+		close(conn);
+		return list;
+	}
+
+	public int insertReply(Reply r) {
+		Connection conn = getConnection();
+		
+		int result1 = new QtoADao().insertReply(conn, r);
+		
+		if(result1 > 0 ) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1;
+	}
+
 }
