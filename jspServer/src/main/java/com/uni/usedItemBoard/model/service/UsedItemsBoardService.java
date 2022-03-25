@@ -116,5 +116,11 @@ public class UsedItemsBoardService {
 		return list;
 	}
 
+	public ArrayList<UsedItemsBoard> filteringList(String category, String minprice, String maxprice, String search,
+			String except) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

@@ -92,7 +92,7 @@ public class UsedItemsBoardListServlet extends HttpServlet {
 		// pi 객체 또한 속성에 담는다
 		request.setAttribute("pi", pi);
 		 
-		// 이 값을 가지고 boardListView.jsp 파일로 이동시킨다.
+		// 이 값을 가지고 usedItemsBoard.jsp 파일로 이동시킨다.
 		request.getRequestDispatcher("views/used_item_board/usedItemsBoard.jsp").forward(request, response);
 	
 	}

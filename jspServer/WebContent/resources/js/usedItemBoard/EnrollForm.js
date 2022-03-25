@@ -1,6 +1,86 @@
+function deletebye(index){
+    console.log(index)
+    let deleteE = document.getElementById("image"+index)
+    console.log(deleteE)
+    $("#image"+index).parent().remove()
+    $("file1").empty()
+}
+    
+// 인덱스 생성
+let index = 0;
+$(function(){
+      //드래그 앤 드롭
+      //$(".imagin").sortable();
+    
+      //이미지 등록
+    $("#file1").change(function(e){
+        //ul 내용 비워주기
+        $('#sortimg').empty();
 
-$(".deleteimg").hide();
+        var files = e.target.files;
+        var arr = Array.prototype.slice.call(files);
+        
+        var maxFileCnt = 10;   // 첨부파일 최대 개수
+        var attFileCnt = document.querySelectorAll('#file1').length;    // 기존 추가된 첨부파일 개수
+        var remainFileCnt = maxFileCnt - attFileCnt;    // 추가로 첨부가능한 개수
+        var curFileCnt = this.files.length;  // 현재 선택된 첨부파일 개수
+        console.log(remainFileCnt)
+        console.log(curFileCnt)
+        // 첨부파일 개수 확인
+        if (curFileCnt > maxFileCnt) {
+            alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
+            return false;
+        }
 
+        //업로드 가능 파일인지 체크
+        for(var i=0; i<files.length; i++){
+            if(!checkExtension(files[i].name,files[i].size)){
+                return false;
+            }
+        }
+        preview(arr);
+        
+        function checkExtension(fileName,fileSize){
+            var maxSize = 10971520;  //10MB
+
+            if(fileSize >= maxSize){
+                alert('이미지 크기가 초과되었습니다.');
+                $("#file1").val("");  //파일 초기화
+                return false;
+            }
+            
+            return true;
+        }
+
+        
+        function preview(arr){
+            arr.forEach(function(f){
+
+                //li에 이미지 추가
+                var str = '<li class="previewImg">';
+                //str += '<span>'+fileName+'</span><br>';
+                
+                //이미지 파일 미리보기
+                if(f.type.match('image.*')){
+                    
+                    //파일을 읽기 위한 FileReader객체 생성
+                    var reader = new FileReader(); 
+                    reader.onload = function (e) { 
+                        
+                        //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+                        str += '<a id="image'+ index +'" class="image" onclick="deletebye(`'+index+'`);">'+"<span class='del'>x</span>"+'<img src="'+e.target.result+'" title="'+f.name+'" width=200 height=200></a>';
+                        str += '</li>';
+                        $(str).appendTo('#sortimg');
+                        ++index;
+                    } 
+                    reader.readAsDataURL(f);
+                }
+            })
+        }
+    })
+
+
+    })
 // 게시글 체크
 function checkform() {
     
@@ -23,7 +103,7 @@ function checkform() {
             alert("카테고리를 선택해 주세요");
             return $("#large").focus();
             // 이미지 미선택시 알림
-        }else if($("#titleImg").is('[src]') == false){
+        }else if(!$("#file1").val()){
             alert("이미지는 최소 1장이 필요합니다.")
             return $("#imagin").focus();
             // 가격 작성 하지 않을 시 알림
@@ -147,64 +227,3 @@ $(function(){
     })
 })
 
-
-//let count = 0; // 1, 파일ID file1 fil2
-let i = 1;
-// 카운트로 파일 넘버를 고를 수 있고 카운트가 10이 될 시 알림 울림
-$("#imagin").click(function() {
-    console.log($("#file"+i).val())
-    console.log(i)
-    console.log($("#contentImg9").is('[src]'))
-    if($("#contentImg9").is('[src]') == false){
-        for(i; i <= 10 ; i++){
-            if($("#file"+i).val() == ''){
-                $("#file"+i).click();
-                break;
-            }
-        }
-    }
-    if($("#contentImg9").is('[src]') === true){
-        alert("이미지는 10장 까지만 가능합니다.")
-    }
-})
-
-// 파일 로드 후 이미지를 보여줌
-function loadImg(inputFile, num){
-    console.log(inputFile.files.length )
-    if(inputFile.files.length == 1){
-        var reader = new FileReader(); // https://developer.mozilla.org/ko/docs/Web/API/FileReader 사이트 참고
-        reader.readAsDataURL(inputFile.files[0]);
-        
-        reader.onload = function(e){
-         	switch(num){
-            case 1 : $("#titleImg").show(); $("#delimg1").show(); $("#titleImg").attr("src", e.target.result); break;
-            case 2 : $("#contentImg1").show(); $("#delimg2").show(); $("#contentImg1").attr("src", e.target.result); break;
-            case 3 : $("#contentImg2").show(); $("#delimg3").show(); $("#contentImg2").attr("src", e.target.result); break;
-            case 4 : $("#contentImg3").show(); $("#delimg4").show(); $("#contentImg3").attr("src", e.target.result); break;
-            case 5 : $("#contentImg4").show(); $("#delimg5").show(); $("#contentImg4").attr("src", e.target.result); break;
-            case 6 : $("#contentImg5").show(); $("#delimg6").show(); $("#contentImg5").attr("src", e.target.result); break;
-            case 7 : $("#contentImg6").show(); $("#delimg7").show(); $("#contentImg6").attr("src", e.target.result); break;
-            case 8 : $("#contentImg7").show(); $("#delimg8").show(); $("#contentImg7").attr("src", e.target.result); break;
-            case 9 : $("#contentImg8").show(); $("#delimg9").show(); $("#contentImg8").attr("src", e.target.result); break;
-            case 10 : $("#contentImg9").show(); $("#delimg10").show(); $("#contentImg9").attr("src", e.target.result); break;
-            }
-        }
-    }/*else if(inputFile.files.length > 1){
-        var reader = new FileReader(); // https://developer.mozilla.org/ko/docs/Web/API/FileReader 사이트 참고
-        for(let i = 0 ; i < 10 ; i++){
-            reader.readAsDataURL(inputFile.files[i]);
-            switch(i){
-            case 1 : $("#titleImg").show(); $("#titleImg").attr("src", e.target.result); break;
-            case 2 : $("#contentImg1").show(); $("#delimg2").show(); $("#contentImg1").attr("src", e.target.result); break;
-            case 3 : $("#contentImg2").show(); $("#contentImg2").attr("src", e.target.result); break;
-            case 4 : $("#contentImg3").show(); $("#contentImg3").attr("src", e.target.result); break;
-            case 5 : $("#contentImg4").show(); $("#contentImg4").attr("src", e.target.result); break;
-            case 6 : $("#contentImg5").show(); $("#contentImg5").attr("src", e.target.result); break;
-            case 7 : $("#contentImg6").show(); $("#contentImg6").attr("src", e.target.result); break;
-            case 8 : $("#contentImg7").show(); $("#contentImg7").attr("src", e.target.result); break;
-            case 9 : $("#contentImg8").show(); $("#contentImg8").attr("src", e.target.result); break;
-            case 10 : $("#contentImg9").show(); $("#contentImg9").attr("src", e.target.result); break;
-            }
-        }
-    }*/
-}

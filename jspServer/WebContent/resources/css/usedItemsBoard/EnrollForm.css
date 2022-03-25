@@ -16,13 +16,20 @@ form{
 	margin-right: 30px;
 }
 #imagin{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #efefef;
-	width: 200px;
-	height: 200px;
-	text-align: center;
+    width: 60vw;
+    border: 1px solid;
+}
+#camera{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #efefef;
+    width: 59vw;
+    height: 200px;
+    text-align: center;
+    flex-wrap: wrap;
+    margin: 10px;
 }
 .article{
 	display: flex;
@@ -30,46 +37,24 @@ form{
 .article1{
 	margin: 10px;
 }
-#contentImg1, #contentImg2, #contentImg3, #contentImg4, #contentImg5, 
-#contentImg6, #contentImg7, #contentImg8, #contentImg9, #titleImg{
-	position : relative;
-	width: 200px;
-	height: 200px;
-	margin-top: 0;
-	display: none;
+
+.previewImg {
+    margin: 10px;
+    margin-right: 0px;
+    margin-top: 0px;
+    position: relative;
+    background: #000000;
+    height: 200px;
+
 }
-#contentImg1, #contentImg2, #contentImg3, #contentImg4, #contentImg5,
-#contentImg6, #contentImg7, #contentImg8, #contentImg9{
-	margin-left: 0;
+#sortimg {
+	list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 #title{
 	width: 15em;
-}
-.deleteimg{
-	position: absolute;
-	background: white;
-	border-radius: 5px;
-}
-#delimg1, #delimg2{
-    top: 31.2vw;
-}
-#delimg3, #delimg4, #delimg5{
-	top: 46.2vw;
-}
-#delimg6, #delimg7, #delimg8{
-	top: 61vw;
-}
-#delimg9, #delimg10{
-	top: 75.9vw;
-}
-#delimg1, #delimg4, #delimg8, #delimg10{
-	left: 53.2vw;
-}
-#delimg2, #delimg5, #delimg7{
-	left: 67.8vw;
-}
-#delimg3, #delimg6, #delimg9{
-    left: 38.6vw;
 }
 .titleline{
 	margin-right: 94px;
@@ -90,7 +75,10 @@ form{
 	text-align: end;
 }
 input[type = "file"]{
-	display: none;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	position: absolute;
 }
 .checkarea{
 	width: 50vw;
@@ -121,4 +109,23 @@ input[type = "file"]{
 }
 #large, #middle, #small{
 	width: 20%;
+}
+/* li 호버시 어두워짐 */
+ul .previewImg:hover img {
+    opacity: 0.7;
+}
+ul>.previewImg:hover .del{ 
+	opacity: 1;
+    color: white;
+    font-size: 70px;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.del{
+	position:absolute;
+	opacity: 0;
 }
