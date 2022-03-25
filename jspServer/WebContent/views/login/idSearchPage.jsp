@@ -6,8 +6,8 @@
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
 <link rel="stylesheet" href="../../resources/css/common/common.css">
-<link rel="stylesheet" href="../../resources/css/sign-upPage.css">
-<link rel="stylesheet" href="../../resources/css/idSearchpage.css">
+<link rel="stylesheet" href="../../resources/css/user/sign-upPage.css">
+<link rel="stylesheet" href="../../resources/css/user/idSearchpage.css">
 </head>
 <body>
     <header id="header">

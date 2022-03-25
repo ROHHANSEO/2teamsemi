@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>로그인</title>
-        <link rel="stylesheet" href="../../resources/css/loginPage.css">
+        <link rel="stylesheet" href="../../resources/css/user/loginPage.css">
         <link rel="stylesheet" href="../../resources/css/common/common.css">
         <link rel="shortcut icon" href="../../resources/images/favicon.ico">
     </head>
@@ -44,6 +44,6 @@
         
         
         <script src="../../resources/library/jquery-3.6.0.min.js"></script>
-        <script src="../../resources/js/loginPage.js"></script>
+        <script src="../../resources/js/user/loginPage.js"></script>
     </body>
     </html>

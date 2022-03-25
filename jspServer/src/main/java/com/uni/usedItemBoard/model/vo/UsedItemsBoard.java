@@ -73,6 +73,34 @@ public class UsedItemsBoard {
 		this.paymentTwo = paymentTwo;
 		this.paymentStatus = paymentStatus;
 	}
+	
+	
+
+
+
+	public UsedItemsBoard(int usedBoardNo, int category, String categorycode, String usedBoardTitle,
+			String usedBoardWriter, String nickName, String usedBoardContent, int price, String saleStatus,
+			String itemCondition, int likeCount, Date createDate, String paymentOne, String paymentTwo,
+			String paymentStatus, String status, String titleImg) {
+		super();
+		this.usedBoardNo = usedBoardNo;
+		this.category = category;
+		this.categorycode = categorycode;
+		this.usedBoardTitle = usedBoardTitle;
+		this.usedBoardWriter = usedBoardWriter;
+		this.nickName = nickName;
+		this.usedBoardContent = usedBoardContent;
+		this.price = price;
+		this.saleStatus = saleStatus;
+		this.itemCondition = itemCondition;
+		this.likeCount = likeCount;
+		this.createDate = createDate;
+		this.paymentOne = paymentOne;
+		this.paymentTwo = paymentTwo;
+		this.paymentStatus = paymentStatus;
+		this.status = status;
+		this.titleImg = titleImg;
+	}
 
 
 

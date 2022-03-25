@@ -217,6 +217,7 @@ body { overflow-x:hidden}
     transition: 0.25s;
    	border: 2px solid #993333;
    	color: black;
+    cursor: pointer;
 }
 .commonsubmit:hover{
 	background-color: #993333;

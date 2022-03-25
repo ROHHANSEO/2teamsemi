@@ -24,12 +24,20 @@ $(function() {
 			$(".userPwd").focus();
 		}
 
-        if($(check_spc.test($("input[name=userPwd]").val())) || $(check_kor.test($("input[name=userPwd]").val()))){
+        if(check_spc.test($("input[name=userPwd]").val()) || check_kor.test($("input[name=userPwd]").val())) {
             alert("비밀번호는 특수문자, 한글은 사용불가합니다.");
             $(".userPwd").val("");
 			$(".userPwdCheck").val("");
 			$(".userPwd").focus();
         }
+
+		if($(".userPwdCheck").val().length < 6){
+			alert("비밀번호는 6자리 이상이여야 합니다");
+            $(".userPwd").val("");
+			$(".userPwdCheck").val("");
+			$(".userPwd").focus();
+		}
+        
 	})
 
 	$(".button").click(function() {
