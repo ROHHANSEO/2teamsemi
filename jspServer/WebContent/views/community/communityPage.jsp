@@ -31,7 +31,6 @@
                         <li><a class="menuLink" href="#">취미생활</a></li>
                         <li><a class="menuLink" href="#">유용한 정보 공유</a></li>
                         <li><a class="menuLink" href="#">동물</a></li>
-                        <li><a class="menuLink" href="#">기타</a></li>
                 </ul>
         </nav>
         
