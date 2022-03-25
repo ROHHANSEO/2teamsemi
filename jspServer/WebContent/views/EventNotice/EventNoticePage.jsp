@@ -1,10 +1,18 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.event.model.vo.Event"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.event.model.vo.*"%>
 <%
 	ArrayList<Event> list = (ArrayList<Event>) request.getAttribute("list");
 	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+
 	
 	String pt = request.getParameter("pt");
 	if (pt == null) pt = "now";
@@ -31,7 +39,7 @@
 <body>
 	<div class="outer">
 		<br>
-		<h2 align="center">이벤트&공지사항</h2>
+		<h2 align="center" >이벤트&공지사항</h2>
 		<br>
 		
 		<h4>이벤트&공지사항 리스트</h4>
@@ -56,9 +64,11 @@
 		 
 			<thead>
 				<tr class="menubar">
-					<th>글번호</th>
+					<th>no.</th>
 					<th width="500">글제목</th>
 					<th width="100">작성자</th>
+					<th width="100">카테고리</th>
+					<th width="100">조회수</th>
 					<th width="100">작성일</th>
 				</tr>
 			</thead>
@@ -70,12 +80,14 @@
 						<td colspan="5">존재하는 공지사항이 없습니다.</td>
 					</tr>
 				 <% }else{  %>
-				 	<% for(Event n : list){ %>
+				 	<% for(Event e : list){ %>
 				 		<tr>
-				 			<td><%= n.getNOTICE_NO() %></td>
-							<td><%= n.getNOTICE_TITLE() %></td>
-							<td><%= n.getUSER_NO() %></td>
-							<td><%= n.getCREATE_DATE() %></td>
+				 			<td><%= e.getNoticeno() %></td>
+				 			<td><%= e.getNoticeTitle() %></td>
+				 			<td><%= e.getUserid() %></td>
+							<td><%= e.getCategory() %></td>
+							<td><%= e.getCategory() %></td>
+							<td><%= e.getCreateDate() %></td>
 				 		</tr>
 				 	<% } %>
 				 <% } %>
@@ -103,9 +115,47 @@
 			</form>
 		</div>
 	</div>
-	<div align="right">
+	
+	<!-- 페이징바 만들기 -->
+		<div class="pagingArea" align="center">
+			<!-- 맨 처음으로 (<<) -->
+			<button class="commonwritebutton god" onclick="location.href='<%=request.getContextPath()%>/eventpage.do?currentPage=1'"> &lt;&lt; </button>
+		
+			<!-- 이전페이지로(<) -->
+			<%if(currentPage == 1){ %>
+			<button disabled class="commonwritebutton god"> &lt; </button>
+			<%}else{ %>
+			<button class="commonwritebutton god"  onclick="location.href='<%= request.getContextPath() %>/eventpage.do?currentPage=<%= currentPage-1 %>'"> &lt; </button>
+			<%} %>
+			
+			<!-- 페이지 목록 -->
+			<%for(int p=startPage; p<=endPage; p++){ %>
+				
+				<%if(p == currentPage){ %>
+				<button disabled class="commonwritebutton god"> <%= p %> </button>
+				<%}else{ %>
+				<button class="commonwritebutton god" onclick="location.href='<%=request.getContextPath() %>/eventpage.do?currentPage=<%= p %>'"> <%= p %> </button>
+				<%} %>
+				
+			<%} %>
+			
+			
+			<%if(currentPage == maxPage){ %>
+			<button disabled class="commonwritebutton god" > &gt; </button>
+			<%}else { %>
+			<button class="commonwritebutton god" onclick="location.href='<%= request.getContextPath() %>/eventpage.do?currentPage=<%= currentPage+1 %>'"> &gt; </button>
+			<%} %>
+		
+			
+			<button class="commonwritebutton god" onclick="location.href='<%=request.getContextPath()%> /eventpage.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
+		</div> 
+		<br><br>
+	
+	<div class="gotoenrollFormServiceCenter">
+    	<% if(user != null && user.getUserId().equals("admin")) { %>    	
 		<input type="button" class="commonwritebutton bts"   id="inse" value="글작성" onclick="location.href='<%= request.getContextPath() %>/insertEventPage.do'">	
-	</div>
+	<% } %>
+		</div>
 			
 		
 		
@@ -114,9 +164,21 @@
 		
 		
 		</div>
+		<script type="text/javascript">
+			<%if(!list.isEmpty()){%>
+			$(function(){
+				$(".listArea>tbody>tr").click(function(){
+					var nno = $(this).children().eq(0).text();
+					
+					location.href="<%=request.getContextPath()%>/detailEvent.do?nno="+nno;
+				})
+			})
+		<%}%>
+		</script>
 		
-		
-		
+		<br><br>
+	
+<!--  	
 	<div id="page">
 		
 		
@@ -199,7 +261,8 @@
 		</script>
 		
 	</div>
-	
+	-->	
+	<br><br><br><br><br><br><br>
 	<div>
     	<%@ include file = "../common/footer.jsp" %>
     </div>

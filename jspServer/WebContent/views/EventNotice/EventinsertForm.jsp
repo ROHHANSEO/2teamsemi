@@ -23,7 +23,7 @@
 	
 			
 	
-	
+	<br>
 	<div class="container">
 		<div class="row">
 			<form method="post" action="insertEventPage.do">
@@ -38,6 +38,12 @@
 							<td><input type="text" class="form-control" placeholder="글 제목" name="Title" maxlength="40" style=" width: 1000px;"></td>
 						</tr>
 						<tr>
+						<td>이미지 : <input type="file" name="uploadfile" onchange="readURL(this);">
+							
+						<img id="preview" src="" alt="image" style="width:100px" /></td>
+							
+						</tr>	
+						<tr>
 							<td><textarea class="form-control" placeholder="글 내용" name="Content" maxlength="2000" style="height: 350px; width: 1000px; resize: none; "></textarea></td>
 						</tr>
 						
@@ -46,14 +52,29 @@
 				
 				<br><br>
 				<p align="right">
-				<input type="submit" class="commonwritebutton"   value="취소하기" onclick="location.href='<%= request.getContextPath() %>/eventpage.do'">
-				<input type="submit" class="commonwritebutton"  value="글쓰기" onclick="location.href='<%= request.getContextPath() %>/insertEventPage.do'">
+				<input type="submit" class="commonwritebutton bts7"   value="취소하기" onclick="location.href='<%= request.getContextPath() %>/eventpage.do'">
+				<input type="submit" class="commonwritebutton bts7"  value="글쓰기" onclick="location.href='<%= request.getContextPath() %>/insertEventPage.do'">
 				</p>
 			</form>
 			
 			
 		</div>
 	</div>
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script>
+			function readURL(input) {
+			  if (input.files && input.files[0]) {
+			    var reader = new FileReader();
+			    reader.onload = function (e) {
+			      $('#preview')
+			      .attr('src', e.target.result);
+			    };
+			    reader.readAsDataURL(input.files[0]);
+			  }
+			}
+		</script>
+
 	<br>
 	<div>
     	<%@ include file = "../common/footer.jsp" %>

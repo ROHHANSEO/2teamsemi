@@ -4,83 +4,149 @@ import java.sql.Date;
 
 public class Event {
 	
-	private int NOTICE_NO;
-	private int USER_NO;
-	private String NOTICE_TITLE;
-	private String NOTICE_CONTENT;
-	private String CATEGORY;
-	private Date CREATE_DATE;
-	private String STATUS;
+	private int noticeno;
+	private int userno;
+	private String userid;
+	private String noticeTitle;
+	private String noticeContent;
+	private String category;
+	private Date createDate;
+	private String status;
 	
-	public Event() {
+	public Event (int noticeno,  String noticeTitle, String userid, String category, Date createDate ){
+		super();
+		this.noticeno = noticeno;
+		this.noticeTitle = noticeTitle;
+		this.userid = userid;
+		this.category = category;
+		this.createDate = createDate;
 		
 	}
-	public Event(int NOTICE_NO, String NOTICE_TITLE, Date CREATE_DATE ) {
-		this.NOTICE_NO = NOTICE_NO;
-		this.NOTICE_TITLE = NOTICE_TITLE;
-		this.CREATE_DATE = CREATE_DATE;
+	
+	
+
+	public Event(int noticeno,  String noticeTitle, Date createDate ){
+		super();
+		this.noticeno = noticeno;
+		this.noticeTitle = noticeTitle;
+		this.createDate = createDate;
+
+	}
+	
+	public Event (int noticeno,  String noticeTitle, String userid, String category, String noticeContent, Date createDate ){
+		super();
+		this.noticeno = noticeno;
+		this.noticeTitle = noticeTitle;
+		this.userid = userid;
+		this.category = category;
+		this.noticeContent=noticeContent;
+		this.createDate = createDate;
+		
 	}
 
-	public int getNOTICE_NO() {
-		return NOTICE_NO;
+
+
+	public int getNoticeno() {
+		return noticeno;
 	}
 
-	public void setNOTICE_NO(int nOTICE_NO) {
-		NOTICE_NO = nOTICE_NO;
+
+
+	public void setNoticeno(int noticeno) {
+		this.noticeno = noticeno;
 	}
 
-	public int getUSER_NO() {
-		return USER_NO;
+
+
+	public int getUserno() {
+		return userno;
 	}
 
-	public void setUSER_NO(int uSER_NO) {
-		USER_NO = uSER_NO;
+
+
+	public void setUserno(int userno) {
+		this.userno = userno;
 	}
 
-	public String getNOTICE_TITLE() {
-		return NOTICE_TITLE;
+
+
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setNOTICE_TITLE(String nOTICE_TITLE) {
-		NOTICE_TITLE = nOTICE_TITLE;
+
+
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
-	public String getNOTICE_CONTENT() {
-		return NOTICE_CONTENT;
+
+
+	public String getNoticeTitle() {
+		return noticeTitle;
 	}
 
-	public void setNOTICE_CONTENT(String nOTICE_CONTENT) {
-		NOTICE_CONTENT = nOTICE_CONTENT;
+
+
+	public void setNoticeTitle(String noticeTitle) {
+		this.noticeTitle = noticeTitle;
 	}
 
-	public String getCATEGORY() {
-		return CATEGORY;
+
+
+	public String getNoticeContent() {
+		return noticeContent;
 	}
 
-	public void setCATEGORY(String cATEGORY) {
-		CATEGORY = cATEGORY;
+
+
+	public void setNoticeContent(String noticeContent) {
+		this.noticeContent = noticeContent;
 	}
 
-	public Date getCREATE_DATE() {
-		return CREATE_DATE;
+
+
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCREATE_DATE(Date cREATE_DATE) {
-		CREATE_DATE = cREATE_DATE;
+
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public String getSTATUS() {
-		return STATUS;
+
+
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setSTATUS(String sTATUS) {
-		STATUS = sTATUS;
+
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "Event [NOTICE_NO=" + NOTICE_NO + ", USER_NO=" + USER_NO + ", NOTICE_TITLE=" + NOTICE_TITLE
-				+ ", NOTICE_CONTENT=" + NOTICE_CONTENT + ", CATEGORY=" + CATEGORY + ", CREATE_DATE=" + CREATE_DATE
-				+ ", STATUS=" + STATUS + "]";
+		return "Event [noticeno=" + noticeno + ", userno=" + userno + ", userid=" + userid + ", noticeTitle="
+				+ noticeTitle + ", noticeContent=" + noticeContent + ", category=" + category + ", createDate="
+				+ createDate + ", status=" + status + "]";
 	}
 	
 	
