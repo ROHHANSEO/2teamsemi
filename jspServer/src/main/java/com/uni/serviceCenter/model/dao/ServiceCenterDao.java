@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.uni.serviceCenter.model.vo.QtoA;
 import com.uni.serviceCenter.model.vo.ServiceCenter;
+import com.uni.usedItemBoard.model.vo.Category;
 
 public class ServiceCenterDao {
 	private Properties prop = new Properties();
@@ -305,6 +306,11 @@ public class ServiceCenterDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public ArrayList<Category> categoryList(Connection conn) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

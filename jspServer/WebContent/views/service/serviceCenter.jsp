@@ -55,7 +55,6 @@
 	<%@include file="../common/header.jsp" %>
 	<div class="wrapper">
 	<div class = "outer">
-	
     <br>
     <div class="formgroupmiddle">
     	<div class="seacrchidichinput">
