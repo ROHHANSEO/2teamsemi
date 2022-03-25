@@ -349,5 +349,45 @@ public class UsedItemsBoardDao {
 		
 		return ua;
 	}
+	
+	// 리스트 뽑아오는 메소드
+	public ArrayList<UsedItemsBoard> myPostList(Connection conn, int userNo) {
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("myPostList");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											rset.getInt("PRICE"),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("CHANGE_NAME")
+											));
+				
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
 
 }

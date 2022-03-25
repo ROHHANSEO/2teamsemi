@@ -32,7 +32,7 @@ form{
 }
 #contentImg1, #contentImg2, #contentImg3, #contentImg4, #contentImg5, 
 #contentImg6, #contentImg7, #contentImg8, #contentImg9, #titleImg{
-	postiion : relative;
+	position : relative;
 	width: 200px;
 	height: 200px;
 	margin-top: 0;
@@ -85,7 +85,6 @@ form{
 }
 .itempline{
 	margin-right: 45px;
-	display: none;
 }
 .but{
 	text-align: end;

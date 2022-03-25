@@ -6,8 +6,8 @@
 <meta charset="UTF-8">
 <title>비밀번호 찾기</title>
 <link rel="stylesheet" href="../../resources/css/common/common.css">
-<link rel="stylesheet" href="../../resources/css/sign-upPage.css">
-<link rel="stylesheet" href="../../resources/css/pwdSearchPage.css">
+<link rel="stylesheet" href="../../resources/css/user/sign-upPage.css">
+<link rel="stylesheet" href="../../resources/css/user/pwdSearchPage.css">
 </head>
 <body>
     <header id="header">

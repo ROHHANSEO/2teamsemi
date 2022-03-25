@@ -103,6 +103,18 @@ public class UsedItemsBoardService {
 		
 		return ua;
 	}
+	
+	
+	//마이페이지 판매기록 리스트 받아오기
+	public ArrayList<UsedItemsBoard> myPostList(int userNo) {
+		Connection conn = getConnection();
+
+		ArrayList<UsedItemsBoard> list = new UsedItemsBoardDao().myPostList(conn, userNo);
+		
+
+		close(conn);
+		return list;
+	}
 
 	
 }

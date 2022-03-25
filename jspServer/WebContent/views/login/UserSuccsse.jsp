@@ -15,7 +15,7 @@
 <meta charset="UTF-8">
 <title><%=msg %></title>
 <link rel="stylesheet" href="../../resources/css/common/common.css">
-<link rel="stylesheet" href="../../resources/css/sign-up_successe.css">
+<link rel="stylesheet" href="../../resources/css/user/user_successe.css">
 </head>
 <body>
 <header id="header">
@@ -61,6 +61,6 @@
 <%@ include file = "../common/footer.jsp" %>
 <script src="../../resources/library/jquery-3.6.0.min.js"></script>
 <script src="../../resources/js/common/common.js"></script>
-<script src="../../resources/js/sign-up_successe.js"></script>
+<script src="../../resources/js/user/sign-up_successe.js"></script>
 </body>
 </html>
