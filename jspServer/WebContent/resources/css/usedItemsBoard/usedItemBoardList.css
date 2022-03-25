@@ -1,15 +1,10 @@
 #top{
     display: flex;
-    border: 1px solid black;
     justify-content: center;
 }
 .container{
     margin: 0 auto;
     width: 80vw;
-    border: 1px solid;
-}
-.item{
-    border: 1px solid black;
 }
 #article1{
     display: flex;
@@ -19,9 +14,6 @@
 }
 #article2{
     display: flex;
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 0;
     width: 50vw;
     margin: 0 auto;
     flex-wrap: wrap;

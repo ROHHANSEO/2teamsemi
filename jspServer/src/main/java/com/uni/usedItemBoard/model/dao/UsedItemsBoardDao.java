@@ -71,25 +71,31 @@ public class UsedItemsBoardDao {
 
 	// 리스트 뽑아오는 메소드
 	public ArrayList<UsedItemsBoard> selectList(Connection conn, PageInfo pi) {
+		// 제너릭스를 사용한 UsedItemsBoard ArrayList 생성
 		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		// PreparedStatement 객체와 ResultSet 객체 생성
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		
+		// sql문을 getProperty() 하여 알맞는 sql 구문 가져와 생성 및 선언
 		String sql = prop.getProperty("selectList");
 		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
 		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
 		int endRow = startRow + pi.getBoardLimit() -1;
-		
 		try {
+			// sql문 담기
 			pstmt = conn.prepareStatement(sql);
 			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
+			// sql문 실행
 			rset = pstmt.executeQuery();
 			
+			// 여러행을 받아오기 때문에 while문
 			while(rset.next()) {
+				// 객체를 생성하여 list에 담는다
 				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 											rset.getString("BOARD_TITLE"),
 											rset.getInt("PRICE"),
