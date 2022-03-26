@@ -30,7 +30,7 @@
             	<span><%=user.getUserName()%>님 어서오세요</span>
                 <a href="<%=request.getContextPath()%>/logout" class="login_page">로그아웃</a>
                 /
-                <a href="<%=request.getContextPath()%>/mypage" class="insert_user">마이페이지</a>
+                <a href="<%=request.getContextPath()%>/salesRecordPage" class="insert_user">마이페이지</a>
             </div>
             <%} %>
         </div>

@@ -20,8 +20,8 @@
                 </ul>
                 <ul role="list">
                     <span>내 정보</span>
-                    <li><span>개인정보 수정</span></li>
-                    <li><span>회원탈퇴</span></li>
+                    <li class="edit"><span>개인정보 수정</span></li>
+                    <li class="secession"><span>회원탈퇴</span></li>
                 </ul>
                 <ul role="list">
                     <span>내 활동</span>

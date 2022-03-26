@@ -8,6 +8,7 @@
 .salescontent {
     width: 160%;
     height: 250px;
+    position: relative;
 }
 
 .salescontent_title_box{
@@ -25,9 +26,18 @@
     right: 10%;
 }
 
-.content_box{
+#salescontent_box .content_box{
     border: 1px solid black;
     height: 100%;
+    margin-top: 30px;
+}
+
+.select_delete_checkbox{
+    position: absolute;
+    top: 11px;
+    left: 15px;
+    zoom: 1.3;
+    display: none;
 }
 
 
@@ -38,11 +48,17 @@
     margin-left: 50px;
 }
 
+.content_box .main_box{
+    width: 100%;
+    height: 40px;
+    position: relative;
+}
+
 .content_box .del_up_box{
-    float: right;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right: -40px;
+    right: 40px;
+    position: absolute;
 }
 
 .main_content_box {
@@ -96,13 +112,11 @@
 .title_name_box{
     float: left;
     margin-left: 50px;
-    height: 100%;
-    line-height: 6;
+    margin-top: 50px;
 }
 
 .title_name_box .content_title_name {
     display: block;
-    height: 45px;
     font-size: 20px;
 }
 
@@ -131,6 +145,10 @@
     display: none;
 }
 
+.status_level_box.action{
+    display: block;
+}
+
 .status_level_box .status_level:not(:last-child){
     border-bottom: 1px solid black;
 }
@@ -149,3 +167,24 @@
 .statuss {
     position: relative;
 }
+
+.content_price .price {
+    color: #e9aae9;
+}
+
+#delete_btn_box {
+    display: none;
+}
+
+.void_text_box{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100px;
+}
+
+.void_text_box .void_view{
+    font-size: 30px;
+    font-weight: 800;
+}
+
