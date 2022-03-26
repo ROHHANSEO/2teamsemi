@@ -374,16 +374,18 @@ public class UsedItemsBoardDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+				UsedItemsBoard board = (new UsedItemsBoard(rset.getInt("BOARD_NO"),
 											rset.getString("BOARD_TITLE"),
 											rset.getInt("PRICE"),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
 											rset.getString("CHANGE_NAME")
 											));
+				board.setCreateDate(rset.getDate("CREATE_DATE"));
+				list.add(board);
 				
+				System.out.println("다오 => "+board);
 			}
-			System.out.println("다오 => "+list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

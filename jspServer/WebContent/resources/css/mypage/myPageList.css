@@ -49,6 +49,13 @@
     border-bottom: 1px solid #993333;
 }
 
+#mypage_list_form #mypage_list li:hover span{
+    color: #993333;
+    border-bottom: 1px solid #993333;
+    cursor: pointer;
+}
+
+
 .mypage_list_page{
     float: left;
 }
