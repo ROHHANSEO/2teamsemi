@@ -156,6 +156,7 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			if(result > 0) {
 				response.sendRedirect("usedBoardList.do");// 화면전환
 			}else {
+				
 				for(int i = 0 ; i < fileList.size() ; i++) {
 					File failedFile = new File(savePath + fileList.get(i).getChangeName());
 					failedFile.delete();

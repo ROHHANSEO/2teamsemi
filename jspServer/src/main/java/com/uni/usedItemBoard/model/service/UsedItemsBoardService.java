@@ -116,11 +116,16 @@ public class UsedItemsBoardService {
 		return list;
 	}
 
-	public ArrayList<UsedItemsBoard> filteringList(String category, String minprice, String maxprice, String search,
-			String except) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<UsedItemsBoard> filteringList(String category, int minprice, int maxprice, String search,
+			String except, PageInfo pi) {
+		Connection conn = getConnection();
+
+		ArrayList<UsedItemsBoard> list = new UsedItemsBoardDao().filteringList(conn, category, minprice, maxprice, search, except, pi);
+
+		close(conn);
+		return list;
 	}
+
 
 	
 }
