@@ -58,10 +58,11 @@
 			
 			// 대분류만 선택했을 시
 			if($("#large").children("option:selected").text() != '대분류' & $("#middle").children("option:selected").text() == '중분류' & $("#small").children("option:selected").text() == '소분류'){
-				cate = $("#large").children("option:selected").text()
+				cate = $("#large").children("option:selected").val()
 				
+				let select = $("#large").children("option:selected").text()
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(cate).attr('id', 'filtercategory')
+				let selectcate = $("<span>").text(select).attr('id', 'filtercategory')
 
 				// x 버튼을 생성후 class 추가와 type 부여
 				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
@@ -70,8 +71,9 @@
 				$("#selectCategory").append(selectcate).append(button); // 담기
 				console.log("대분류만 선택")
 			}else if($("#middle").children("option:selected").text() != '중분류' & $("#small").children("option:selected").text() == '소분류'){// 중분류까지 선택 했을 시
-				cate = $("#middle").children("option:selected").text()
+				cate = $("#middle").children("option:selected").val()
 				
+				let select = $("#middle").children("option:selected").text()
 				// span 태그에 텍스트값을 담고 id 를 부여
 				let selectcate = $("<span>").text(cate).attr('id', 'filtercategory')
 
@@ -82,8 +84,9 @@
 				$("#selectCategory").append(selectcate).append(button); // 담기
 				console.log("중분류까지만 선택")
 			}else if($("#small").children("option:selected").text() != '소분류'){// 소분류까지 선택 했을 시
-				cate = $("#small").children("option:selected").text()
+				cate = $("#small").children("option:selected").val()
 				
+				let select = $("#middle").children("option:selected").text()
 				// span 태그에 텍스트값을 담고 id 를 부여
 				let selectcate = $("<span>").text(cate).attr('id', 'filtercategory')
 				
