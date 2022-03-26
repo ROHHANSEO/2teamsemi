@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.uni.auction.model.dao.AuctionDao;
+import com.uni.auction.model.vo.Auction;
+import com.uni.auction.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.Category;
 
 public class AuctionService {
@@ -17,6 +19,29 @@ public class AuctionService {
 		ArrayList<Category> list = new AuctionDao().categoryList(conn);
 		close(conn);
 		
+		return list;
+	}
+
+	public int getListCount() {// 리스트 갯수
+		Connection conn = getConnection();
+		
+		//int로 리스트 갯수 받아오기 
+		int listCount = new AuctionDao().getListCount(conn);
+		System.out.println("service listCount ===" + listCount);
+		close(conn);
+		
+		return listCount;//리스트 카운트 다시 서블렛으로 보내주기
+	}
+
+	public ArrayList<Auction> selectList(PageInfo pi) {//맞는 페이지의 LIST받아오기
+		Connection conn = getConnection();
+		//pi는 페이지 정보
+		
+		//리스트 받아오기 
+		ArrayList<Auction> list = new AuctionDao().selectList(conn, pi);
+		
+		System.out.println("service selectList ==="+list);
+		close(conn);
 		return list;
 	}
 

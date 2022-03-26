@@ -9,11 +9,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.uni.auction.model.vo.Auction;
+import com.uni.auction.model.vo.PageInfo;
 import com.uni.serviceCenter.model.vo.ServiceCenter;
 import com.uni.usedItemBoard.model.vo.Category;
+import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 public class AuctionDao {
 	private Properties prop = new Properties();
@@ -70,5 +74,78 @@ public class AuctionDao {
 			}
 			return list;
 		}
+
+	public int getListCount(Connection conn) {//리스트 갯수 가져오기 
+		int listCount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getListCount");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			System.out.println("다오 listCount => " + listCount);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+
+	//맞는 페이지의 리스트를 받아오는 것
+	public ArrayList<Auction> selectList(Connection conn, PageInfo pi) {
+		ArrayList<Auction> list = new ArrayList<>();
+		
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectList");
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				// 객체를 생성하여 list에 담는다
+				/*list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											rset.getInt("PRICE"),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("CHANGE_NAME")
+											));*/
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
 
 }
