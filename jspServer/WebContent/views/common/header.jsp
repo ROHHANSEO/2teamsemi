@@ -45,7 +45,7 @@
                 </div>
                 <ul>
                     <li><div onmouseover="add()" onmouseleave="remove()"><a href="<!--이동할 jsp가 위치한 경로입력 할 것-->">시세</a></div></li>
-                    <li><div onmouseover="add()" onmouseleave="remove()"><a href="<!--이동할 jsp가 위치한 경로입력 할 것-->">경매</a></div></li>
+                    <li><div onmouseover="add()" onmouseleave="remove()"><a href="<%=request.getContextPath()%>/auctionPage.do">경매</a></div></li>
                     <li><div onmouseover="add()" onmouseleave="remove()"><a href="<%=request.getContextPath() %>/communitypage.do">커뮤니티</a></div></li>
                     <li><div onmouseover="add()" onmouseleave="remove()"><a href="<%=request.getContextPath()%>/usedBoardList.do">중고거래</a></div></li>
                     <li><div onmouseover="add()" onmouseleave="remove()"><a href="<%=request.getContextPath() %>/eventpage.do">이벤트</a></div></li>
