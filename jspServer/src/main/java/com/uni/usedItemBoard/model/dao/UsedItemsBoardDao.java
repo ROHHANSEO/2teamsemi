@@ -438,7 +438,7 @@ public class UsedItemsBoardDao {
 												));
 				}
 				System.out.println("다오 => "+list);
-			}else if(category.equals("대분류")  && minprice >= 0 && maxprice >= 0 && search.equals("null") && !except.equals("거래완료")) {
+			}else if(category.equals("대분류")  && minprice >= 0 && maxprice > 0 && search.equals("null") && !except.equals("거래완료")) {
 				// 금액 범위만 존재하면
 				System.out.println("금액범위만 존재한다");
 				
@@ -504,8 +504,8 @@ public class UsedItemsBoardDao {
 				
 				// sql 구문에 ?인덱스에 맞는 값 넣기
 				pstmt.setString(1, except);
-				pstmt.setInt(3, startRow);
-				pstmt.setInt(4, endRow);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
 				// sql문 실행
 				rset = pstmt.executeQuery();
 				
@@ -521,7 +521,7 @@ public class UsedItemsBoardDao {
 												));
 				}
 				System.out.println("다오 => "+list);
-			}else if(category.equals("대분류")  && minprice >= 0 && maxprice > 0 && search.equals("null") && !except.equals("거래완료")) {
+			}else if(!category.equals("대분류")  && minprice >= 0 && maxprice > 0 && search.equals("null") && !except.equals("거래완료")) {
 				// 카테고리와 가격 범위만 한 경우
 				System.out.println("카테고리와 가격 범위만 존재한다");
 				
@@ -530,10 +530,11 @@ public class UsedItemsBoardDao {
 				
 				// sql 구문에 ?인덱스에 맞는 값 넣기
 				pstmt.setString(1, category);
-				pstmt.setInt(2, minprice);
-				pstmt.setInt(3, maxprice);
-				pstmt.setInt(4, startRow);
-				pstmt.setInt(5, endRow);
+				pstmt.setString(2, category);
+				pstmt.setInt(3, minprice);
+				pstmt.setInt(4, maxprice);
+				pstmt.setInt(5, startRow);
+				pstmt.setInt(6, endRow);
 				// sql문 실행
 				rset = pstmt.executeQuery();
 				
@@ -558,9 +559,12 @@ public class UsedItemsBoardDao {
 				pstmt = conn.prepareStatement(sql);
 				
 				// sql 구문에 ?인덱스에 맞는 값 넣기
-				pstmt.setString(1, except);
-				pstmt.setInt(3, startRow);
-				pstmt.setInt(4, endRow);
+				pstmt.setString(1, category);
+				pstmt.setString(2, category);
+				pstmt.setString(3, "%"+search+"%");
+				pstmt.setString(4, "%"+search+"%");
+				pstmt.setInt(5, startRow);
+				pstmt.setInt(6, endRow);
 				// sql문 실행
 				rset = pstmt.executeQuery();
 				
@@ -578,31 +582,286 @@ public class UsedItemsBoardDao {
 				System.out.println("다오 => "+list);
 			}else if(!category.equals("대분류") && minprice == 0 && maxprice == 0 && search.equals("null") && except.equals("거래완료")) {
 				// 카테고리와 거래완료된 게시글 제외하기만 한 경우
+				System.out.println("카테고리와 거래완료된 게시글을 제외만 존재한다");
 				
-			}else if(category.equals("대분류") && minprice >= 0 && maxprice >= 0 && !search.equals("null") && !except.equals("거래완료")) {
+				String sql = prop.getProperty("filteringList7");
+				// sql문 담기
+				pstmt = conn.prepareStatement(sql);
+				
+				// sql 구문에 ?인덱스에 맞는 값 넣기
+				pstmt.setString(1, category);
+				pstmt.setString(2, category);
+				pstmt.setString(3, except);
+				pstmt.setInt(4, startRow);
+				pstmt.setInt(5, endRow);
+				// sql문 실행
+				rset = pstmt.executeQuery();
+				
+				// 여러행을 받아오기 때문에 while문
+				while(rset.next()) {
+					// 객체를 생성하여 list에 담는다
+					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+												rset.getString("BOARD_TITLE"),
+												rset.getInt("PRICE"),
+												rset.getString("SALE_STATUS"),
+												rset.getInt("LIKE_COUNT"),
+												rset.getString("CHANGE_NAME")
+												));
+				}
+				System.out.println("다오 => "+list);
+			}else if(category.equals("대분류") && minprice >= 0 && maxprice > 0 && !search.equals("null") && !except.equals("거래완료")) {
 				// 가격범위와 검색내 검색만 한 경우
+				System.out.println("가격범위와 검색내 검색만 존재한다");
 				
-			}else if(category.equals("대분류")  && minprice >= 0 && maxprice >= 0 && search.equals("null") && except.equals("거래완료")) {
+				String sql = prop.getProperty("filteringList8");
+				// sql문 담기
+				pstmt = conn.prepareStatement(sql);
+				
+				// sql 구문에 ?인덱스에 맞는 값 넣기
+				pstmt.setInt(1, minprice);
+				pstmt.setInt(2, maxprice);
+				pstmt.setString(3, "%"+search+"%");
+				pstmt.setString(4, "%"+search+"%");
+				pstmt.setInt(5, startRow);
+				pstmt.setInt(6, endRow);
+				
+				// sql문 실행
+				rset = pstmt.executeQuery();
+				
+				// 여러행을 받아오기 때문에 while문
+				while(rset.next()) {
+					// 객체를 생성하여 list에 담는다
+					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+												rset.getString("BOARD_TITLE"),
+												rset.getInt("PRICE"),
+												rset.getString("SALE_STATUS"),
+												rset.getInt("LIKE_COUNT"),
+												rset.getString("CHANGE_NAME")
+												));
+				}
+				System.out.println("다오 => "+list);
+			}else if(category.equals("대분류")  && minprice >= 0 && maxprice > 0 && search.equals("null") && except.equals("거래완료")) {
 				// 가격 범위와 거래 완료된 게시글 제외하기만 한 경우
+				System.out.println("가격범위와 거래 완료돤 게시글 제외만 존재한다");
 				
-			}else if(!category.equals("대분류") && minprice == 0 && maxprice == 0 && !search.equals("null") && except.equals("거래완료")) {
+				String sql = prop.getProperty("filteringList9");
+				// sql문 담기
+				pstmt = conn.prepareStatement(sql);
+				
+				// sql 구문에 ?인덱스에 맞는 값 넣기
+				pstmt.setInt(1, minprice);
+				pstmt.setInt(2, maxprice);
+				pstmt.setString(3, except);
+				pstmt.setInt(4, startRow);
+				pstmt.setInt(5, endRow);
+				
+				// sql문 실행
+				rset = pstmt.executeQuery();
+				
+				// 여러행을 받아오기 때문에 while문
+				while(rset.next()) {
+					// 객체를 생성하여 list에 담는다
+					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+												rset.getString("BOARD_TITLE"),
+												rset.getInt("PRICE"),
+												rset.getString("SALE_STATUS"),
+												rset.getInt("LIKE_COUNT"),
+												rset.getString("CHANGE_NAME")
+												));
+				}
+				System.out.println("다오 => "+list);
+			}else if(category.equals("대분류") && minprice == 0 && maxprice == 0 && !search.equals("null") && except.equals("거래완료")) {
 				// 검색내 검색과 거래완료 게시글 제외하기만 한 경우
+				System.out.println("검색 내 검색과 거래완료 게시글 제외하기만 존재한다");
 				
-			}else if(!category.equals("대분류") && minprice >= 0 && maxprice >= 0 && !search.equals("null") && !except.equals("거래완료")) {
+				String sql = prop.getProperty("filteringList10");
+				// sql문 담기
+				pstmt = conn.prepareStatement(sql);
+				
+				// sql 구문에 ?인덱스에 맞는 값 넣기
+				pstmt.setString(1, "%"+search+"%");
+				pstmt.setString(2, "%"+search+"%");
+				pstmt.setString(3, except);
+				pstmt.setInt(4, startRow);
+				pstmt.setInt(5, endRow);
+				
+				// sql문 실행
+				rset = pstmt.executeQuery();
+				
+				// 여러행을 받아오기 때문에 while문
+				while(rset.next()) {
+					// 객체를 생성하여 list에 담는다
+					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+												rset.getString("BOARD_TITLE"),
+												rset.getInt("PRICE"),
+												rset.getString("SALE_STATUS"),
+												rset.getInt("LIKE_COUNT"),
+												rset.getString("CHANGE_NAME")
+												));
+				}
+				System.out.println("다오 => "+list);
+			}else if(!category.equals("대분류") && minprice >= 0 && maxprice > 0 && !search.equals("null") && !except.equals("거래완료")) {
 				// 카테고리와 가격 범위와 검색내 검색을 한 경우
+				System.out.println("카테고리와 가격 범위와 검색내 검색만 존재한다");
 				
+				String sql = prop.getProperty("filteringList11");
+				// sql문 담기
+				pstmt = conn.prepareStatement(sql);
+				
+				// sql 구문에 ?인덱스에 맞는 값 넣기
+				pstmt.setString(1, category);
+				pstmt.setString(2, category);
+				pstmt.setInt(3, minprice);
+				pstmt.setInt(4, maxprice);
+				pstmt.setString(5, "%"+search+"%");
+				pstmt.setString(6, "%"+search+"%");
+				pstmt.setInt(7, startRow);
+				pstmt.setInt(8, endRow);
+				
+				// sql문 실행
+				rset = pstmt.executeQuery();
+				
+				// 여러행을 받아오기 때문에 while문
+				while(rset.next()) {
+					// 객체를 생성하여 list에 담는다
+					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+												rset.getString("BOARD_TITLE"),
+												rset.getInt("PRICE"),
+												rset.getString("SALE_STATUS"),
+												rset.getInt("LIKE_COUNT"),
+												rset.getString("CHANGE_NAME")
+												));
+				}
+				System.out.println("다오 => "+list);
 			}else if(!category.equals("대분류") && minprice == 0 && maxprice == 0 && !search.equals("null") && except.equals("거래완료")) {
 				// 카테고리와 검색내 검색과 거래완료 게시글 제외하기을 한 경우
+				System.out.println("카테고리와 검색내 검색과 거래완료 게시글 제외만 존재한다");
 				
-			}else if(!category.equals("대분류") && minprice >= 0 && maxprice >= 0 && search.equals("null") && except.equals("거래완료")) {
+				String sql = prop.getProperty("filteringList12");
+				// sql문 담기
+				pstmt = conn.prepareStatement(sql);
+				
+				// sql 구문에 ?인덱스에 맞는 값 넣기
+				pstmt.setString(1, category);
+				pstmt.setString(2, category);
+				pstmt.setString(3, "%"+search+"%");
+				pstmt.setString(4, "%"+search+"%");
+				pstmt.setString(5, except);
+				pstmt.setInt(6, startRow);
+				pstmt.setInt(7, endRow);
+				
+				// sql문 실행
+				rset = pstmt.executeQuery();
+				
+				// 여러행을 받아오기 때문에 while문
+				while(rset.next()) {
+					// 객체를 생성하여 list에 담는다
+					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+												rset.getString("BOARD_TITLE"),
+												rset.getInt("PRICE"),
+												rset.getString("SALE_STATUS"),
+												rset.getInt("LIKE_COUNT"),
+												rset.getString("CHANGE_NAME")
+												));
+				}
+				System.out.println("다오 => "+list);
+			}else if(!category.equals("대분류") && minprice >= 0 && maxprice > 0 && search.equals("null") && except.equals("거래완료")) {
 				// 카테고리와 가격 범위와 거래완료 게시글 제외하기을 한 경우
+				System.out.println("카테고리와 가격 범위와 거래완료 게시글 제외만 존재한다");
 				
-			}else if(category.equals("대분류") && minprice != 0 && maxprice != 0 && !search.equals("null") && except.equals("거래완료")) {
+				String sql = prop.getProperty("filteringList13");
+				// sql문 담기
+				pstmt = conn.prepareStatement(sql);
+				
+				// sql 구문에 ?인덱스에 맞는 값 넣기
+				pstmt.setString(1, category);
+				pstmt.setString(2, category);
+				pstmt.setInt(3, minprice);
+				pstmt.setInt(4, maxprice);
+				pstmt.setString(5, except);
+				pstmt.setInt(6, startRow);
+				pstmt.setInt(7, endRow);
+				
+				// sql문 실행
+				rset = pstmt.executeQuery();
+				
+				// 여러행을 받아오기 때문에 while문
+				while(rset.next()) {
+					// 객체를 생성하여 list에 담는다
+					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+												rset.getString("BOARD_TITLE"),
+												rset.getInt("PRICE"),
+												rset.getString("SALE_STATUS"),
+												rset.getInt("LIKE_COUNT"),
+												rset.getString("CHANGE_NAME")
+												));
+				}
+				System.out.println("다오 => "+list);
+			}else if(category.equals("대분류") && minprice >= 0 && maxprice > 0 && !search.equals("null") && except.equals("거래완료")) {
 				// 가격 범위와 검색내 검색과 거래완로 게시글 제외하기를 한 경우
+				System.out.println("가격 범위와 검색내 검색과 거래완료 게시글 제외만 존재한다");
 				
+				String sql = prop.getProperty("filteringList14");
+				// sql문 담기
+				pstmt = conn.prepareStatement(sql);
+				
+				// sql 구문에 ?인덱스에 맞는 값 넣기
+				pstmt.setInt(1, minprice);
+				pstmt.setInt(2, maxprice);
+				pstmt.setString(3, "%"+search+"%");
+				pstmt.setString(4, "%"+search+"%");
+				pstmt.setString(5, except);
+				pstmt.setInt(6, startRow);
+				pstmt.setInt(7, endRow);
+				
+				// sql문 실행
+				rset = pstmt.executeQuery();
+				
+				// 여러행을 받아오기 때문에 while문
+				while(rset.next()) {
+					// 객체를 생성하여 list에 담는다
+					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+												rset.getString("BOARD_TITLE"),
+												rset.getInt("PRICE"),
+												rset.getString("SALE_STATUS"),
+												rset.getInt("LIKE_COUNT"),
+												rset.getString("CHANGE_NAME")
+												));
+				}
+				System.out.println("다오 => "+list);
 			}else {
 				// 모두다 적용 한 경우
 				
+				String sql = prop.getProperty("filteringList15");
+				// sql문 담기
+				pstmt = conn.prepareStatement(sql);
+				
+				// sql 구문에 ?인덱스에 맞는 값 넣기
+				pstmt.setString(1, category);
+				pstmt.setString(2, category);
+				pstmt.setInt(3, minprice);
+				pstmt.setInt(4, maxprice);
+				pstmt.setString(5, "%"+search+"%");
+				pstmt.setString(6, "%"+search+"%");
+				pstmt.setString(7, except);
+				pstmt.setInt(8, startRow);
+				pstmt.setInt(9, endRow);
+				
+				// sql문 실행
+				rset = pstmt.executeQuery();
+				
+				// 여러행을 받아오기 때문에 while문
+				while(rset.next()) {
+					// 객체를 생성하여 list에 담는다
+					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+												rset.getString("BOARD_TITLE"),
+												rset.getInt("PRICE"),
+												rset.getString("SALE_STATUS"),
+												rset.getInt("LIKE_COUNT"),
+												rset.getString("CHANGE_NAME")
+												));
+				}
+				System.out.println("다오 => "+list);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
