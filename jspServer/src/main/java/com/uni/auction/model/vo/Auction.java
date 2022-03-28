@@ -25,6 +25,9 @@ public class Auction {
 		// TODO Auto-generated constructor stub
 	}
 
+	////글번호, 제목, 조회수, 즉시판매갑,판매상태, 사진 메인
+	
+	
 	public Auction(int auctionNo, String category, String categorycode, String auctionWriter, String auctionTitle,
 			String auctionContent, String itemCondition, int itemPrice, int itemUp, int itemDirect, String sellStatus,
 			int count, Date createDate, String status, String titleImg) {
@@ -43,6 +46,16 @@ public class Auction {
 		this.count = count;
 		this.createDate = createDate;
 		this.status = status;
+		this.titleImg = titleImg;
+	}
+
+	public Auction(int auctionNo, String auctionTitle, int itemDirect, String sellStatus, int count, String titleImg) {
+		super();
+		this.auctionNo = auctionNo;
+		this.auctionTitle = auctionTitle;
+		this.itemDirect = itemDirect;
+		this.sellStatus = sellStatus;
+		this.count = count;
 		this.titleImg = titleImg;
 	}
 

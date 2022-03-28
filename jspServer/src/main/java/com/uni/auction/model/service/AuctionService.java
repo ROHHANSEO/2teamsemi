@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.uni.auction.model.dao.AuctionDao;
 import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.PageInfo;
+import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
 
 public class AuctionService {
@@ -44,5 +45,37 @@ public class AuctionService {
 		close(conn);
 		return list;
 	}
+
+	public ArrayList<Category> totCategoryList() {
+		Connection conn = getConnection();
+		
+		ArrayList<Category> cList = new AuctionDao().totCategoryList(conn);
+		close(conn);
+		
+		return cList;
+	}
+
+	public ArrayList<Category> selectCategoryetc(String category) {
+		Connection conn = getConnection();
+		
+		ArrayList<Category> cList = new AuctionDao().selectCategoryetc(conn, category);
+		System.out.println("서비스 middle => " + cList);
+		close(conn);
+		
+		return cList;
+	}
+
+	public ArrayList<Category> selectMiddle(String category) {
+		Connection conn = getConnection();
+		
+		ArrayList<Category> cList = new AuctionDao().selectMiddle(conn, category);
+		System.out.println("서비스 middle => " + cList);
+		close(conn);
+		
+		return cList;
+	}
+
+	
+
 
 }
