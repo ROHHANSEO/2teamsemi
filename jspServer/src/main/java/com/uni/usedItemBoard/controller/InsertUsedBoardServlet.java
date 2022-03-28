@@ -63,6 +63,10 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("content").replaceAll("\n", "<br>"); 
 			
+			System.out.println("writer 서블렛 ==> "+writer);
+			System.out.println("title 서블렛 ==> "+title);
+			System.out.println("content 서블렛 ==> "+content);
+			
 			// 상품상태
 			String productStatus = multiRequest.getParameter("productStatus");
 			

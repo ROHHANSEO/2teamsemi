@@ -86,7 +86,7 @@ public class fileteringServlet extends HttpServlet {
 		int minprice = Integer.parseInt(request.getParameter("minprice"));
 		int maxprice = Integer.parseInt(request.getParameter("maxprice"));
 		String search = request.getParameter("search");
-		String except = (request.getParameter("except") == "true")? "거래완료":"";
+		String except = (Boolean.parseBoolean(request.getParameter("except")) == true)? "거래완료":"";
 		
 		System.out.println(category);
 		System.out.println(minprice);
@@ -101,6 +101,7 @@ public class fileteringServlet extends HttpServlet {
 			response.setContentType("application/json; charset=utf-8"); // 꼭 이렇게 응답해야한다
 			new Gson().toJson(list, response.getWriter()); // 응답할 리스트적기 
 		}else {
+			
 			String msg = "결과가 일치한 게시물이 없습니다.";
 			response.getWriter().print(msg);
 		}
