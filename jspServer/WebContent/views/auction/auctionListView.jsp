@@ -3,6 +3,7 @@
 <%
 	   	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");
 		ArrayList<Auction> Alist = (ArrayList<Auction>)request.getAttribute("Alist");
+		
 		PageInfo pi = (PageInfo)request.getAttribute("pi");
 		
 		int listCount = pi.getListCount();
@@ -102,7 +103,7 @@
 		 	<div  class="sfilterse">검색 필터 부분</div>
 		 	<% if(user != null) { %>
 		 	<div class= "animation">
-    		<a href="#"> 게시물 작성 </a>
+    		<a href="<%= request.getContextPath() %>/insertAuction.do"> 게시물 작성 </a>
     		</div>
     		<% } %>
 		</div>
@@ -115,7 +116,6 @@
 				<a href="#">고가순</a>
 			</div>
 		</div>
-	</div>
 	<!-- 페이징바 만들기 -->
 	<div class="pagingArea" align="center">
 		<!-- 맨 처음으로 (<<) -->
@@ -149,6 +149,8 @@
 		<!-- 맨 끝으로 (>>) -->
 		<button onclick="location.href='<%=request.getContextPath()%>/auctionPage.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
 	</div> 
+	
+	</div>
 	
 	<%--  <%@ include file = "../common/footer.jsp" %> --%>
 	<script>
