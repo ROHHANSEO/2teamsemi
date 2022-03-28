@@ -1,29 +1,29 @@
-package com.uni.serviceCenter.controller;
+package com.uni.mypage.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.uni.serviceCenter.model.service.ServiceCenterService;
-import com.uni.serviceCenter.model.vo.ServiceCenter;
+import com.uni.user.model.service.UserService;
+import com.uni.user.model.vo.User;
 
 /**
- * Servlet implementation class ServiceCenterMainServlet
+ * Servlet implementation class adminStatusUpdateServlet
  */
-@WebServlet("/serviceCenter.do")//고객센터 메인 페이지로 넘어가게 해서 jsp로 연결
-public class ServiceCenterMainServlet extends HttpServlet {
+@WebServlet("/adminUpdate")
+public class adminStatusUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServiceCenterMainServlet() {
+    public adminStatusUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,12 +32,24 @@ public class ServiceCenterMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
 		
+		int result = new UserService().adminUpdate(userNo);
+		
+		PrintWriter out = response.getWriter();
+		if (result > 0) {
+			User user = new UserService().selectUser(userNo);
+			request.getSession().invalidate();
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			session.setAttribute("userPwd", user.getUserPwd());
+			out.print("success");
+		} else {
+			out.print("fail");
+		}
 
-		
-		RequestDispatcher view = request.getRequestDispatcher("views/service/serviceCenter.jsp");
-		view.forward(request, response);
-		
+		out.flush();
+		out.close();
 	}
 
 	/**

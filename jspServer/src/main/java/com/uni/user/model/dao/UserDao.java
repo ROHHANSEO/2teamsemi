@@ -260,4 +260,97 @@ public class UserDao {
 		
 		return result;
 	}
+
+	public int updateUser(Connection conn, User user) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateUser");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getUserPwd());
+			pstmt.setString(3, user.getUserName());
+			pstmt.setString(4, user.getCitiNo());
+			pstmt.setString(5, user.getPhone());
+			pstmt.setString(6, user.getNickName());
+			pstmt.setString(7, user.getEmail());
+			pstmt.setString(8, user.getGender());
+			pstmt.setInt(9, user.getUserNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		
+		return result;
+	}
+
+	public int adminUpdate(Connection conn, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminUpdate");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		
+		return result;
+	}
+
+	public User selectUser(Connection conn, int userNo) {
+		User user = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectUser");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				user = new User(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("CITI_NO"),
+						rset.getString("PHONE"),
+						rset.getString("NICK_NAME"),
+						rset.getString("EMAIL"),
+						rset.getString("GENDER"),
+						rset.getString("ADMIN_STATUS"),
+						rset.getString("STATUS"),
+						rset.getInt("BAN_COUNT")
+						);
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return user;
+	}
 }

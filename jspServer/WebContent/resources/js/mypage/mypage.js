@@ -142,12 +142,22 @@ $(function(){
     $(".edit_submit_btn").click(function(){
 
         
-        let arr={};
+        let arr={
+            userNo : $("input[name=userNo]").val(),
+            userId : $("input[name=userId]").val(),
+            userPwd : $("input[name=userPwd]").val(),
+            userName : $("input[name=userName]").val(),
+            citiNo : $("input[name=citiNo]").val(),
+            phoneNo : $("input[name=phoneNo]").val(),
+            nickName : $("input[name=nickName]").val(),
+            email : $("input[name=email]").val(),
+            gender : $("input[name=gender]").val(),
+        };
+
         //비밀번호 입력확인, 입력이 있다면 입력과 입력확인이 같은지 확인후 변수에 저장
         if($(".userPwd").val() !='' && $(".userPwdCheck").val() !=''){
             if($(".userPwd").val() == $(".userPwdCheck").val()){
-                var userPwd = $(".userPwd").val();
-                arr.userPwd = userPwd;
+                arr.userPwd = $(".userPwd").val();
             } else {
                 alert("비밀번호가 일치하지않습니다 다시 입력해주세요");
                 return;
@@ -155,35 +165,40 @@ $(function(){
         }
 
         if($(".nick_name").val() != ''){
-            var nickName = $(".nick_name").val();
-            arr.nickName = nickName;
+            arr.nickName = $(".nick_name").val();;
         }
 
         if($(".phone").val() != ''){
-            var phone = $(".phone").val();
-            arr.phone = phone;
+            arr.phone = $(".phone").val();
 
         }
 
         if($(".email").val() != ''){
-            var email = $(".email").val();
-            arr.email = email;
+            arr.email = $(".email").val();
         }
 
-        console.log(Object.keys(arr).length > 0);
-        if(Object.keys(arr).length > 0){
+        var jsonArr = JSON.stringify(arr);
+
+        if($(".nick_name").val() != '' ||$(".phone").val() != ''||$(".email").val() != '' ||($(".userPwd").val() != '' && $(".userPwdCheck").val() != '')){
             $.ajax({
                 url : "userUpdate",
                 type : "post",
-                contentType : "application/json; charset=utf-8",
-                data : JSON.stringify(arr),
+                data : {jsonArr : jsonArr},
                 success : function(result){
-                    if(result == "success"){
+                    console.log(result);
+                    if(result == "fail"){
+                        alert("회원정보 변경에 실패하였습니다.");
+                        $("#edit_modal_container2").hide();
+                        $("#edit_modal_container2 input").val("");
+                    } else if(result == "passwordsuccess"){
+                        alert("변경되었습니다. 다시 로그인 해주세요");
+                        location.href="/";
+                    } else {
+                        alert("변경되었습니다.");
                         $("#edit_modal_container2").hide();
                         $("#edit_modal_container3").fadeIn(200);
                         $("#edit_modal_container2 input").val("");
-                    } else {
-                        alert("회원정보 변경에 실패하였습니다.");
+                        location.reload();
                     }
                 }
             })
@@ -226,3 +241,36 @@ $(function(){
             }
         })
     })
+
+    //관리자 코드 입력
+    $(".admin_code").click(function(){
+        $("#admin_code_modal1").fadeIn(200);
+    })
+
+    $(".admin_code_next_btn").click(function(){
+        if($("#admin_code_modal1 input[type=hidden]").val() == $("#admin_code_modal1 input[type=password]").val()){
+            
+            $.ajax({
+                url : "adminUpdate",
+                data : {a : "a"},
+                success : function(result){
+                    if(result == "fail"){
+                        alert("실패하였습니다. 관리자에게 문의해주세요");
+                    } else {
+                        $("#admin_code_modal1").hide();
+                        $("#admin_code_modal2").fadeIn(200);
+                        $("#admin_code_modal1 input[type=password]").val("")
+                    }
+                }
+            })
+        } else {
+            alert("비밀번호 불일치 합니다 다시 입력해주세요");
+            $("input[type=password]").val("")
+        }
+    })
+
+    $(".admin_code_modal_btn").click(function(){
+        $("#admin_code_modal2").hide();
+        location.href="/";
+    })
+

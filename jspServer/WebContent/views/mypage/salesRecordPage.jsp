@@ -22,6 +22,8 @@
 <%@include file = "../common/secessionModal1.jsp" %>
 <%@include file = "../common/secessionModal2.jsp" %>
 <%@include file = "../common/secessionModalSuccess.jsp" %>
+<%@include file = "../common/adminCode.jsp" %>
+<%@include file = "../common/adminCode2.jsp" %>
 <div class="mypage_list_page">
     <%@include file = "../common/mypageList.jsp" %>
 </div>

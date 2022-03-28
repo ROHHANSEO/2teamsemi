@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.serviceCenter.model.vo.*"%>
-<%
-	ArrayList<QtoA> list = (ArrayList<QtoA>)request.getAttribute("list");
-%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +10,8 @@
 <link rel="stylesheet" href="../../resources/library/animate.css">
 </head>
 <body>
-	
 	<%@include file="../common/header.jsp" %>
+	<%@include file="../admin/AdminTitle.jsp" %>
 	<div class="wrapper">
 		<div class = "outer">
     		<br>
@@ -32,15 +29,9 @@
     			</div>
     		</div>
     		<div class = "questionenroll">
-    			<div class = "questioneach"> 
-    				<% if(user != null) { %>
-    					<a href="#" onclick="serviceCenterQtoA();" class= "animation"> 1:1 문의하기 </a>
-    				<% } %>
-    			</div>
     			<div class="gotoenrollFormServiceCenter">
-    				<% if(user != null && user.getUserId().equals("admin")) { %>
-    					<button class="commonwritebutton serviceCenterwrite" onclick="writeFunction();" type="button">글 작성</button>
-    				<% } %>
+    				<button class="commonwritebutton serviceCenterdelete" type="button">글 삭제</button>
+    				<button class="commonwritebutton serviceCenterwrite" onclick="writeFunction();" type="button">글 작성</button>
     			</div>
     		</div>
     		<div  class ="serviceCentermiddle">

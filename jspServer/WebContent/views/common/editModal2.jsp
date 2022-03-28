@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.uni.user.model.vo.User"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,7 +86,15 @@
             </div>
             <div class="modal_body">
                 <div class="content_box">
-                    <input type="hidden" value="">
+                    <input type="hidden" name="userNo" value="<%=((User)request.getSession().getAttribute("user")).getUserNo()%>">
+                    <input type="hidden" name="userId" value="<%=((User)request.getSession().getAttribute("user")).getUserId()%>">
+                    <input type="hidden" name="userPwd" value="<%=((User)request.getSession().getAttribute("user")).getUserPwd()%>">
+                    <input type="hidden" name="userName" value="<%=((User)request.getSession().getAttribute("user")).getUserName()%>">
+                    <input type="hidden" name="citiNo" value="<%=((User)request.getSession().getAttribute("user")).getCitiNo()%>">
+                    <input type="hidden" name="phoneNo" value="<%=((User)request.getSession().getAttribute("user")).getPhone()%>">
+                    <input type="hidden" name="nickName" value="<%=((User)request.getSession().getAttribute("user")).getNickName()%>">
+                    <input type="hidden" name="email" value="<%=((User)request.getSession().getAttribute("user")).getEmail()%>">
+                    <input type="hidden" name="gender" value="<%=((User)request.getSession().getAttribute("user")).getGender()%>">
                     <div>
                         <span>바꾸실 비밀번호 입력</span>
                         <input class="userPwd" type="password" maxlength="12" required>
@@ -101,11 +109,11 @@
                     </div>
                     <div>
                         <span>바꾸실 전화번호</span>
-                        <input class="phone" type="text" name="phone" placeholder="전화번호(-없이)" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="11" required>
+                        <input class="phone" type="text"  placeholder="전화번호(-없이)" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="11" required>
                     </div>
                     <div>
                         <span>바꾸실 이메일</span>
-                        <input class="email" type="text" name="email" placeholder="@포함 전체 작성" maxlength="50">
+                        <input class="email" type="text"  placeholder="@포함 전체 작성" maxlength="50">
                     </div>
                 </div>
             </div>

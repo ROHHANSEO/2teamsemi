@@ -28,6 +28,10 @@
                     <li><span>찜 리스트</span></li>
                     <li><span>채팅 목록</span></li>
                 </ul>
+                <ul role="list">
+                    <span>관리자</span>
+                    <li class="admin_code"><span>관리자 코드 입력</span></li>
+                </ul>
             </div>
         </div>
     </aside>

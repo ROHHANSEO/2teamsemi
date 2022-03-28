@@ -25,7 +25,14 @@
                 /
                 <a href="<%=request.getContextPath()%>/sign_up" class="insert_user">회원가입</a>
             </div>
-            <%} else { %>
+            <%} else if(user.getAdminStatus().equals("Y")) {%>
+            <div id="header_top_right">
+                <span><%=user.getUserName()%> 관리자님 어서오세요</span>
+                <a href="<%=request.getContextPath()%>/logout" class="login_page">로그아웃</a>
+                /
+                <a href="<%=request.getContextPath()%>/adminMainPage" class="insert_user">관리자 페이지</a>
+            </div>
+            <%} else if(user.getAdminStatus().equals("N")) { %>
             <div id="header_top_right">
             	<span><%=user.getUserName()%>님 어서오세요</span>
                 <a href="<%=request.getContextPath()%>/logout" class="login_page">로그아웃</a>

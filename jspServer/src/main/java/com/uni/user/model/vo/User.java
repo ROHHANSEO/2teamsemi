@@ -85,6 +85,22 @@ public class User {
 
 
 
+	public User(int userNo, String userId, String userPwd, String userName, String citiNo, String phone,
+			String nickName, String email, String gender) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.citiNo = citiNo;
+		this.phone = phone;
+		this.nickName = nickName;
+		this.email = email;
+		this.gender = gender;
+	}
+
+
+
 	public int getUserNo() {
 		return userNo;
 	}

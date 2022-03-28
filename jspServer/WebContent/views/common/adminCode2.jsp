@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    #edit_modal_container3 {
+    #admin_code_modal2 {
         background-color: rgba(0, 0, 0, 0.5);
         position: absolute;
         top: 0;
@@ -18,7 +18,7 @@
         align-items: center;
     }
 
-    #edit_modal_container3 #modal_box {
+    #admin_code_modal2 #modal_box {
         width: 400px;
         background-color: #fff;
         padding: 20px 0 20px 0;
@@ -31,63 +31,58 @@
         text-align: center;
     }
 
-    #edit_modal_container3 .modal_header .modal_title {
+    #admin_code_modal2 .modal_header .modal_title {
         font-size: 30px;
     }
 
-    #edit_modal_container3 #modal_box .modal_body {
+    #admin_code_modal2 #modal_box .modal_body {
         height: 400px;
         position: relative;
     }
 
-    #edit_modal_container3 .modal_body .pwd_text {
+    #admin_code_modal2 .modal_body .pwd_text {
         display: block;
         font-size: 20px;
     }
 
-    #edit_modal_container3 .modal_body .content_box {
+    #admin_code_modal2 .modal_body .content_box {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 150px;
+        left: 30px;
     }
 
-    #edit_modal_container3 .content_box input{
-        margin-top: 10px;
+    #admin_code_modal2 .content_box input[type=password]{
+        margin-top: 30px;
         width: 300px;
     }
 
-    #edit_modal_container3 .modal_footer {
+    #admin_code_modal2 .modal_footer {
         text-align: center;
     }
 
-    #edit_modal_container3 .modal_footer button{
-        width: 300px;
+    #admin_code_modal2 .modal_footer button{
+        width: 150px;
         height: 40px;
         display: inline-block;
         border-radius: 10px;
-    }
-
-    #edit_modal_container3 .content_box div{
-        margin-top: 5px;
     }
 
 
 </style>
 </head>
 <body>
-    <div id="edit_modal_container3" class="modal_view">
+    <div id="admin_code_modal2" class="modal_view">
         <div id="modal_box">
             <div class="modal_header">
-                <span class="modal_title">개인정보수정</span>
+                <span class="modal_title">관리자 코드 입력</span>
             </div>
             <div class="modal_body">
                 <div class="content_box">
-                    <span class="pwd_text">변경완료</span>
+                    <span class="pwd_text">관리자로 변경되었습니다</span>
                 </div>
             </div>
             <div class="modal_footer">
-                <button class="edit1_cancel_btn" type="button">닫기</button>
+                <button class="admin_code_modal_btn" type="button">확인</button>
             </div>
         </div>
     </div>

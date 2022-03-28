@@ -82,4 +82,39 @@ public class UserService {
 		return result;	
 	}
 
+	public int updateUser(User user) {
+		Connection conn = getConnection();
+		
+		int result = new UserDao().updateUser(conn,user);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;	
+	}
+
+	public int adminUpdate(int userNo) {
+		Connection conn = getConnection();
+		
+		int result = new UserDao().adminUpdate(conn,userNo);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;	
+	}
+
+	public User selectUser(int userNo) {
+		Connection conn = getConnection();
+		
+		User user = new UserDao().selectUser(conn,userNo);
+		close(conn);
+
+		return user;	
+	}
+
 }
