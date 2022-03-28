@@ -16,7 +16,7 @@ import com.uni.serviceCenter.model.vo.QtoA;
 /**
  * Servlet implementation class QtoAListServlet
  */
-@WebServlet("/listQtoA.do")
+@WebServlet("/QtoAListPage")
 public class QtoAListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,7 +36,7 @@ public class QtoAListServlet extends HttpServlet {
 		ArrayList<QtoA> list = new QtoAService().selectList();
 		System.out.println( " QtoA list 값 받아오나===="+list);
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("views/service/serviceCenter.jsp").forward(request, response);
+		request.getRequestDispatcher("views/admin/QtoAListPage.jsp").forward(request, response);
 	}
 
 	/**

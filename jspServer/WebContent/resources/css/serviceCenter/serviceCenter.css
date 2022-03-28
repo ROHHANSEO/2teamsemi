@@ -188,3 +188,17 @@
 		.totalUpdateService{
 			visibility: hidden;
 		}
+		
+		.serviceCenterdelete{
+		    width: 100px;
+		    height: 30px;
+		    line-height: 30px;
+		    position: absolute;
+			right: 260px;
+		}
+		
+		#sevicecenterPage{
+			color: #993333;
+		    border-bottom: 1px solid #993333;
+		    font-weight: 600;
+		}

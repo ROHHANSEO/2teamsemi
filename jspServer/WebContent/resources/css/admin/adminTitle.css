@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+#admin_title {
+    position: relative;
+    left: 5%;
+    margin-top: 30px;
+}
+
+#admin_title #content_title{
+    border-bottom: 1px solid black;
+    padding: 10px 30px;
+    width: 80vw;
+}
+
+#content_title .title_name {
+    font-size: 30px;
+}
+
+#admin_title #content_nav {
+    padding: 10px 20px;
+}
+
+#content_nav a {
+    margin-left: 10px;
+}
+
+#content_nav a:hover{
+    color: #993333;
+    border-bottom: 1px solid #993333;
+    font-weight: 600;
+}
+
+
+/* 관리자페이지 컨텐츠 선택시 글자색변경 */
+
+
