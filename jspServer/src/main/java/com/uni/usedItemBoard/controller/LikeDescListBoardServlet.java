@@ -14,16 +14,16 @@ import com.uni.usedItemBoard.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 /**
- * Servlet implementation class UsedItemsListPriceAscServlet
+ * Servlet implementation class LikeDescListBoardServlet
  */
-@WebServlet("/usedListPriceAsc.do")
-public class UsedItemsListPriceAscServlet extends HttpServlet {
+@WebServlet("/usedListLike.do")
+public class LikeDescListBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UsedItemsListPriceAscServlet() {
+    public LikeDescListBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -81,7 +81,7 @@ public class UsedItemsListPriceAscServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, startPage, endPage, maxPage, pageLimit, boardLimit);
 		
 		//이 객체를 가지고 조회도 해야하죠? select하러 가기
-		ArrayList<UsedItemsBoard> list = new UsedItemsBoardService().selecPriceAscList(pi);
+		ArrayList<UsedItemsBoard> list = new UsedItemsBoardService().selecLikeDescList(pi);
 
 		System.out.println("서블렛 => "+list);
 
@@ -93,7 +93,7 @@ public class UsedItemsListPriceAscServlet extends HttpServlet {
 		request.setAttribute("pi", pi);
 		 
 		// 이 값을 가지고 usedItemsBoard.jsp 파일로 이동시킨다.
-		request.getRequestDispatcher("views/used_item_board/usedItemsPriceAscList.jsp").forward(request, response);
+		request.getRequestDispatcher("views/used_item_board/usedItemsLikeDescList.jsp").forward(request, response);
 	}
 
 	/**

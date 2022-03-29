@@ -17,6 +17,7 @@
     width: 50vw;
     margin: 0 auto;
     flex-wrap: wrap;
+    border-top: 1px solid;
 }
 .firstLine, .secondLine{
 	display: flex;
@@ -54,4 +55,7 @@
 }
 .title, .price, .status{
 	font-size: 14px;
+}
+.seq:hover{
+	color: #993333;
 }

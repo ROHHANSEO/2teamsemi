@@ -100,10 +100,6 @@ public class fileteringServlet extends HttpServlet {
 		if(!list.isEmpty()) {
 			response.setContentType("application/json; charset=utf-8"); // 꼭 이렇게 응답해야한다
 			new Gson().toJson(list, response.getWriter()); // 응답할 리스트적기 
-		}else {
-			
-			String msg = "결과가 일치한 게시물이 없습니다.";
-			response.getWriter().print(msg);
 		}
 		
 	}

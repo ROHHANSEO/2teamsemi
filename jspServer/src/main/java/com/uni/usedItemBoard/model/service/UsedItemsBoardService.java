@@ -126,6 +126,30 @@ public class UsedItemsBoardService {
 		return list;
 	}
 
+	public ArrayList<UsedItemsBoard> selecPriceAscList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<UsedItemsBoard> list = new UsedItemsBoardDao().selecPriceAscList(conn, pi);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> selecPriceDescList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<UsedItemsBoard> list = new UsedItemsBoardDao().selecPriceDescList(conn, pi);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> selecLikeDescList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<UsedItemsBoard> list = new UsedItemsBoardDao().selecLikeDescList(conn, pi);
+		close(conn);
+		return list;
+	}
+
 
 	
 }

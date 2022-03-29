@@ -101,7 +101,7 @@ public class UsedItemsBoardDao {
 											rset.getInt("PRICE"),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("CHANGE_NAME")
+											rset.getString("ORIGIN_NAME")
 											));
 			}
 			System.out.println("다오 => "+list);
@@ -159,9 +159,8 @@ public class UsedItemsBoardDao {
 				
 				pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
 				
-				pstmt.setString(1, at.getOriginName()); 
-				pstmt.setString(2, at.getChangeName()); 
-				pstmt.setString(3, at.getFilePath());
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getFilePath());
 				
 				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
 				System.out.println("Dao result => " + result); // 임의 확인
@@ -340,8 +339,7 @@ public class UsedItemsBoardDao {
 			
 			while(rset.next()) {
 				at = new UsedAttachment(rset.getInt("FILE_NO"), 
-									  rset.getString("ORIGIN_NAME"),
-									  rset.getString("CHANGE_NAME"));
+									  rset.getString("ORIGIN_NAME"));
 				ua.add(at);
 			}
 			System.out.println("다오 ua => "+ua);
@@ -379,7 +377,7 @@ public class UsedItemsBoardDao {
 											rset.getInt("PRICE"),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("CHANGE_NAME")
+											rset.getString("ORIGIN_NAME")
 											));
 				board.setCreateDate(rset.getDate("CREATE_DATE"));
 				list.add(board);
@@ -434,7 +432,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -462,7 +460,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -490,7 +488,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -517,7 +515,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -546,7 +544,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -576,7 +574,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -605,7 +603,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -636,7 +634,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -666,7 +664,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -696,7 +694,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -729,7 +727,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -761,7 +759,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -793,7 +791,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -825,7 +823,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -858,7 +856,7 @@ public class UsedItemsBoardDao {
 												rset.getInt("PRICE"),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("CHANGE_NAME")
+												rset.getString("ORIGIN_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -871,6 +869,147 @@ public class UsedItemsBoardDao {
 			close(pstmt);
 		}
 			
+		
+		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> selecPriceAscList(Connection conn, PageInfo pi) {
+		// 제너릭스를 사용한 UsedItemsBoard ArrayList 생성
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// sql문을 getProperty() 하여 알맞는 sql 구문 가져와 생성 및 선언
+		String sql = prop.getProperty("priceAscList");
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				// 객체를 생성하여 list에 담는다
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											rset.getInt("PRICE"),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("ORIGIN_NAME")
+											));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> selecPriceDescList(Connection conn, PageInfo pi) {
+		// 제너릭스를 사용한 UsedItemsBoard ArrayList 생성
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// sql문을 getProperty() 하여 알맞는 sql 구문 가져와 생성 및 선언
+		String sql = prop.getProperty("priceDescList");
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				// 객체를 생성하여 list에 담는다
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											rset.getInt("PRICE"),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("ORIGIN_NAME")
+											));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> selecLikeDescList(Connection conn, PageInfo pi) {
+		// 제너릭스를 사용한 UsedItemsBoard ArrayList 생성
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// sql문을 getProperty() 하여 알맞는 sql 구문 가져와 생성 및 선언
+		String sql = prop.getProperty("likeDescList");
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				// 객체를 생성하여 list에 담는다
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											rset.getInt("PRICE"),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("ORIGIN_NAME")
+											));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
 		
 		return list;
 	}

@@ -6,7 +6,6 @@ public class UsedAttachment {
 	private int fileNo;			// 파일 고유 번호
 	private int refBoardNo;		// 참조하고 있는 게시글 번호
 	private String originName;	// 파일 원본명
-	private String changeName;	// 파일 수정명
 	private String filePath;	// 파일이 저장된 폴더 경로
 	private Date uploadDate;	// 파일 업로드일
 	private int fileLevel;		// 0:타이틀이미지, 1:내용이미지
@@ -18,22 +17,20 @@ public class UsedAttachment {
 	
 	
 	
-	public UsedAttachment(int fileNo, String originName, String changeName) {
+	public UsedAttachment(int fileNo, String originName) {
 		super();
 		this.fileNo = fileNo;
 		this.originName = originName;
-		this.changeName = changeName;
 	}
 
 
 
-	public UsedAttachment(int fileNo, int refBoardNo, String originName, String changeName, String filePath, Date uploadDate,
+	public UsedAttachment(int fileNo, int refBoardNo, String originName, String filePath, Date uploadDate,
 			int fileLevel, String status) {
 		super();
 		this.fileNo = fileNo;
 		this.refBoardNo = refBoardNo;
 		this.originName = originName;
-		this.changeName = changeName;
 		this.filePath = filePath;
 		this.uploadDate = uploadDate;
 		this.fileLevel = fileLevel;
@@ -62,14 +59,6 @@ public class UsedAttachment {
 
 	public void setOriginName(String originName) {
 		this.originName = originName;
-	}
-
-	public String getChangeName() {
-		return changeName;
-	}
-
-	public void setChangeName(String changeName) {
-		this.changeName = changeName;
 	}
 
 	public String getFilePath() {
@@ -107,7 +96,7 @@ public class UsedAttachment {
 	@Override
 	public String toString() {
 		return "Attachment [fileNo=" + fileNo + ", refBoardNo=" + refBoardNo + ", originName=" + originName
-				+ ", changeName=" + changeName + ", filePath=" + filePath + ", uploadDate=" + uploadDate
+				+ ", filePath=" + filePath + ", uploadDate=" + uploadDate
 				+ ", fileLevel=" + fileLevel + ", status=" + status + "]";
 	}
 

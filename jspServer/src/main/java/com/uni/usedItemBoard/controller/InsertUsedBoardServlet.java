@@ -3,18 +3,19 @@ package com.uni.usedItemBoard.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.uni.common.MyFileRenamePolicy;
+import com.uni.common.UploadUtil;
 import com.uni.usedItemBoard.model.service.UsedItemsBoardService;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
@@ -24,6 +25,11 @@ import com.uni.user.model.vo.User;
  * Servlet implementation class InsertUsedBoardServlet
  */
 @WebServlet("/insertUsed.do")
+@MultipartConfig(
+	    fileSizeThreshold = 1024*1024,
+	    maxFileSize = 1024*1024*10, //10메가
+	    maxRequestSize = 1024*1024*10*10 // 10메가 10개까지
+	)
 public class InsertUsedBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,39 +48,70 @@ public class InsertUsedBoardServlet extends HttpServlet {
 		
 		//multipart 됏는지 확인
 		if(ServletFileUpload.isMultipartContent(request)) {
+			request.setCharacterEncoding("UTF-8"); // 인코딩
 			
-			int maxSize = 10*1024*1024; //10Mbyte로 제한
+			UploadUtil uploadUtil = UploadUtil.create(request.getServletContext()); // UploadUtil 객체 생성 --> 저장하기 위해
 			
-			//저장할 경로파일지정
-			// getRealPath : 절대 정로 파일
-			String resouces = request.getSession().getServletContext().getRealPath("/resources");
+			// part API 를 통해 list 생성
+			// 참고 사이트1 : https://dev-gorany.tistory.com/289 
+			// 참고 사이트2 : https://velog.io/@godkimchichi/Java-19-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C#2-apache-jakarta%EC%9D%98-commons
+			List<Part> parts = (List<Part>)request.getParts();
 			
-			// 저장하는 경로 지정
-			String savePath = resouces + "\\usedboard_upfiles\\";
+			// 파일 어레이리스트 생성
+			ArrayList<UsedAttachment> fileList = new ArrayList<>();
 			
-			System.out.println("savePath : " + savePath);
+			int index = 0; // 인덱스 생성 --> 첫 파일에 1을 붙여줄 것이기 때문
 			
-			// MultipartRequest객체 생성								요청, 저장하는 경로, 최대 파일크기, 인코딩, 따로 파일의 이름을 정하는 객체
-			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-			
+			// for each문 사용
+			for(Part part : parts) {
+				
+				if(!part.getName().equals("file1")) continue; //file1(input name 값)로 들어온 Part가 아니면 스킵
+				// getName() : part 객체가 가진 input:file 의 name을 가져오는 메소드
+				
+				if(part.getSubmittedFileName().equals("")) continue; //업로드 된 파일 이름이 없으면 스킵
+				// getSubmittedFileName() : part 객체가 가지고 있는 file 이름을 가져오는 메소드
+				
+				// 파일의 이름을 String형으로 받음
+				String fileName = part.getSubmittedFileName();
+				System.out.println("fileName ==> "+ fileName); // 확인용
+				
+				// index가 0이면 --> 첫 파일이면
+				if(index == 0) {
+					fileName = 1+fileName; // 앞에 1을 붙여줌
+				}
+				
+				// uploadUtil의 saveFiles 메소드 사용하여 파일을 저장
+				uploadUtil.saveFiles(part, uploadUtil.createFilePath());
+				
+				// UsedAttachment객체 생성
+				UsedAttachment at = new UsedAttachment();
+				
+				// 저장경로와 이름 저장
+				at.setFilePath(uploadUtil.createFilePath());
+				at.setOriginName(part.getSubmittedFileName());
+				
+				// fileList에 담기
+				fileList.add(at);
+			}
+			System.out.println("서블렛 fileList ==> " + fileList); // 값 확인용
 		
 			// 작성자, 제목, 내용 받아오기
 			String writer = String.valueOf(((User)request.getSession().getAttribute("user")).getUserNo());
-			String title = multiRequest.getParameter("title");
-			String content = multiRequest.getParameter("content").replaceAll("\n", "<br>"); 
+			String title = request.getParameter("title");
+			String content = request.getParameter("content").replaceAll("\n", "<br>").replaceAll("\u0020", "&nbsp;"); 
 			
 			System.out.println("writer 서블렛 ==> "+writer);
 			System.out.println("title 서블렛 ==> "+title);
 			System.out.println("content 서블렛 ==> "+content);
 			
 			// 상품상태
-			String productStatus = multiRequest.getParameter("productStatus");
+			String productStatus = request.getParameter("productStatus");
 			
 			//가격
-			int price = Integer.parseInt(multiRequest.getParameter("price"));
+			int price = Integer.parseInt(request.getParameter("price"));
 			
 			// 바로결제와 만나서 결제
-			String[] payments = multiRequest.getParameterValues("payments");
+			String[] payments = request.getParameterValues("payments");
 			String paymentOne = "";
 			String paymentTwo = "";
 			
@@ -100,9 +137,9 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			}
 			
 			// 카테고리 고유코드
-			String categoryLarge = multiRequest.getParameter("large");
-			String categoryMiddle = multiRequest.getParameter("middle");
-			String categorySmall = multiRequest.getParameter("small");
+			String categoryLarge = request.getParameter("large");
+			String categoryMiddle = request.getParameter("middle");
+			String categorySmall = request.getParameter("small");
 			
 			System.out.println("대분류 =>" + categoryLarge);
 			System.out.println("중분류 =>" + categoryMiddle);
@@ -129,31 +166,7 @@ public class InsertUsedBoardServlet extends HttpServlet {
 				System.out.println("서블렛 ub 객체 생성 =>"+ub);
 			}
 			
-			// 어레이리스트 생성
-			ArrayList<UsedAttachment> fileList = new ArrayList<>();
-			
-			// for문 돌려서 파일 이름 생성
-			for(int i = 1 ; i <= 10 ; i++) {
-				// name 이름 얻기
-				String name = "file"+i;
-				
-				// 오리지널 이름이 null이 아니면
-				if(multiRequest.getOriginalFileName(name) != null) {
-					
-					String originName = multiRequest.getOriginalFileName(name);
-					String changeName = multiRequest.getFilesystemName(name);
-					
-					System.out.println(originName);
-					System.out.println(changeName);
-					
-					UsedAttachment at = new UsedAttachment();
-					at.setFilePath(savePath);
-					at.setOriginName(originName);
-					at.setChangeName(changeName);
-					
-					fileList.add(at);
-				}
-			}
+
 			
 			int result = new UsedItemsBoardService().insertUsedBoard(ub, fileList);
 			
@@ -162,7 +175,7 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			}else {
 				
 				for(int i = 0 ; i < fileList.size() ; i++) {
-					File failedFile = new File(savePath + fileList.get(i).getChangeName());
+					File failedFile = new File(uploadUtil.createFilePath() + fileList.get(i).getOriginName());
 					failedFile.delete();
 				}
 				
