@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.uni.admin.model.dao.QtoADao;
+import com.uni.admin.model.vo.BlockBoard;
 import com.uni.serviceCenter.model.vo.QtoA;
 
 public class QtoAService {
@@ -52,6 +53,30 @@ public class QtoAService {
 		}
 		close(conn);
 		return result1;
+	}
+
+	public ArrayList<BlockBoard> BlockBoardList() {
+		Connection conn = getConnection();
+		
+		ArrayList<BlockBoard> list = new QtoADao().BlockBoardList(conn);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<BlockBoard> BlockBoardDetailList(String boardNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<BlockBoard> list = new QtoADao().BlockBoardDetailList(conn, boardNo);
+		close(conn);
+		return list;
+	}
+
+	public BlockBoard reportBoardDetail(String blockNo) {
+		Connection conn = getConnection();
+		
+		BlockBoard block = new QtoADao().reportBoardDetail(conn, blockNo);
+		close(conn);
+		return block;
 	}
 
 }

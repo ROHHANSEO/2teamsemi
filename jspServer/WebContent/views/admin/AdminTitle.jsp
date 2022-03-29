@@ -14,7 +14,7 @@
             <span class="title_name">관리자 페이지</span>
         </div>
         <div id="content_nav">
-            <a href="">신고 게시판</a>
+            <a id="reportPage" href="<%=request.getContextPath()%>/adminMainPage">신고 게시판</a>
             <a id="sevicecenterPage" href="<%=request.getContextPath()%>/sevicecenterPage">고객 센터</a>
             <a id="QtoAListPage" href="<%=request.getContextPath()%>/QtoAListPage">1:1 문의답변</a>
             <a href="">이벤트</a>
