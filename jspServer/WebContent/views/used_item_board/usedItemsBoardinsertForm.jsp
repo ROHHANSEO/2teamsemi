@@ -105,7 +105,7 @@ ArrayList<Category> cList = (ArrayList<Category>) request.getAttribute("category
 					<div class="checkarea">
 						<div>
 							<input type="text" name="price" id="price"
-								placeholder="가격을 입력해주세요" required>원
+								placeholder="가격을 입력해주세요" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>원
 						</div>
 						<div class="checkline">
 							<div class="product">

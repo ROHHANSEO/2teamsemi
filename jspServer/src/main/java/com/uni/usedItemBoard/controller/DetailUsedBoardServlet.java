@@ -43,12 +43,13 @@ public class DetailUsedBoardServlet extends HttpServlet {
 		System.out.println("서블렛 ua =>" + ua);
 		
 		if(ub != null && !ua.isEmpty()) {
-			request.setAttribute("bList", ub);
+			request.setAttribute("ub", ub);
 			request.setAttribute("fileList", ua);
 			
-			request.getRequestDispatcher("views/used_item_board/usedItemDetail.jsp");
+			request.getRequestDispatcher("views/used_item_board/usedItemDetail.jsp").forward(request, response);
 		}else {
-			
+			request.setAttribute("msg", "게시물 등록 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}
 

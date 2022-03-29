@@ -68,7 +68,7 @@ $(function(){
                     reader.onload = function (e) { 
                         
                         //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
-                        str += '<a id="image'+ index +'" class="image" onclick="deletebye(`'+index+'`);">'+"<span class='del'>x</span>"+'<img src="'+e.target.result+'" title="'+f.name+'" width=200 height=200></a>';
+                        str += '<a id="image'+ index +'" name="image" onclick="deletebye(`'+index+'`);">'+"<span class='del'>x</span>"+'<img src="'+e.target.result+'" title="'+f.name+'" width=200 height=200></a>';
                         str += '</li>';
                         $(str).appendTo('#sortimg');
                         ++index;

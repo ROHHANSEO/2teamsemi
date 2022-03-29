@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../../resources/css/usedItemsBoard/usedItemBoardList.css">
+<!-- <link rel="stylesheet" href="../../resources/css/usedItemsBoard/usedItemBoardList.css"> -->
 </head>
 <body>
 	<div>
@@ -34,7 +34,7 @@
 	    		<% } %>
 	    		<div></div>
 	    		<div>
-	    			<a href="<%= request.getContextPath() %>/usedBoardList.do" class="seq">최신순</a> | <a href="<%= request.getContextPath() %>/usedListLike.do" class="seq">인기순</a> | <a class="seq" href="<%= request.getContextPath() %>/usedListPriceDesc.do">고가순</a> | <a class="seq" href="<%= request.getContextPath() %>/usedListPriceAsc.do">저가순</a>
+	    			<a href="<%= request.getContextPath() %>/usedBoardList.do">최신순</a> | <a href="<%= request.getContextPath() %>/usedListLike.do">인기순</a> | <a href="<%= request.getContextPath() %>/usedListPriceDesc.do">고가순</a> | <a href="<%= request.getContextPath() %>/usedListPriceAsc.do">저가순</a>
 	    		</div>
 	    	</div>
 	    	<div class="item" id="article2">

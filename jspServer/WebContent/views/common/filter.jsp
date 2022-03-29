@@ -66,11 +66,8 @@
 				
 				let select = $("#large").children("option:selected").text()
 				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
-				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(select).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(select).addClass('filtercategory')
 
 				$("#selectCategory").empty() // 비워주기
 				$("#selectCategory").append(selectcate) // 담기
@@ -80,11 +77,8 @@
 				
 				let select = $("#middle").children("option:selected").text()
 				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
-				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(select).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(select).addClass('filtercategory')
 
 				$("#selectCategory").empty() // 비워주기
 				$("#selectCategory").append(selectcate) // 담기
@@ -94,11 +88,8 @@
 				
 				let select = $("#middle").children("option:selected").text()
 								
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
-
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(select).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(select).addClass('filtercategory')
 
 				$("#selectCategory").empty() // 비워주기
 				$("#selectCategory").append(selectcate) // 담기
@@ -112,13 +103,10 @@
 				minprice = $("#minprice").val() // 최소 금액 값 담기
 				maxprice = $("#maxprice").val() // 최대 금액 값 담기
 				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
-				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(minprice+" ~ "+maxprice).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(minprice+" ~ "+maxprice).addClass('filtercategory')
 			
-				$("#selectCategory").append(selectcate).append(button);
+				$("#selectCategory").append("ㅤ", selectcate)
 			}else if($("#minprice").val() == '' & $("#maxprice").val() != '' | $("#minprice").val() != '' & $("#maxprice").val() == ''){// 둘중 하나만 했을 시 포커스
 				alert("금액 범위를 검색할 때 두 금액 모두 작성하셔야 합니다.")
 				if($("#minprice").val() == '' & $("#maxprice").val() != ''){
@@ -140,13 +128,10 @@
 			if($("#searchInSearch").val() != ''){
 				search = $("#searchInSearch").val() // 검색내 검색 담기
 				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
-				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(search).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(search).addClass('filtercategory')
 				
-				$("#selectCategory").append(selectcate) // 담기
+				$("#selectCategory").append("ㅤ", selectcate) // 담기
 			}else{ // 없을시
 				search = 'null';
 			}
@@ -156,13 +141,10 @@
 				except = $('#deal').is(':checked') // boolean 담기
 				
 				let deal = "거래완료 게시글 제외하기";
-				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
-				
+								
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(deal).addClass('filtercategory').append(button);
-				$("#selectCategory").append(selectcate) // 담기
+				let selectcate = $("<span>").text(deal).addClass('filtercategory')
+				$("#selectCategory").append("ㅤ", selectcate) // 담기
 			}else{
 				except = false;
 			}
@@ -210,7 +192,11 @@
 							let thumnail = $("<div>").addClass("thumbnail").html(aTag);
 							
 							article.append(thumnail);
+							
 						})
+					}else{
+						let msg = "필터와 일치한 게시물이 존재하지 않습니다.";
+						article.append(msg);
 					}
 				}
 			})
@@ -234,11 +220,8 @@
 				
 				let select = $("#large").children("option:selected").text()
 				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
-				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(select).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(select).addClass('filtercategory')
 
 				$("#selectCategory").empty() // 비워주기
 				$("#selectCategory").append(selectcate) // 담기
@@ -248,11 +231,8 @@
 				
 				let select = $("#middle").children("option:selected").text()
 				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
-				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(select).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(select).addClass('filtercategory')
 
 				$("#selectCategory").empty() // 비워주기
 				$("#selectCategory").append(selectcate) // 담기
@@ -262,14 +242,12 @@
 				
 				let select = $("#middle").children("option:selected").text()
 								
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
-
+				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(select).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(select).addClass('filtercategory')
 
 				$("#selectCategory").empty() // 비워주기
-				$("#selectCategory").append(selectcate) // 담기
+				$("#selectCategory").append("ㅤ", selectcate) // 담기
 				console.log("소분류까지 선택")
 			}else{ // 분류 선택 안했을시
 				cate = "대분류";
@@ -280,13 +258,11 @@
 				minprice = $("#minprice").val() // 최소 금액 값 담기
 				maxprice = $("#maxprice").val() // 최대 금액 값 담기
 				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
 				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(minprice+" ~ "+maxprice).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(minprice+" ~ "+maxprice).addClass('filtercategory')
 			
-				$("#selectCategory").append(selectcate).append(button);
+				$("#selectCategory").append("ㅤ", selectcate)
 			}else if($("#minprice").val() == '' & $("#maxprice").val() != '' | $("#minprice").val() != '' & $("#maxprice").val() == ''){// 둘중 하나만 했을 시 포커스
 				alert("금액 범위를 검색할 때 두 금액 모두 작성하셔야 합니다.")
 				if($("#minprice").val() == '' & $("#maxprice").val() != ''){
@@ -308,13 +284,11 @@
 			if($("#searchInSearch").val() != ''){
 				search = $("#searchInSearch").val() // 검색내 검색 담기
 				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
 				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(search).addClass('filtercategory').append(button);
+				let selectcate = $("<span>").text(search).addClass('filtercategory')
 				
-				$("#selectCategory").append(selectcate) // 담기
+				$("#selectCategory").append("ㅤ", selectcate) // 담기
 			}else{ // 없을시
 				search = 'null';
 			}
@@ -325,12 +299,10 @@
 				
 				let deal = "거래완료 게시글 제외하기";
 				
-				// x 버튼을 생성후 class 추가와 type 부여
-				let button = $("<button>").text('x').addClass("deleteCategory").attr("type", "button");//type='button' onclick='delete';
 				
 				// span 태그에 텍스트값을 담고 id 를 부여
-				let selectcate = $("<span>").text(deal).addClass('filtercategory').append(button);
-				$("#selectCategory").append(selectcate) // 담기
+				let selectcate = $("<span>").text(deal).addClass('filtercategory')
+				$("#selectCategory").append("ㅤ", selectcate) // 담기
 			}else{
 				except = false;
 			}
