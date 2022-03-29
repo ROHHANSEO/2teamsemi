@@ -189,7 +189,7 @@
 		<p> 경매 게시판 글 작성</p>
 	</div>
 	<div class="underheaderenrollF"></div><!-- 라인 부분 -->
-	<form name="auctionForm" class="auctionForm" action="<%=request.getContextPath()%>/insertAuction.do" method="post" enctype="multipart/form-data">
+	<form name="auctionForm" class="auctionForm" action="<%=request.getContextPath()%>/insertAuctionform.do" method="post" enctype="multipart/form-data">
 	<div class="enrollTitlesection"><!-- 제목 div -->
 		<span class="titleNamepart"> 제목<span class="dotpoint">*</span></span>
 		<input type="text" name="title" class="counttitlename" placeholder="제목을 입력해주세요" required >
@@ -241,19 +241,19 @@
 	<div class="auctionprice"><!-- 경매가격 선택 div -->
 		<span class="titleNamepart"> 가격 <span class="dotpoint">*</span></span>
 		<div>
-			<input type="text" name="auctionPrice" id="fprice" placeholder="경매 시작가를 적어주세요" class="fprice" required> 원
+			<input type="text" name="fprice" id="fprice" placeholder="경매 시작가를 적어주세요" class="fprice" required> 원
 		</div>
 	</div>
 	<div class="auctionprice"><!-- 올릴경매가 div -->
 		<span class="titleNamepart"> 올릴 경매가 <span class="dotpoint">*</span></span>
 		<div>
-			<input type="text" name="auctionPrice" id="fprice" placeholder="올릴 경매가를 적어주세요" class="fprice" required> 원
+			<input type="text" name="sprice" id="sprice" placeholder="올릴 경매가를 적어주세요" class="fprice" required> 원
 		</div>
 	</div>
 	<div class="auctionprice"><!--즉시 판매가  div -->
 		<span class="titleNamepart"> 즉시 판매가 <span class="dotpoint">*</span></span>
 		<div>
-			<input type="text" name="auctionPrice" id="fprice" placeholder="즉시 판매가를 적어주세요" class="fprice" required> 원
+			<input type="text" name="tprice" id="tprice" placeholder="즉시 판매가를 적어주세요" class="fprice" required> 원
 		</div>
 	</div>
 	<div class="enrollcontentsection"><!-- 내용 작성 div -->
@@ -343,7 +343,7 @@
                     reader.onload = function (e) { 
                         
                         //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
-                        str += '<a id="image'+ index +'" class="image" onclick="deletebye(`'+index+'`);">'+"<span class='del'>x</span>"+'<img src="'+e.target.result+'" title="'+f.name+'" width=200 height=200></a>';
+                        str += '<a id="image'+ index +'" class="image" onclick="deletebye(`'+index+'`);">'+"<span class='del'>x</span>"+'<img name="img'+index+'" src="'+e.target.result+'" title="'+f.name+'" width=200 height=200></a>';
                         str += '</li>';
                         $(str).appendTo('#sortimg');
                         ++index;

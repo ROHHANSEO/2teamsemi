@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.usedItemBoard.model.vo.Category, com.uni.auction.model.vo.*"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.usedItemBoard.model.vo.Category, com.uni.auction.model.vo.*" %>
 <%
 	   	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");
-		ArrayList<Auction> Alist = (ArrayList<Auction>)request.getAttribute("Alist");
+		ArrayList<Auction> aulist = (ArrayList<Auction>)request.getAttribute("aulist");
 		
 		PageInfo pi = (PageInfo)request.getAttribute("pi");
 		
@@ -73,7 +73,7 @@
       	margin-top: 20px;
       }
       .selectparta{
-      	margin-left:15px;
+      	margin-left:20px;
       	font-size:25px;
       	display: inline-block;
       }
@@ -81,12 +81,34 @@
       	right: 50%;
     	float: right;
     	margin-top:5px;
-    	margin-right:5px;
+    	margin-right:10px;
       }
       .selectpartb a:hover{
        	color :  #993333;
         font-size: large;
         transition : all .35s;
+      }
+      .auctionList{
+      	border:2px solid blue;
+
+      }
+      .auctionTot{
+      	margin-top:20px;
+      }
+      .itemLIst{
+      	border:2px solid black;
+      	display:flex;
+      	width:95%;
+      	margin:0 auto;	
+      	margin-bottom:10px;
+      }
+      .contentPart{
+      	border:2px solid red;
+      	margin-left:15px;
+      	width: 60%;
+      }
+      .priceContent{
+      	display:flex;
       }
 </style>
 </head>
@@ -116,8 +138,24 @@
 				<a href="#">고가순</a>
 			</div>
 		</div>
-	<!-- 페이징바 만들기 -->
-	<div class="pagingArea" align="center">
+		<div class="auctionTot"><!-- 게시글  -->
+		<%for(Auction al : aulist){ %>
+		<div class="itemLIst">
+		<div class="auctionList"><!-- 이미지 부분 -->
+		<input type="hidden" value="<%=al.getAuctionNo()%>">
+		<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="100" height="100">
+		</div>
+		<div class="contentPart"><!-- 글부분 -->
+			<div> <p><%=al.getSellStatus() %> </p></div>
+			<div> <p><%=al.getAuctionTitle() %> </p></div>
+			<div class="priceContent"> <p><%=al.getItemDirect() %>원 </p><p>즉시구매가 </p></div>
+			<div> <p>경매 마감 시간 : </p></div>
+		</div>
+		</div>
+		<%} %>
+		</div>
+		<!-- 페이징바 만들기 -->
+		<div class="pagingArea" align="center">
 		<!-- 맨 처음으로 (<<) -->
 		<button onclick="location.href='<%=request.getContextPath()%>/auctionPage.do?currentPage=1'"> &lt;&lt; </button>
 	
@@ -159,6 +197,7 @@
 			console.log(input)
 			$(".selectparta").text(input);
 		})
+		
 	</script>
 </body>
 </html>

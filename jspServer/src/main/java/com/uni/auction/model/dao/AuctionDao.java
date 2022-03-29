@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.uni.auction.model.vo.Auction;
+import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
 import com.uni.serviceCenter.model.vo.ServiceCenter;
 import com.uni.usedItemBoard.model.vo.Category;
+import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 public class AuctionDao {
@@ -115,11 +117,11 @@ public class AuctionDao {
 		int endRow = startRow + pi.getBoardLimit() -1;
 		
 		//selectList=SELECT * FROM(SELECT ROWNUM RNUM, A.* \
-		//FROM(SELECT BOARD_NO, AUCTION_TITLE, COUNT, ITEM_DIRECT,SELL_STATUS, CHANGE_NAME \
-		//FROM AUCTION_SELL JOIN(SELECT * FROM AUCTION_ATT WHERE FILE_NO IN(SELECT MIN(FILE_NO) FILE_NO \
-		//FROM AUCTION_ATT WHERE STATUS='Y' GROUP BY BOARD_NO)) USING (BOARD_NO) \
-		//WHERE AUCTION_SELL.STATUS='Y' ORDER BY BOARD_NO DESC) A) WHERE RNUM BETWEEN ? AND ?\
-		
+		//FROM(SELECT BOARD_NO, CATEGORYCODE, AUCTION_TITLE, COUNT, ITEM_DIRECT,SELL_STATUS, CHANGE_NAME, TO_CHAR(CREATE_DATE,'yyMMddhh24mi') CA\
+		//FROM AUCTION_SELL JOIN(SELECT * FROM AUCTION_ATT \
+		//WHERE FILE_NO IN(SELECT MIN(FILE_NO) FILE_NO FROM AUCTION_ATT WHERE STATUS='Y' GROUP BY REF_CATEGORY)) \
+		//ON (BOARD_NO=REF_CATEGORY) WHERE AUCTION_SELL.STATUS='Y' ORDER BY BOARD_NO DESC) A) \
+		//WHERE RNUM BETWEEN ? AND ?
 		try {
 			// sql문 담기
 			pstmt = conn.prepareStatement(sql);
@@ -134,12 +136,14 @@ public class AuctionDao {
 			while(rset.next()) {
 				// 객체를 생성하여 list에 담는다
 				list.add(new Auction(rset.getInt("BOARD_NO"),
-											rset.getString("AUCTION_TITLE"),
-											rset.getInt("ITEM_DIRECT"),
-											rset.getString("SELL_STATUS"),
-											rset.getInt("COUNT"),
-											rset.getString("CHANGE_NAME")
-											));
+									rset.getString("CATEGORYCODE"),
+									rset.getString("AUCTION_TITLE"),
+									rset.getInt("ITEM_DIRECT"),
+									rset.getString("SELL_STATUS"),
+									rset.getInt("COUNT"),
+									rset.getString("CHANGE_NAME"),
+									rset.getString(9)
+									));
 			}
 			System.out.println("다오 => "+list);
 		} catch (SQLException e) {
@@ -264,6 +268,65 @@ public class AuctionDao {
 		}
 		
 		return cList;
+	}
+
+	public int insertAuctionItem(Connection conn, Auction ub) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("insertAuctionItem"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		//INSERT INTO AUCTION_SELL VALUES(SEQ_AUCTION.NEXTVAL, 2, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, SYSDATE, DEFAULT, DEFAULT, DEFAULT)
+		//고유코드, 회원번호, 제목, 내용, 상품 상태, 경매시작가, 올릴 경매가, 즉시 판매가
+		System.out.println("insert 물건 다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setString(1, ub.getCategorycode()); // 고유코드
+			pstmt.setInt(2, Integer.parseInt(ub.getAuctionWriter())); // 회원번호
+			pstmt.setString(3, ub.getAuctionTitle()); // 제목
+			pstmt.setString(4, ub.getAuctionContent()); // 내용
+			pstmt.setString(5, ub.getItemCondition());	// 상품 상태
+			pstmt.setInt(6, ub.getItemPrice());	// 경매 시작가 
+			pstmt.setInt(7, ub.getItemUp());	// 올릴 경매가 
+			pstmt.setInt(8, ub.getItemDirect());	// 즉시판매가
+	
+			System.out.println("다오왔다감");
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		return result; // int로 반환
+	
+	}
+
+	public int insertAuctionAttachment(Connection conn, ArrayList<AuctionAttachment> fileList) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("insertAuctionAttachment"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		try {
+			for(int i = 0 ; i < fileList.size() ; i++) {
+				AuctionAttachment at = fileList.get(i);
+				
+				pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+				
+				pstmt.setString(1, at.getOriginName()); 
+				pstmt.setString(2, at.getChangeName()); 
+				pstmt.setString(3, at.getFilePath());
+				
+				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
+				System.out.println("Dao result => " + result); // 임의 확인
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
 	}
 	
 

@@ -5,8 +5,7 @@ import java.sql.Date;
 public class Auction {
 
 	private int auctionNo; //게시글 번호
-	private String category; //카테고리 분류(1~7)
-	//1. 신발, 2. 의류, 3.패션 잡화, 4. 라이프, 5. 테크, 6. 진품 명품, 7.기타
+	private String category; //카테고리 분류
 	private String categorycode; //고유코드(최대 소분류)
 	private String auctionWriter; //게시글 작성자(번호 또는 이름)
 	private String auctionTitle; //게시글 제목
@@ -17,6 +16,7 @@ public class Auction {
 	private int itemDirect; //즉시 판매가 
 	private String sellStatus; //거래 상태(판매중, 판매완료, 거래중)
 	private int count; //조회수
+	private String dateget;//가져온 날짜
 	private Date createDate; //게시글 작성일
 	private String status; //게시글 상태값(Y, N) -> 삭제 할시 N으로 
 	private String titleImg; //게시글 타이틀 이미지 (서버에 입력되어있는 이름)
@@ -25,7 +25,6 @@ public class Auction {
 		// TODO Auto-generated constructor stub
 	}
 
-	////글번호, 제목, 조회수, 즉시판매갑,판매상태, 사진 메인
 	
 	
 	public Auction(int auctionNo, String category, String categorycode, String auctionWriter, String auctionTitle,
@@ -49,15 +48,43 @@ public class Auction {
 		this.titleImg = titleImg;
 	}
 
-	public Auction(int auctionNo, String auctionTitle, int itemDirect, String sellStatus, int count, String titleImg) {
+	public Auction(String categorycode, String auctionWriter, String auctionTitle, String auctionContent,
+			String itemCondition, int itemPrice, int itemUp, int itemDirect) {
+		super();
+		this.categorycode = categorycode;
+		this.auctionWriter = auctionWriter;
+		this.auctionTitle = auctionTitle;
+		this.auctionContent = auctionContent;
+		this.itemCondition = itemCondition;
+		this.itemPrice = itemPrice;
+		this.itemUp = itemUp;
+		this.itemDirect = itemDirect;
+	}
+
+	public Auction(int auctionNo,String categorycode, String auctionTitle, int itemDirect, String sellStatus, int count, String titleImg, String dateget) {
 		super();
 		this.auctionNo = auctionNo;
+		this.categorycode= categorycode;
 		this.auctionTitle = auctionTitle;
 		this.itemDirect = itemDirect;
 		this.sellStatus = sellStatus;
 		this.count = count;
 		this.titleImg = titleImg;
+		this.dateget = dateget;
 	}
+
+	
+	public String getDateget() {
+		return dateget;
+	}
+
+
+
+	public void setDateget(String dateget) {
+		this.dateget = dateget;
+	}
+
+
 
 	public int getAuctionNo() {
 		return auctionNo;
@@ -179,14 +206,16 @@ public class Auction {
 		this.titleImg = titleImg;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Auction [auctionNo=" + auctionNo + ", category=" + category + ", categorycode=" + categorycode
 				+ ", auctionWriter=" + auctionWriter + ", auctionTitle=" + auctionTitle + ", auctionContent="
 				+ auctionContent + ", itemCondition=" + itemCondition + ", itemPrice=" + itemPrice + ", itemUp="
 				+ itemUp + ", itemDirect=" + itemDirect + ", sellStatus=" + sellStatus + ", count=" + count
-				+ ", createDate=" + createDate + ", status=" + status + ", titleImg=" + titleImg + "]";
+				+ ", dateget=" + dateget + ", createDate=" + createDate + ", status=" + status + ", titleImg="
+				+ titleImg + "]";
 	}
-	
-	
+
 }
