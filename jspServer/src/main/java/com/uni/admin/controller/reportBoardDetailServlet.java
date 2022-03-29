@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.uni.admin.model.service.QtoAService;
 import com.uni.admin.model.vo.BlockBoard;
 
 /**
- * Servlet implementation class AdminMainPageServlet
+ * Servlet implementation class reportBoardDetailServlet
  */
-@WebServlet("/adminMainPage")
-public class AdminMainPageServlet extends HttpServlet {
+@WebServlet("/reportBoardDetail")
+public class reportBoardDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminMainPageServlet() {
+    public reportBoardDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,19 +32,13 @@ public class AdminMainPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<BlockBoard> list = new QtoAService().BlockBoardList();
+		String blockNo = request.getParameter("blockNo");
+		BlockBoard block = new QtoAService().reportBoardDetail(blockNo);
 		
-		if(list.isEmpty()) {
-			request.setAttribute("msg", "신고된 게시물이 없습니다.");
-		} else {
-			request.setAttribute("list", list);
+		if(block != null) {
+			response.setContentType("application/json; charset = utf-8");
+			new Gson().toJson(block, response.getWriter());
 		}
-		
-		request.getRequestDispatcher("views/admin/AdminMainPage.jsp").forward(request, response);
-		
-		
-		
-		
 	}
 
 	/**

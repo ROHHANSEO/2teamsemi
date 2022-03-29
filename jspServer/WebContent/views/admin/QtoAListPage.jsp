@@ -13,6 +13,9 @@
 <body>
 <%@include file="../common/header.jsp" %>
 <%@include file="../admin/AdminTitle.jsp" %>
+	<div id="title_box">
+		<span class="title_name">1:1 문의답변</span>
+	</div>
 	<div class = "testadmin">
 		<table class="questionList" id="questionList" >
 			<thead>

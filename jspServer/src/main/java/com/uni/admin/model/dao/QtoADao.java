@@ -1,5 +1,7 @@
 package com.uni.admin.model.dao;
 
+import static com.uni.common.JDBCTemplate.close;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,11 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
-import static com.uni.common.JDBCTemplate.*;
 
 import com.uni.admin.model.service.Reply;
+import com.uni.admin.model.vo.BlockBoard;
 import com.uni.serviceCenter.model.vo.QtoA;
 
 public class QtoADao {
@@ -159,6 +164,104 @@ public class QtoADao {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<BlockBoard> BlockBoardList(Connection conn) {
+		ArrayList<BlockBoard> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("BlockBoardList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<>();
+			while(rset.next()) {
+				
+				list.add(new BlockBoard(rset.getString("CLASS_NAME"),
+									rset.getString("BOARD_TITLE"),
+									rset.getInt("BOARD_NO"),
+									rset.getInt("COUNT")));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<BlockBoard> BlockBoardDetailList(Connection conn, String boardNo) {
+		ArrayList<BlockBoard> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("BlockBoardDetailList");
+		System.out.println(boardNo);
+		System.out.println(sql);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(boardNo));
+			System.out.println(pstmt);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<>();
+			while(rset.next()) {
+				
+				BlockBoard block = new BlockBoard(rset.getInt("BLOCK_NO"),
+									rset.getString("BLOCK_TITLE"),
+									rset.getString("BLOCK_CATEGORY"));
+				
+				DateFormat sdFormat = new SimpleDateFormat("yy-MM-dd");
+				String day = sdFormat.format(rset.getDate("BLOCK_T"));
+				
+				block.setUpTime(day);
+				list.add(block);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public BlockBoard reportBoardDetail(Connection conn, String blockNo) {
+		BlockBoard block = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("reportBoardDetail");
+		System.out.println(sql);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(blockNo));
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				block = new BlockBoard(rset.getString("BLOCK_TITLE"),
+									rset.getString("BLOCK_CON"));
+				
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return block;
 	}
 
 }
