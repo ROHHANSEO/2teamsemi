@@ -1,13 +1,16 @@
 package com.uni.auction.model.service;
 
 import static com.uni.common.JDBCTemplate.close;
+import static com.uni.common.JDBCTemplate.commit;
 import static com.uni.common.JDBCTemplate.getConnection;
+import static com.uni.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.uni.auction.model.dao.AuctionDao;
 import com.uni.auction.model.vo.Auction;
+import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
@@ -73,6 +76,22 @@ public class AuctionService {
 		close(conn);
 		
 		return cList;
+	}
+
+	public int insertAuctionItem(Auction ub, ArrayList<AuctionAttachment> fileList) {
+		Connection conn = getConnection();
+		
+		int result1 = new AuctionDao().insertAuctionItem(conn, ub);
+		int result2 = new AuctionDao().insertAuctionAttachment(conn, fileList);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1*result2;
 	}
 
 	

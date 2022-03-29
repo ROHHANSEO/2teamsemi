@@ -60,7 +60,7 @@ public class AuctionListServlet extends HttpServlet {
 		pageLimit = 10;
 		
 		//게시글 최대갯수 
-		boardLimit = 10;
+		boardLimit = 5;
 		
 		maxPage = (int)Math.ceil((double)listCount/boardLimit);
 		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
@@ -77,13 +77,13 @@ public class AuctionListServlet extends HttpServlet {
 		// 페이지인포 객체를 생성 
 		PageInfo pi = new PageInfo(listCount, currentPage, startPage, endPage, maxPage, pageLimit, boardLimit);
 		
-		ArrayList<Auction> Alist = new AuctionService().selectList(pi);
-		System.out.println("Alist 옥션 리스트 =="+Alist);
+		ArrayList<Auction> aulist = new AuctionService().selectList(pi);
+		System.out.println("Alist 옥션 리스트 =="+aulist);
 		
 		ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
 		
 		// 담은 ArrayList 객체인 list를 속성에 담고
-		request.setAttribute("Alist", Alist);
+		request.setAttribute("aulist", aulist);
 		// pi 객체 또한 속성에 담는다
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
