@@ -27,7 +27,7 @@
 			<table align="center">
 				<tr>
 					<td>제목</td>
-					<td colspan="3"><input type="text" name="title" value="<%= e.getNoticeTitle() %>"></td>
+					<td colspan="3"><input type="text" id="Title" name="title" value="<%= e.getNoticeTitle() %>"></td>
 				</tr>
 				
 				<tr>
@@ -42,12 +42,22 @@
 			</table>
 			<br>
 			
+			
 			<div class="btns" align="center">
-				<button type="submit" class="commonwritebutton ses1" >취소</button>
+				<button type="button" class="commonwritebutton ses2" onclick="location.href='<%=request.getContextPath() %>/eventpage.do'">취소</button>
 				<button type="submit" class="commonwritebutton ses1" >수정</button>
 			</div>
 		</form>
 	</div>
+	<script>
+	
+	if ($("#text").val() == "") {
+		alert("제목을 정확히 입력해주세요");
+		return;
+		}
+	
+	
+	</script>
 	<%@ include file="../common/footer.jsp" %>
 	
 </body>

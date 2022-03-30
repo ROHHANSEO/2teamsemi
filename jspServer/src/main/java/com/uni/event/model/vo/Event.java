@@ -12,13 +12,15 @@ public class Event {
 	private String category;
 	private Date createDate;
 	private String status;
+	private int count;
 	
-	public Event (int noticeno,  String noticeTitle, String userid, String category, Date createDate ){
+	public Event (int noticeno,  String noticeTitle, String userid, String category, int count, Date createDate ){
 		super();
 		this.noticeno = noticeno;
 		this.noticeTitle = noticeTitle;
 		this.userid = userid;
 		this.category = category;
+		this.count = count;
 		this.createDate = createDate;
 		
 	}
@@ -33,15 +35,33 @@ public class Event {
 
 	}
 	
-	public Event (int noticeno,  String noticeTitle, String userid, String category, String noticeContent, Date createDate ){
+	public Event (int noticeno,  String noticeTitle, String userid, String category, String noticeContent, int count, Date createDate ){
 		super();
 		this.noticeno = noticeno;
 		this.noticeTitle = noticeTitle;
 		this.userid = userid;
 		this.category = category;
 		this.noticeContent=noticeContent;
+		this.count = count;
 		this.createDate = createDate;
 		
+	}
+	
+	
+
+
+
+	public Event(String title, String writer, String replaceAll) {
+		this.noticeTitle = noticeTitle;
+		this.userid = userid;
+		this.noticeContent=noticeContent;
+		
+	}
+
+
+
+	public Event() {
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -139,6 +159,20 @@ public class Event {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
+
+
+
+	public int getCount() {
+		return count;
+	}
+
+
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 
 
@@ -146,8 +180,12 @@ public class Event {
 	public String toString() {
 		return "Event [noticeno=" + noticeno + ", userno=" + userno + ", userid=" + userid + ", noticeTitle="
 				+ noticeTitle + ", noticeContent=" + noticeContent + ", category=" + category + ", createDate="
-				+ createDate + ", status=" + status + "]";
+				+ createDate + ", status=" + status + ", count=" + count + "]";
 	}
+
+
+
+	
 	
 	
 	

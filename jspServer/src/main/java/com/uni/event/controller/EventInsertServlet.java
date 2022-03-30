@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class EventInsertServlet
  */
-@WebServlet("/insertEventPage.do")
+@WebServlet("/enrollevent.do")
 public class EventInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,6 +26,7 @@ public class EventInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		
 		request.getRequestDispatcher("views/EventNotice/EventinsertForm.jsp").forward(request, response);
 	}

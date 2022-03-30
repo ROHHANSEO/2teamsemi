@@ -1,7 +1,18 @@
 .container{
 		display: flex;
 		justify-content: center;
+		width:70%;
+		margin:0 auto;
+		margin-top:50px;
 	}
+
+h3{
+	float:center;
+	margin:0 auto;
+	align:center;
+	margin-top:10px;
+	color: #993333;	
+}
 
 .bts7{
 	width:100px;
