@@ -10,19 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.uni.auction.model.service.AuctionService;
-import com.uni.usedItemBoard.model.vo.Category;
+import com.uni.auction.model.vo.Auction;
+import com.uni.auction.model.vo.AuctionAttachment;
 
 /**
- * Servlet implementation class AuctionItemInsertServlet
+ * Servlet implementation class DetailAuctionServlet
  */
-@WebServlet("/insertAuction.do")
-public class AuctionItemInsertServlet extends HttpServlet {
+@WebServlet("/detailAuction.do")
+public class DetailAuctionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AuctionItemInsertServlet() {
+    public DetailAuctionServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +32,24 @@ public class AuctionItemInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Category> cList = new AuctionService().categoryList();
-		//카테고리를 가져온다 
+		int scno = Integer.parseInt(request.getParameter("scno"));
+		System.out.println(scno +"scno 옥션 디테일");
 		
+		Auction ac = new AuctionService().selectAuction(scno);
+		ArrayList<AuctionAttachment> at = new AuctionService().selectAttachment(scno);
 		
-		request.setAttribute("category", cList);//대중소 카테고리를 다 가져온다.
-
-		request.getRequestDispatcher("views/auction/auctionItemsInsertForm.jsp").forward(request, response); // 화면 전환
+		System.out.println("디테일 옥션 + "+ ac);
+		//System.out.println("디테일 옥션 + "+ at);
+		
+		if(ac != null & !at.isEmpty()) {
+			request.setAttribute("ac", ac);//옥션 정보 
+			request.setAttribute("fileList", at);//사진 정보들 
+			
+			request.getRequestDispatcher("views/auction/auctionDetail.jsp").forward(request, response);
+		}else {
+			request.setAttribute("msg", "게시물 등록 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

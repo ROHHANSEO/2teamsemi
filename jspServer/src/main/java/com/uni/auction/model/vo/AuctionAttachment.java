@@ -24,7 +24,12 @@ public class AuctionAttachment {
 		this.originName = originName;
 		this.changeName = changeName;
 	}
-
+	
+	public AuctionAttachment(int fileNo, String originName) {
+		super();
+		this.fileNo = fileNo;
+		this.originName = originName;
+	}
 
 
 	public AuctionAttachment(int fileNo, int refBoardNo, String originName, String changeName, String filePath, Date uploadDate,

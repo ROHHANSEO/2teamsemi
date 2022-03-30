@@ -68,23 +68,20 @@
   	.firstcategory{
   		width: 150px;
   		height: 30px;
-  		border: 1px solid lightgray;
   		border-radius: 5px;
   	}
   	.imgDiv{
   		display:flex;
-  		border-bottom: 1px solid black;
   		margin:10px auto 10px auto;
   	}
   	#imagin {
-    width: 59vw;
-    border: 1px solid;
-    margin-right:15px;
-    margin-bottom:15px;
-}
+	    width: 59vw;
+	    margin-right:15px;
+	    margin-bottom:15px;
+	}
   	.article{
-	display: flex;
-}
+		display: flex;
+	}
 	#camera{
 	    position: relative;
 	    display: flex;
@@ -124,7 +121,6 @@
 	    position: relative;
 	    background: #000000;
 	    height: 200px;
-
 	}
 	
 	.del{

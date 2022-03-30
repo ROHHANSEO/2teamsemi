@@ -22,7 +22,7 @@
 	.wtotal{
 		border:2px solid black;
 		width:70%;
-		height:100vh;
+		height:100%;
 		margin:0 auto;
 	}
 	.categorylist{
@@ -34,22 +34,21 @@
 
 	}
 	.categorydiv{
-		border:1px solid black;
         text-align: center;
         width: 70%;
 		hight:15%;
+		border:1px solid black;
      }
      .categorydiv:hover{
      	background-color: #993333;
  		color: white;
      }
      .categorydiv p{
-     	
      	line-height:6;
      }
      .searchfilter{
      	background-color:lightgray;
-     	height:5%;
+     	height:50px;
      	margin:auto;
      	text-align:center;
      	display:flex;
@@ -70,7 +69,7 @@
       	flex:auto;
       }
       .selectpart{
-      	margin-top: 20px;
+      	margin: 20px 30px 50px 30px;
       }
       .selectparta{
       	margin-left:20px;
@@ -88,27 +87,49 @@
         font-size: large;
         transition : all .35s;
       }
-      .auctionList{
-      	border:2px solid blue;
-
-      }
       .auctionTot{
       	margin-top:20px;
+      	
       }
       .itemLIst{
-      	border:2px solid black;
       	display:flex;
-      	width:95%;
-      	margin:0 auto;	
-      	margin-bottom:10px;
+      	width:90%;
+      	margin:0 5% 30px 5%;
       }
       .contentPart{
-      	border:2px solid red;
       	margin-left:15px;
       	width: 60%;
+      	margin-top:30px;
       }
       .priceContent{
       	display:flex;
+      	margin-bottom:10px;
+      }
+      .statusauction{
+      	margin-bottom:10px;
+      	font-size:16px;
+      	color:#993333;
+      }
+      .titleauction{
+      	margin-bottom:10px;
+      	font-size:19px;
+      }
+      .endauction{
+      	margin-top:15px;
+      	font-size:14px;
+      }
+      .b{
+      	margin-left:10px;
+      	margin-top:10px;
+      	font-size:12px;
+      }
+      .a{
+      	font-size:22px;
+      }
+      .itemLIst:hover{
+      	cursor: pointer;
+      	opacity: 0.8;
+      	background-color:rgb(236, 236, 236);;
       }
 </style>
 </head>
@@ -139,20 +160,20 @@
 			</div>
 		</div>
 		<div class="auctionTot"><!-- 게시글  -->
-		<%for(Auction al : aulist){ %>
-		<div class="itemLIst">
-		<div class="auctionList"><!-- 이미지 부분 -->
-		<input type="hidden" value="<%=al.getAuctionNo()%>">
-		<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="100" height="100">
-		</div>
-		<div class="contentPart"><!-- 글부분 -->
-			<div> <p><%=al.getSellStatus() %> </p></div>
-			<div> <p><%=al.getAuctionTitle() %> </p></div>
-			<div class="priceContent"> <p><%=al.getItemDirect() %>원 </p><p>즉시구매가 </p></div>
-			<div> <p>경매 마감 시간 : </p></div>
-		</div>
-		</div>
-		<%} %>
+			<%for(Auction al : aulist){ %>
+			<div class="itemLIst">
+				<div class="auctionList"><!-- 이미지 부분 -->
+					<input type="hidden" value="<%=al.getAuctionNo()%>" class="auctionno">
+					<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="200" height="200">
+				</div>
+				<div class="contentPart"><!-- 글부분 -->
+					<div class="statusauction"> <p><%=al.getSellStatus() %> </p></div>
+					<div class="titleauction"> <p><%=al.getAuctionTitle() %> </p></div>
+					<div class="priceContent"> <span class="a" ><%=al.getPriceFo() %>원 </span><p class="b">즉시구매가 </p></div>
+					<div class="endauction"> <p>경매 마감 : <%=al.getDateget() %></p></div>
+				</div>
+			</div>
+			<%} %>
 		</div>
 		<!-- 페이징바 만들기 -->
 		<div class="pagingArea" align="center">
@@ -190,13 +211,19 @@
 	
 	</div>
 	
-	<%--  <%@ include file = "../common/footer.jsp" %> --%>
+	<%@ include file = "../common/footer.jsp" %> 
 	<script>
 		$(".categorydiv").click(function(){
 			var input = $(this).text();
 			console.log(input)
 			$(".selectparta").text(input);
 		})
+		$(".itemLIst").click(function(){
+			var scno = $(this).children().children().val();
+			console.log(scno)
+			location.href="<%=request.getContextPath()%>/detailAuction.do?scno="+scno;
+		})
+	
 		
 	</script>
 </body>
