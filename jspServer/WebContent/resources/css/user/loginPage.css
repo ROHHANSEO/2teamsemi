@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+#content{
+	display: block;
+    width: 100vw;
+    height: 80vh;
+    text-align: center;
+    overflow: hidden;
+}
+
+#logo {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+#logo img {
+    width: 200px;
+    height: 200px;
+}
+
+.form {
+    display: inline-block;
+}
+
+input[type=text],input[name=password]{
+    width: 200px;
+    height: 30px;
+}
+
+tr {
+    height: 45px;
+}
+
+td {
+    width: 200px;
+}
+
+#input_table tr:nth-child(3) {
+    text-align: right;
+}
+
+button {
+    width: 200px;
+    height: 30px;
+    background-color: #993333;
+    color: #fff;
+    border-radius: 10px;
+}
+
+#page_select_btn{
+    display: flex;
+    width: 400px;
+}
+
+#page_select_btn span {
+    display: block;
+    width: 150px;
+    height: 20px;
+    margin: 10px 15px;
+}
+
+

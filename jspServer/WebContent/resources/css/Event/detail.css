@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+
+.outer{
+		width:80vw;
+		height:500px;
+		background:white;
+		color:black;
+		margin:auto;
+		margin-top:50px;
+	}
+
+.etitle{
+	
+	border-bottom: 1px solid #993333;
+}
+
+h2{
+	color: #993333;
+}
+
+#detailArea{width:80%; margin:auto;border-color:black;}
+
+#detailArea p{height:150px;}
+
+.btns a{text-decoration:none; color:white;}
+
+.btnupdate:hover{
+	color:#993333;
+}
+
+.w{
+	color:#993333;
+}
+.c{
+	
+}
+.d{
+	
+}
+.n{
+	
+}

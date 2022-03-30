@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.outer{
+		width:800px;
+		height:500px;
+		background:white;
+		color:black;
+		margin:auto;
+		margin-top:50px;
+	}
+	#updateForm{width:60%; margin:auto;}
+	#updateForm>table{border:1px solid white;}
+	#updateForm>table input{
+		width:100%;
+		box-sizing:border-box;
+	}
+	
+.ses1 {
+	width: 100px;
+	height:30px;
+}
+
+
+h2{
+	border-bottom: 1px solid #993333;
+	margin-bottom:30px; 
+}
