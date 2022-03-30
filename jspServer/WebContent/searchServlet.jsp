@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트&공지사항 검색</title>
+<title>Insert title here</title>
 </head>
 <body>
 

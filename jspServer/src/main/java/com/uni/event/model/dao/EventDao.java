@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.uni.admin.model.service.Reply;
 import com.uni.event.model.vo.*;
 
 public class EventDao {
@@ -51,6 +52,7 @@ public class EventDao {
 								   rset.getString("NOTICE_TITLE"),
 								   rset.getString("USER_ID"),
 								   rset.getString("CATEGORY"),
+								   rset.getInt("COUNT"),
 								   rset.getDate("CREATE_DATE")));
 			}
 			System.out.println( " Dao list=====> " + list);
@@ -64,58 +66,7 @@ public class EventDao {
 		return list;
 	}
 	
-	public ArrayList<Event> list(String pt) throws Exception{
-		ArrayList<Event> list = null;
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("selectListType");
-		
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			rset = pstmt.executeQuery();
-			
-			switch (pt) {
-			case "now":
-				sql += "WHERE CREATE_DATE <= SYSDATE";
-				break;
-			case "old":
-				sql += "WHERE CREATE_DATE < TRUNC(SYSDATE)";
-				break;
-			case "all":
-				sql += " ";
-				break;
-				
-			default:
-				System.out.println("잘못된 정보가 넘어 왔습니다.");
-				break;
-			}
-			
-			sql += "ORDER BY CREATE_DATE DESC";
-			
-			System.out.println("EventDao.list().sql : " + sql );
-			
-			
-			while(rset.next()) {
-				if(list == null) list = new ArrayList<Event>();
-				while(rset.next()) {
-					list.add(new Event(rset.getInt("noticeno"),							
-							   rset.getString("noticeTitle"),
-							   rset.getDate("createDate")));
-		}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close(conn);
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
+	
 	
 	public ArrayList<Event> insertList(Connection conn) {
 		ArrayList<Event> list = new ArrayList<Event>();
@@ -135,7 +86,25 @@ public class EventDao {
 		return list;
 	}
 	
-	
+	public int increaseCount(Connection conn, int nno) {
+		int result = 0; 
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("increaseCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, nno);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
 
 	public Event selectEvent(Connection conn, int nno) {
 		Event event = null;
@@ -155,6 +124,7 @@ public class EventDao {
 						   rset.getString("USER_ID"),
 						   rset.getString("CATEGORY"),
 						   rset.getString("NOTICE_CONTENT"),
+						   rset.getInt("COUNT"),
 						   rset.getDate("CREATE_DATE"));
 			}
 			System.out.println( " Dao Event=== " + event);
@@ -168,89 +138,86 @@ public class EventDao {
 		return event;
 	}
 
-	public int increaseCount(Connection conn, int nno) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 
 	public int deletEvent(Connection conn, int nno) {
 			int result = 0;
 			PreparedStatement pstmt = null;
 			String sql = prop.getProperty("deleteNotice");
+			
+			System.out.println("nno=====>"+ nno);
+			
 			try {
-			pstmt = conn.prepareStatement (sql);
-			pstmt.setInt (1, nno);
-			result = pstmt.executeUpdate();
+				pstmt = conn.prepareStatement (sql);
+				pstmt.setInt (1, nno);
+				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			}finally{
-			close(pstmt);
+				close(pstmt);
 			}
+			
 			return result;
 
 	
 
 			}
 
-	  public int getListCount(Connection conn) {
-		int listCount = 0;
-		Statement stmt = null;
-		ResultSet rset = null;
+	
+	  
+	 
+
+	public int insertNotice(Connection conn, Event ev) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertNotice");
 		
-		String sql = prop.getProperty("getListCount"); 
+		
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ev.getNoticeTitle());
+			pstmt.setString(2, ev.getCategory());
+			pstmt.setString(3, ev.getNoticeContent());
+			pstmt.setInt(4, Integer.parseInt(ev.getUserid()));
 			
-			if(rset.next()) {
-				listCount = rset.getInt("COUNT(*)");
-			}
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
-		return listCount;
+		
+		return result;
 	}
-	  
-	  public ArrayList<Event> selectList(Connection conn, PageInfo pi) {
-			ArrayList<Event> list = new ArrayList<>();
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
+
+	public int updateNotice(Connection conn, Event event) {
+		int result = 0; 
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, event.getNoticeTitle());
+			pstmt.setString(2, event.getNoticeContent());
+			pstmt.setInt(3, event.getNoticeno());
 			
-			String sql = prop.getProperty("selectEventList");
-			
-			int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
-			int endRow = startRow + pi.getBoardLimit() -1;
-			
-			
-			
-			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
-				
-				rset = pstmt.executeQuery();
-				while(rset.next()) {
-					list.add(new Event(rset.getInt("noticeno"),
-									rset.getString("noticeTitle"),
-									rset.getString("userid"),
-									rset.getString("category"),
-									rset.getDate("createDate")));
-				
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				close(rset);
-				close(pstmt);
-			}
-			return list;
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
+		return result;
+	}
+
+	
+
+
+
+
 }

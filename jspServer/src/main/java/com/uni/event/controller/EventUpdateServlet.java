@@ -1,7 +1,6 @@
-	package com.uni.event.controller;
+package com.uni.event.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,16 +13,16 @@ import com.uni.event.model.service.EventService;
 import com.uni.event.model.vo.Event;
 
 /**
- * Servlet implementation class EventListServlet
+ * Servlet implementation class EventUpdateServlet
  */
-@WebServlet("/eventpage.do")
-public class EventListServlet extends HttpServlet {
+@WebServlet("/updateNotice.do")
+public class EventUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EventListServlet() {
+    public EventUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +32,31 @@ public class EventListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<Event> list = new EventService().selectList();
+		Event event = new Event(); //notice 객체를 불러올 것을 담아준다. 각 형식에 맞춰서 작업한다.
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		int nno = Integer.parseInt(request.getParameter("nno"));
 		
-		if(list != null) {
-			
-			request.setAttribute("list", list);
-			
-			RequestDispatcher view = request.getRequestDispatcher("views/EventNotice/EventNoticePage.jsp");
+		//설정해준다.
+		event.setNoticeTitle(title);
+		event.setNoticeContent(content);
+		event.setNoticeno(nno);
+		
+		// 형식에 맞추어서 보낸준다.
+		int result = new EventService().updateNotice(event);
+		
+		if(result > 0 ) {
+			request.getSession().setAttribute("msg", "공지사항이 성공적으로 수정되었습니다. ");
+			response.sendRedirect("eventpage.do?nno="+nno);
+		}else {
+			request.setAttribute("msg", "공지사항수정실패");
+			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
 			view.forward(request, response);
 		}
-		}	
+		
+	}
+	
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
