@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="../../resources/css/common/common.css">
 <link rel="stylesheet" href="../../resources/css/serviceCenter/serviceCenter.css">
 <link rel="stylesheet" href="../../resources/library/animate.css">
+<style>
+	.deleteAction{
+		display:none;
+	}
+</style>
 </head>
 <body>
 	<%@include file="../common/header.jsp" %>
@@ -29,9 +34,9 @@
     			</div>
     		</div>
     		<div class = "questionenroll">
-    			<div class="gotoenrollFormServiceCenter">
-    				<button class="commonwritebutton serviceCenterdelete" type="button">글 삭제</button>
-    				<button class="commonwritebutton serviceCenterwrite" onclick="writeFunction();" type="button">글 작성</button>
+    			<div class="gotoenrollFormServiceCenter btn_box">
+    				<button class="commonwritebutton serviceCenterdelete delete_btn" type="button">글 삭제</button>
+    				<button class="commonwritebutton serviceCenterwrite add_btn" onclick="writeFunction();" type="button">글 작성</button>
     			</div>
     		</div>
     		<div  class ="serviceCentermiddle">
@@ -67,6 +72,8 @@
     </div>
     	<%@ include file = "../common/footer.jsp" %>
     <script type="text/javascript">
+    
+    
     	/* 고객센터 부분 */
     	$(function(){
     		
@@ -88,7 +95,7 @@
    					console.log(obj.serviceWriter)
    					
    					heightChange(list);
-   					var serviceNo = $("<td>").text(number++).addClass("serviceCListt");
+   					var serviceNo = $("<td>").addClass("serviceCListt").text(number++).append("<input class='outputserviceNo deleteAction' name = 'serviceNo' type='checkbox' onclick='event.stopPropagation()'>");
    					var serviceTd = $("<td>").html(obj.serviceTitle).addClass("serviceCListtitle");
    					var servicehidden = $("<td><div>").text(obj.serviceNo).addClass("serviceHiddenNo");
    					
@@ -113,6 +120,39 @@
     			}
     		})
     	}
+    	
+    	
+    	//체크박스
+    	$(".delete_btn").click(function(){
+    		
+    		$("input[name=serviceNo]").toggle();
+				var serviceNo = [];
+				$("input[name=serviceNo]:checked").each(function(){
+					serviceNo.push($(this).parent().siblings(".serviceHiddenNo").text());
+					console.log(serviceNo);
+				})
+				
+
+					$.ajax({
+						url : "serviceDelete",
+						type : "post",
+						traditional: true,
+						data : {serviceNo : serviceNo},
+						success : function(result){
+							if(result == "success"){
+								alert("정상적으로 삭제 되었습니다.");
+								location.reload();
+							} else {
+								alert("삭제에 실패하였습니다.");
+							}
+						}
+						
+					})
+			
+				
+
+    	})
+
     
  		function writeFunction(){//글작성하기 버튼
  			location.href="<%=request.getContextPath()%>/enrollFormServiceCenter.do";

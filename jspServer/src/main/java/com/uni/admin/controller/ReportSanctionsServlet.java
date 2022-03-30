@@ -1,7 +1,7 @@
 package com.uni.admin.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.uni.admin.model.service.QtoAService;
-import com.uni.admin.model.vo.BlockBoard;
 
 /**
- * Servlet implementation class AdminMainPageServlet
+ * Servlet implementation class ReportSanctionsServlet
  */
-@WebServlet("/adminMainPage")
-public class AdminMainPageServlet extends HttpServlet {
+@WebServlet("/reportSanctions")
+public class ReportSanctionsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminMainPageServlet() {
+    public ReportSanctionsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +30,18 @@ public class AdminMainPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<BlockBoard> list = new QtoAService().BlockBoardList();
+		String blockNo = request.getParameter("blockNo");
 		
-		if(list.isEmpty()) {
-			request.setAttribute("msg", "void");
+		int result = new QtoAService().reportSanctions(blockNo);
+		
+		PrintWriter out = response.getWriter();
+		if(result > 0) {
+			out.print("success");
 		} else {
-			request.setAttribute("msg", "aaa");
-			request.setAttribute("list", list);
+			out.print("fail");
 		}
-		
-		request.getRequestDispatcher("views/admin/AdminMainPage.jsp").forward(request, response);
-		
-		
-		
-		
+		out.flush();
+		out.close();
 	}
 
 	/**

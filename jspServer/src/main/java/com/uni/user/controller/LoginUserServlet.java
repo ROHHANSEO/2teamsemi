@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +36,7 @@ public class LoginUserServlet extends HttpServlet {
 		String userPwd = request.getParameter("password");
 		//checkbox 값은 체크시 on 미체크시 null 출력
 		String check = request.getParameter("loginCip");
+		System.out.println(check);
 		
 		User user = new UserService().loginUser(new User(userId, userPwd));
 		
@@ -42,6 +44,16 @@ public class LoginUserServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			session.setAttribute("userPwd", userPwd);
+			
+//			if(check.equals("Y")) {
+//				Cookie loginCookie = new Cookie("loginCookie",session.getId());
+//				loginCookie.setPath("/");
+//				long limitTime = 60*60*24*90;
+//				loginCookie.setMaxAge((int)limitTime);
+//				response.addCookie(loginCookie);
+//				
+//			}
+			
 			response.sendRedirect("/");
 		} else {
 			request.setAttribute("msg", "로그인에 실패했습니다");

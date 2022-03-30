@@ -202,3 +202,18 @@
 		    border-bottom: 1px solid #993333;
 		    font-weight: 600;
 		}
+
+		.commonwritebutton.serviceCenterdelete.delete_btn{
+			position: static;
+			right: 0;
+		}
+
+		.commonwritebutton.serviceCenterwrite.add_btn {
+			position: static;
+			right: 0;
+		}
+
+		.gotoenrollFormServiceCenter.btn_box{
+			position: absolute;
+    		right: 100px;
+		}

@@ -1,3 +1,8 @@
+$(function(){
+    $("#report_modal_container").hide();
+    $(".input_hidden").hide();
+})
+    
     $(".block_board_list").click(function(){
         if($(this).hasClass("action")){
             $(".report_listcon").remove();
@@ -33,9 +38,10 @@
         }
     })
 
-$(function(){
-    $("#report_modal_container").hide();
-})
+
+    $(".selectSanctions").click(function(){
+        $(".input_hidden").toggle();
+    })
 
 
 $(document).on("click",".report_listcon",function(){
@@ -47,6 +53,7 @@ $(document).on("click",".report_listcon",function(){
         success : function(result){
             $("#report_modal_container .report_title_name").text(result.title);
             $("#report_modal_container .content").text(result.content);
+            $("#report_modal_container .block_no").val(blockNo);
             $("#report_modal_container").fadeIn(200);
         }
     })
@@ -55,4 +62,58 @@ $(document).on("click",".report_listcon",function(){
 $(".report_modal_cancel_btn").click(function(){
     $("#report_modal_container").fadeOut(200);
 })
+
+$(".report_sanctions_btn").click(function(){
+    var blockNo = $("#report_modal_container .block_no").val();
+    $.ajax({
+        url : "reportSanctions",
+        type : "post",
+        data : {blockNo : blockNo},
+        success : function(result){
+            if(result == "success"){
+                alert("정상적으로 제재 되었습니다.");
+            } else {
+                alert("에러발생");
+            }
+            $("#report_modal_container").fadeOut(200);
+            location.reload();
+        }
+    })
+})
+
+$(".Sanctions").click(function(){
+
+    var boardNo = [];
+    $("input[name=boardNo]:checked").each(function(){
+        var checkArr = $(this).val();
+        boardNo.push(checkArr); 
+        console.log(checkArr)
+    });
+
+    $.ajax({
+        url : "selectSanctions",
+        type : "post",
+        traditional: true,
+        data : {boardNo : boardNo},
+        success : function(result){
+            if(result == "success"){
+                alert("정상적으로 제재 되었습니다.");
+                location.reload();
+            } else {
+                alert("실패하였습니다.");
+            }
+
+        }
+    })
+})
+
+
+
+
+
+
+
+
+
+
 
