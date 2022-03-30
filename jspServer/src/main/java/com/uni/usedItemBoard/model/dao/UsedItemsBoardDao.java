@@ -1,12 +1,8 @@
 package com.uni.usedItemBoard.model.dao;
 
+import static com.uni.common.JDBCTemplate.close;
+
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.io.FileNotFoundException; 
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,19 +10,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
 import com.uni.usedItemBoard.model.vo.Category;
+import com.uni.usedItemBoard.model.vo.LikeProduct;
 import com.uni.usedItemBoard.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
-import static com.uni.common.JDBCTemplate.*;
-
 public class UsedItemsBoardDao {
 	
 	private Properties prop = new Properties();
+	
+	DecimalFormat dc = new DecimalFormat("###,###,###");
 	
 	public UsedItemsBoardDao() { // DB 연결
 		String fileName = UsedItemsBoardDao.class.getResource("/sql/usedItemsBoard/usedItemsBoard-query.properties").getPath();
@@ -95,10 +93,11 @@ public class UsedItemsBoardDao {
 			
 			// 여러행을 받아오기 때문에 while문
 			while(rset.next()) {
+
 				// 객체를 생성하여 list에 담는다
 				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 											rset.getString("BOARD_TITLE"),
-											rset.getInt("PRICE"),
+											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
 											rset.getString("ORIGIN_NAME")
@@ -297,17 +296,19 @@ public class UsedItemsBoardDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				ub = new UsedItemsBoard(rset.getString("CATEGORYCODE"), 
-									  rset.getString("BOARD_TITLE"), 
-									  rset.getString("NICK_NAME"), 
-									  rset.getString("BOARD_CONTENT"), 
-									  rset.getInt("PRICE"), 
-									  rset.getString("SALE_STATUS"),
-									  rset.getString("ITEM_CONDITION"),
-									  rset.getInt("LIKE_COUNT"),
-									  rset.getString("PAYMENT_ONE"),
-									  rset.getString("PAYMENT_TWO"),
-									  rset.getString("PAYMENT_STATUS"));
+				ub = new UsedItemsBoard(bNo,
+						  rset.getString("CATEGORYCODE"), 
+						  rset.getString("BOARD_TITLE"), 
+						  rset.getString("WRITER_NO"),
+						  rset.getString("NICK_NAME"), 
+						  rset.getString("BOARD_CONTENT"), 
+						  dc.format(rset.getInt("PRICE")), 
+						  rset.getString("SALE_STATUS"),
+						  rset.getString("ITEM_CONDITION"),
+						  rset.getInt("LIKE_COUNT"),
+						  rset.getString("PAYMENT_ONE"),
+						  rset.getString("PAYMENT_TWO"),
+						  rset.getString("PAYMENT_STATUS"));
 			}
 			System.out.println("다오 ub => "+ub);
 		} catch (SQLException e) {
@@ -374,7 +375,7 @@ public class UsedItemsBoardDao {
 			while(rset.next()) {
 				UsedItemsBoard board = (new UsedItemsBoard(rset.getInt("BOARD_NO"),
 											rset.getString("BOARD_TITLE"),
-											rset.getInt("PRICE"),
+											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
 											rset.getString("ORIGIN_NAME")
@@ -429,7 +430,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -457,7 +458,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -485,7 +486,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -512,7 +513,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -541,7 +542,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -571,7 +572,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -600,7 +601,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -631,7 +632,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -661,7 +662,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -691,7 +692,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -724,7 +725,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -756,7 +757,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -788,7 +789,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -820,7 +821,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -853,7 +854,7 @@ public class UsedItemsBoardDao {
 					// 객체를 생성하여 list에 담는다
 					list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 												rset.getString("BOARD_TITLE"),
-												rset.getInt("PRICE"),
+												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
 												rset.getString("ORIGIN_NAME")
@@ -901,7 +902,7 @@ public class UsedItemsBoardDao {
 				// 객체를 생성하여 list에 담는다
 				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 											rset.getString("BOARD_TITLE"),
-											rset.getInt("PRICE"),
+											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
 											rset.getString("ORIGIN_NAME")
@@ -948,7 +949,7 @@ public class UsedItemsBoardDao {
 				// 객체를 생성하여 list에 담는다
 				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 											rset.getString("BOARD_TITLE"),
-											rset.getInt("PRICE"),
+											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
 											rset.getString("ORIGIN_NAME")
@@ -995,7 +996,7 @@ public class UsedItemsBoardDao {
 				// 객체를 생성하여 list에 담는다
 				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
 											rset.getString("BOARD_TITLE"),
-											rset.getInt("PRICE"),
+											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
 											rset.getString("ORIGIN_NAME")
@@ -1013,5 +1014,300 @@ public class UsedItemsBoardDao {
 		
 		return list;
 	}
+
+	public ArrayList<UsedItemsBoard> relationBoard(Connection conn, String category, String title) {
+		// 제너릭스를 사용한 UsedItemsBoard ArrayList 생성
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// sql문을 getProperty() 하여 알맞는 sql 구문 가져와 생성 및 선언
+		String sql = prop.getProperty("relationBoard");
+		
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setString(1, category);
+			pstmt.setString(2, category);
+			pstmt.setString(3, title);
+			
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				// 객체를 생성하여 list에 담는다
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											dc.format(rset.getInt("PRICE")),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("ORIGIN_NAME")
+											));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> popularList(Connection conn) {
+		// 제너릭스를 사용한 UsedItemsBoard ArrayList 생성
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// sql문을 getProperty() 하여 알맞는 sql 구문 가져와 생성 및 선언
+		String sql = prop.getProperty("popularList");
+		
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				// 객체를 생성하여 list에 담는다
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											dc.format(rset.getInt("PRICE")),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("ORIGIN_NAME")
+											));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public int statusUpdate(Connection conn, String status, int bNo) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("statusUpdate"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setString(1, status); // 상태 넣기
+			pstmt.setInt(2, bNo);
+			
+			System.out.println("다오왔다감");
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public int plusLike(Connection conn, int bNo) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("plusLike"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setInt(1, bNo);
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public int minusLike(Connection conn, int bNo) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("minusLike"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setInt(1, bNo);
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+	
+
+	public int createLike(Connection conn, int bNo, int uNo) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("createLike"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setInt(1, uNo);
+			pstmt.setInt(2, bNo);
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public int deleteLike(Connection conn, int bNo, int uNo) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("deleteLike"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setInt(1, uNo);
+			pstmt.setInt(2, bNo);
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public int delateUsedItemBoard(Connection conn, int bNo) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("delateUsedItemBoard"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setInt(1, bNo);
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public int deleteLikeAll(Connection conn, int bNo) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("deleteLikeAll"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setInt(1, bNo);
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public ArrayList<LikeProduct> selectLike(Connection conn, int bNo) {
+		// 제너릭스를 사용한 UsedItemsBoard ArrayList 생성
+		ArrayList<LikeProduct> like = new ArrayList<>();
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// sql문을 getProperty() 하여 알맞는 sql 구문 가져와 생성 및 선언
+		String sql = prop.getProperty("selectLike");
+		
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setInt(1, bNo);
+			
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				// 객체를 생성하여 list에 담는다
+				like.add(new LikeProduct(rset.getInt("LIKE_NO"),
+											rset.getInt("USER_NO"),
+											rset.getInt("BOARD_NO")
+											));
+			}
+			System.out.println("다오 like=> "+like);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return like;
+	}
+
 
 }

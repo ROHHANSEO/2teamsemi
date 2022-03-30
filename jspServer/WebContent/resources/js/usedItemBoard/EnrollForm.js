@@ -1,9 +1,14 @@
 function deletebye(index){
+
     console.log(index)
     let deleteE = document.getElementById("image"+index)
     console.log(deleteE)
+    // 만약 같고온 이미지가 
+    //if($("#image"+index) == ){
+
+    //}
     $("#image"+index).parent().remove()
-    $("file1").empty()
+    
 }
     
 // 인덱스 생성
@@ -16,6 +21,10 @@ $(function(){
     $("#file1").change(function(e){
         //ul 내용 비워주기
         $('#sortimg').empty();
+        console.log("e : "+e);
+        console.log("e.target : "+e.target)
+        console.log("e.target.files : "+e.target.files);
+        console.log("e.target.files[0] : "+e.target.files[0]);
 
         var files = e.target.files;
         var arr = Array.prototype.slice.call(files);

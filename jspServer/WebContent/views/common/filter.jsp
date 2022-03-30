@@ -166,7 +166,7 @@
 					article.empty();	
 					if(list.length != 0){
 						$.each(list, function(index, obj){
-							
+							console.log("들어옴")
 							
 							let listprice = obj.price;
 							let listcondition = obj.itemCondition;
