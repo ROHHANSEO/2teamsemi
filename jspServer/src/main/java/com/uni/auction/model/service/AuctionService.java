@@ -14,6 +14,8 @@ import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
+import com.uni.usedItemBoard.model.vo.UsedAttachment;
+import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 public class AuctionService {
 
@@ -92,6 +94,37 @@ public class AuctionService {
 		
 		close(conn);
 		return result1*result2;
+	}
+
+	public Auction selectAuction(int scno) {//디테일 옥션 정보들 받아오는 것
+		Connection conn = getConnection();
+		Auction ac = new AuctionDao().selectAuction(conn, scno);
+		close(conn);
+		
+		return ac;
+	}
+
+	public ArrayList<AuctionAttachment> selectAttachment(int scno) {//디테일 페이지에서 사진들 받아오는 것 
+		Connection conn = getConnection();
+		
+		ArrayList<AuctionAttachment> at = new AuctionDao().selectAttachment(conn, scno);
+		close(conn);
+		
+		return at;
+	}
+
+	public int deleteAuction(int scno) {//옥션 게시글 삭제
+		Connection conn = getConnection();
+		
+		int result = new AuctionDao().deleteAuction(conn, scno);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 
 	

@@ -10,16 +10,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
 import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
-import com.uni.serviceCenter.model.vo.ServiceCenter;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
-import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 public class AuctionDao {
 	private Properties prop = new Properties();
@@ -134,14 +133,16 @@ public class AuctionDao {
 			
 			// 여러행을 받아오기 때문에 while문
 			while(rset.next()) {
+				DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
 				// 객체를 생성하여 list에 담는다
+				
 				list.add(new Auction(rset.getInt("BOARD_NO"),
 									rset.getString("CATEGORYCODE"),
 									rset.getString("AUCTION_TITLE"),
-									rset.getInt("ITEM_DIRECT"),
+									dc.format(rset.getInt("ITEM_DIRECT")),
 									rset.getString("SELL_STATUS"),
 									rset.getInt("COUNT"),
-									rset.getString("CHANGE_NAME"),
+									rset.getString("ORIGIN_NAME"),
 									rset.getString(9)
 									));
 			}
@@ -312,9 +313,8 @@ public class AuctionDao {
 				
 				pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
 				
-				pstmt.setString(1, at.getOriginName()); 
-				pstmt.setString(2, at.getChangeName()); 
-				pstmt.setString(3, at.getFilePath());
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getFilePath());
 				
 				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
 				System.out.println("Dao result => " + result); // 임의 확인
@@ -327,6 +327,110 @@ public class AuctionDao {
 		}
 		
 		return result; // int로 반환
+	}
+
+	//옥션 디테일 정보들 불러오기
+	public Auction selectAuction(Connection conn, int scno) {
+		Auction ac = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAuction");
+		//SELECT A.CATEGORYCODE, A.WRITER_NO, A.AUCTION_TITLE, A.AUCTION_CONTENT, 
+		//A.ITEM_CONDITION, A.ITEM_PRICE, A.ITEM_UP, A.ITEM_DIRECT, A.SELL_STATUS, 
+		//A.COUNT, TO_CHAR(A.CREATE_DATE,'YYYY/MM/DD HH24:MI:SS'), 
+		//TO_CHAR(A.CREATE_DATE+1,'YYYY/MM/DD HH24:MI:SS'), A.STATUS \
+		//FROM AUCTION_SELL AJOIN MEMBER B ON(A.WRITER_NO=B.USER_NO) WHERE A.BOARD_NO = ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, scno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				
+				ac = new Auction(rset.getInt("BOARD_NO"),
+								rset.getString("CATEGORYCODE"), 
+								rset.getString("WRITER_NO"),
+								rset.getString("USER_ID"),
+								rset.getString("AUCTION_TITLE"), 
+								rset.getString("AUCTION_CONTENT"), 
+								rset.getString("ITEM_CONDITION"), 
+								rset.getInt("ITEM_PRICE"), 
+								rset.getInt("ITEM_UP"),
+								rset.getInt("ITEM_DIRECT"),
+								rset.getString("SELL_STATUS"),
+								rset.getInt("COUNT"),
+								rset.getString(13),
+								rset.getString(14), 
+								rset.getString("STATUS"));
+				System.out.println("dao에서 옥션 리스트 "+ ac);
+			}
+			System.out.println("다오 ub => "+ac);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return ac;
+	}
+
+	//옥션 상세페이지 사진 리스트 받아오기
+	public ArrayList<AuctionAttachment> selectAttachment(Connection conn, int scno) {
+		ArrayList<AuctionAttachment> at = new ArrayList<>();
+		AuctionAttachment aa = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, scno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				aa = new AuctionAttachment(rset.getInt("FILE_NO"), 
+									  rset.getString("ORIGIN_NAME"));
+				at.add(aa);
+			}
+			System.out.println("다오 AT => "+at);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return at;
+	}
+
+	public int deleteAuction(Connection conn, int scno) {//옥션 글 삭제
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteAuction");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, scno);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		
+		return result;
 	}
 	
 
