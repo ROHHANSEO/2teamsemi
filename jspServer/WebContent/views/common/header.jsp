@@ -51,12 +51,12 @@
                     </div>
                 </div>
                 <ul>
-                    <li><div onmouseover="add()" onmouseleave="remove()"><a href="<!--이동할 jsp가 위치한 경로입력 할 것-->">시세</a></div></li>
-                    <li><div onmouseover="add()" onmouseleave="remove()"><a href="<%=request.getContextPath()%>/auctionPage.do">경매</a></div></li>
-                    <li><div onmouseover="add()" onmouseleave="remove()"><a href="<%=request.getContextPath() %>/communitypage.do">커뮤니티</a></div></li>
-                    <li><div onmouseover="add()" onmouseleave="remove()"><a href="<%=request.getContextPath()%>/usedBoardList.do">중고거래</a></div></li>
-                    <li><div onmouseover="add()" onmouseleave="remove()"><a href="<%=request.getContextPath() %>/eventpage.do">이벤트</a></div></li>
-                    <li><div onmouseover="add()" onmouseleave="remove()"><a href="<%=request.getContextPath()%>/serviceCenter.do">고객센터</a></div></li>
+                    <li><a href="<!--이동할 jsp가 위치한 경로입력 할 것-->"><div>시세</div></a></li>
+                    <li><a href="<%=request.getContextPath()%>/auctionPage.do"><div>경매</div></a></li>
+                    <li><a href="<%=request.getContextPath() %>/communitypage.do"><div>커뮤니티</div></a></li>
+                    <li><a href="<%=request.getContextPath()%>/usedBoardList.do"><div>중고거래</div></a></li>
+                    <li><a href="<%=request.getContextPath() %>/eventpage.do"><div>이벤트</div></a></li>
+                    <li><a href="<%=request.getContextPath()%>/serviceCenter.do"><div>고객센터</div></a></li>
                 </ul>
             </div>
         </nav>

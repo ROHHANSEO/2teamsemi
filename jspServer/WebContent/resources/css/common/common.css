@@ -102,9 +102,6 @@ body { overflow-x:hidden}
 /* header > nav : event js와 연계 */
 #main_nav .nav ul .active {
     background-color: #993333;
-}
-
-#main_nav .nav ul .active a {
     color: #fff;
 }
 

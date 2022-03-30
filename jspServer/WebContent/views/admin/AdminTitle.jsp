@@ -19,7 +19,7 @@
             <a id="QtoAListPage" href="<%=request.getContextPath()%>/QtoAListPage">1:1 문의답변</a>
             <a href="">이벤트</a>
             <a href="">공지사항</a>
-            <a href="">dashboard</a>
+            <a id="DashBoardPage" href="<%=request.getContextPath()%>/dashBoardPage">dashboard</a>
         </div>
     </div>
 </body>

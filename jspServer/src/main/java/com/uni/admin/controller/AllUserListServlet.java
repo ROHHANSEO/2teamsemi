@@ -1,6 +1,7 @@
 package com.uni.admin.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,20 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.uni.admin.model.service.QtoAService;
-import com.uni.admin.model.vo.BlockBoard;
+import com.uni.user.model.vo.User;
 
 /**
- * Servlet implementation class AdminMainPageServlet
+ * Servlet implementation class AllUserListServlet
  */
-@WebServlet("/adminMainPage")
-public class AdminMainPageServlet extends HttpServlet {
+@WebServlet("/AlluserList")
+public class AllUserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminMainPageServlet() {
+    public AllUserListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +33,13 @@ public class AdminMainPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<BlockBoard> list = new QtoAService().BlockBoardList();
+		ArrayList<User> user = new QtoAService().AllUserList();
 		
-		if(list.isEmpty()) {
-			request.setAttribute("msg", "void");
-		} else {
-			request.setAttribute("msg", "aaa");
-			request.setAttribute("list", list);
+		
+		if(!user.isEmpty()) {
+			response.setContentType("application/json; charset = utf-8");
+			new Gson().toJson(user, response.getWriter());
 		}
-		
-		request.getRequestDispatcher("views/admin/AdminMainPage.jsp").forward(request, response);
-		
-		
-		
-		
 	}
 
 	/**

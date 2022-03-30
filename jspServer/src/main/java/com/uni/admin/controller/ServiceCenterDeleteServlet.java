@@ -1,7 +1,7 @@
 package com.uni.admin.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.uni.admin.model.service.QtoAService;
-import com.uni.admin.model.vo.BlockBoard;
 
 /**
- * Servlet implementation class AdminMainPageServlet
+ * Servlet implementation class ServiceCenterDeleteServlet
  */
-@WebServlet("/adminMainPage")
-public class AdminMainPageServlet extends HttpServlet {
+@WebServlet("/serviceDelete")
+public class ServiceCenterDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminMainPageServlet() {
+    public ServiceCenterDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +30,18 @@ public class AdminMainPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<BlockBoard> list = new QtoAService().BlockBoardList();
+		String[] serviceNo = request.getParameterValues("serviceNo");
+		System.out.println("구동확인"+serviceNo[0]);
+		int result = new QtoAService().serviceDelete(serviceNo);
 		
-		if(list.isEmpty()) {
-			request.setAttribute("msg", "void");
+		PrintWriter out = response.getWriter();
+		if(result > 0) {
+			out.print("success");
 		} else {
-			request.setAttribute("msg", "aaa");
-			request.setAttribute("list", list);
+			out.print("fail");
 		}
-		
-		request.getRequestDispatcher("views/admin/AdminMainPage.jsp").forward(request, response);
-		
-		
-		
-		
+		out.flush();
+		out.close();
 	}
 
 	/**

@@ -226,3 +226,9 @@
     background-color: antiquewhite;
     height: 40px;
 }
+
+.title_name .btn_box{
+    position: absolute;
+    display: inline-block;
+    right: 25%;
+}

@@ -119,6 +119,7 @@
                 <div class="modal_footer">
                     <button class="report_modal_cancel_btn" type="button">취소</button>
                     <button class="report_sanctions_btn" type="button">경고하기</button>
+                    <input class="block_no" type="hidden" value="">
                 </div>
             </div>
         </div>

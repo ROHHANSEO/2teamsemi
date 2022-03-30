@@ -18,6 +18,7 @@ import java.util.Properties;
 import com.uni.admin.model.service.Reply;
 import com.uni.admin.model.vo.BlockBoard;
 import com.uni.serviceCenter.model.vo.QtoA;
+import com.uni.user.model.vo.User;
 
 public class QtoADao {
 	private Properties prop = new Properties();
@@ -263,5 +264,347 @@ public class QtoADao {
 		}
 		return block;
 	}
+
+	public int[] reportSanctionsCategoryNo(Connection conn, String blockNo) {
+		int[] result = new int[2];
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reportSanctionsCategoryNo");
+		
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(blockNo));
+
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result[0] = rset.getInt("CATEGORY_NO");
+				result[1] = Integer.parseInt(rset.getString("BOARD_NO"));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int reportSanctionsUserNo(Connection conn, int[] categoryNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = "";
+		switch(categoryNo[0]) {
+			case 1:
+				sql = prop.getProperty("usedBoardUserNo");
+				break;
+			case 2:
+				sql = prop.getProperty("actionBoardUserNo");
+				break;
+			case 3:
+				sql = prop.getProperty("communityBoardUserNo");
+				break;
+		}
+		
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNo[1]);
+
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("WRITER_NO");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int reportSanctions(Connection conn, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("reportSanctions");
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate(); 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int boardBlock(Connection conn, int[] categoryNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = "";
+		switch(categoryNo[0]) {
+			case 1:
+				sql = prop.getProperty("usedBoardBlock");
+				break;
+			case 2:
+				sql = prop.getProperty("actionBoardBlock");
+				break;
+			case 3:
+				sql = prop.getProperty("communityBoardBlock");
+				break;
+		}
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, categoryNo[1]);
+			
+			result = pstmt.executeUpdate(); 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int reportDelete(Connection conn, int boardNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("reportDelete");
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, boardNo);
+			
+			result = pstmt.executeUpdate(); 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int[] SanctionsUser(Connection conn, String[] boN) {
+		int result[] = new int [boN.length];
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = "";
+		
+		for(int i = 0; i < boN.length; i++) {
+			
+			int boardNo = Integer.parseInt(boN[i]);
+			
+			if(boardNo > 1000000 && boardNo < 1999999) {
+				sql = prop.getProperty("usedboarduser");
+			} else if(boardNo > 2000000 && boardNo < 2999999) {
+				sql = prop.getProperty("actionuser");
+			}
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, boardNo);
+
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					result[i] = rset.getInt("WRITER_NO");
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+		
+		}
+		
+		return result;
+	}
+
+	public int selectreportSanctions(Connection conn, int[] userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("reportSanctions");
+		try {
+			
+			for(int i = 0 ; i < userNo.length; i++) {
+				pstmt = conn.prepareStatement(sql);
+			
+				pstmt.setInt(1, userNo[i]);
+			
+				result += pstmt.executeUpdate(); 
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int selectreportDelete(Connection conn, String[] boardNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("reportDelete");
+		try {
+			for(int i = 0; i < boardNo.length; i++) {
+			
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, Integer.parseInt(boardNo[i]));
+				
+				result += pstmt.executeUpdate(); 
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int serviceDelete(Connection conn, String[] serviceNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("serviceDelete");
+		try {
+			for(int i = 0; i < serviceNo.length; i++) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(serviceNo[i]));
+				result = pstmt.executeUpdate(); 
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<User> AllUserList(Connection conn) {
+		ArrayList<User> user = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("AllUserList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				user.add(new User(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("CITI_NO"),
+						rset.getString("PHONE"),
+						rset.getString("NICK_NAME"),
+						rset.getString("EMAIL"),
+						rset.getString("GENDER"),
+						rset.getString("ADMIN_STATUS"),
+						rset.getString("STATUS"),
+						rset.getInt("BAN_COUNT")
+						));
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return user;
+	}
+
+	public ArrayList<User> BanUserList(Connection conn) {
+		ArrayList<User> user = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("BanUserList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				user.add(new User(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("CITI_NO"),
+						rset.getString("PHONE"),
+						rset.getString("NICK_NAME"),
+						rset.getString("EMAIL"),
+						rset.getString("GENDER"),
+						rset.getString("ADMIN_STATUS"),
+						rset.getString("STATUS"),
+						rset.getInt("BAN_COUNT")
+						));
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return user;
+	}
+
+
 
 }
