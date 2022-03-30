@@ -73,22 +73,25 @@ public class InsertUsedBoardServlet extends HttpServlet {
 				
 				// 파일의 이름을 String형으로 받음
 				String fileName = part.getSubmittedFileName();
-				System.out.println("fileName ==> "+ fileName); // 확인용
-				
+
 				// index가 0이면 --> 첫 파일이면
 				if(index == 0) {
 					fileName = 1+fileName; // 앞에 1을 붙여줌
+					index++;
+					System.out.println("fileName ==> "+ fileName); // 확인용
+				}else {
+					index++;
 				}
 				
 				// uploadUtil의 saveFiles 메소드 사용하여 파일을 저장
-				uploadUtil.saveFiles(part, uploadUtil.createFilePath());
+				uploadUtil.saveFiles(part, fileName, uploadUtil.createFilePath());
 				
 				// UsedAttachment객체 생성
 				UsedAttachment at = new UsedAttachment();
 				
 				// 저장경로와 이름 저장
 				at.setFilePath(uploadUtil.createFilePath());
-				at.setOriginName(part.getSubmittedFileName());
+				at.setOriginName(fileName);
 				
 				// fileList에 담기
 				fileList.add(at);

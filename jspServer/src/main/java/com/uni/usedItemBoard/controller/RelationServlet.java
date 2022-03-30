@@ -9,22 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.uni.usedItemBoard.model.service.UsedItemsBoardService;
-import com.uni.usedItemBoard.model.vo.LikeProduct;
-import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 /**
- * Servlet implementation class DetailUsedBoardServlet
+ * Servlet implementation class RelationServlet
  */
-@WebServlet("/detailview.do")
-public class DetailUsedBoardServlet extends HttpServlet {
+@WebServlet("/relationItem.do")
+public class RelationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetailUsedBoardServlet() {
+    public RelationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,27 +32,19 @@ public class DetailUsedBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String category = request.getParameter("category");
+		String title = request.getParameter("title");
 		
-		int bNo = Integer.parseInt(request.getParameter("bNo"));
-		System.out.println(bNo);
+		System.out.println(category);
+		System.out.println(title);
 		
-		UsedItemsBoard ub = new UsedItemsBoardService().selectUsedBoard(bNo);
-		ArrayList<UsedAttachment> ua = new UsedItemsBoardService().selectAttachment(bNo);
-		ArrayList<LikeProduct> like = new UsedItemsBoardService().selectLike(bNo);
+		ArrayList<UsedItemsBoard> bList = new UsedItemsBoardService().relationBoard(category, title);
 		
-		System.out.println("서블렛 ub =>" + ub);
-		System.out.println("서블렛 ua =>" + ua);
-		System.out.println("서블렛 like =>" + like);
+		System.out.println("서블렛 bList --> "+bList);
 		
-		if(ub != null && !ua.isEmpty()) {
-			request.setAttribute("ub", ub);
-			request.setAttribute("fileList", ua);
-			request.setAttribute("like", like);
-			
-			request.getRequestDispatcher("views/used_item_board/usedItemDetail.jsp").forward(request, response);
-		}else {
-			request.setAttribute("msg", "게시물 등록 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		if(!bList.isEmpty()) {
+			response.setContentType("application/json; charset=utf-8"); // 꼭 이렇게 응답해야한다
+			new Gson().toJson(bList, response.getWriter()); // 응답할 리스트적기 
 		}
 	}
 

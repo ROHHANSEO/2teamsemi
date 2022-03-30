@@ -11,6 +11,7 @@ public class UsedItemsBoard {
 	private String nickName;		// 닉네임
 	private String usedBoardContent;// 게시글 내용
 	private int price;				// 가격
+	private String comprice;		// 컴마가 들어간 가격
 	private String saleStatus;		// 판매 상태
 	private String itemCondition;	// 상품 상태
 	private int likeCount;			// 게시글 찜 수
@@ -20,12 +21,6 @@ public class UsedItemsBoard {
 	private String paymentStatus;	// 판매 상태 (Y, N)
 	private String status;			// 게시글 상태값(Y, N)
 	private String titleImg;		// 게시글의 타이틀 이미지 (실제 서버에 업로드되어있는 이름)
-	
-	
-	public UsedItemsBoard() {
-		
-	}
-	
 	
 
 	public UsedItemsBoard(String categorycode, String usedBoardTitle, String usedBoardWriter, String usedBoardContent,
@@ -40,10 +35,19 @@ public class UsedItemsBoard {
 		this.paymentOne = paymentOne;
 		this.paymentTwo = paymentTwo;
 	}
-
-
-
 	
+
+	public UsedItemsBoard(int usedBoardNo, String usedBoardTitle, String comprice, String saleStatus, int likeCount,
+			String titleImg) {
+		super();
+		this.usedBoardNo = usedBoardNo;
+		this.usedBoardTitle = usedBoardTitle;
+		this.comprice = comprice;
+		this.saleStatus = saleStatus;
+		this.likeCount = likeCount;
+		this.titleImg = titleImg;
+	}
+
 
 	public UsedItemsBoard(int usedBoardNo, String usedBoardTitle, int price, String itemCondition, int likeCount,
 			String titleImg) {
@@ -75,7 +79,64 @@ public class UsedItemsBoard {
 	}
 	
 	
+	
 
+
+	public UsedItemsBoard(String categorycode, String usedBoardTitle, String usedBoardWriter, String nickName,
+			String usedBoardContent, int price, String saleStatus, String itemCondition, int likeCount,
+			String paymentOne, String paymentTwo, String paymentStatus) {
+		super();
+		this.categorycode = categorycode;
+		this.usedBoardTitle = usedBoardTitle;
+		this.usedBoardWriter = usedBoardWriter;
+		this.nickName = nickName;
+		this.usedBoardContent = usedBoardContent;
+		this.price = price;
+		this.saleStatus = saleStatus;
+		this.itemCondition = itemCondition;
+		this.likeCount = likeCount;
+		this.paymentOne = paymentOne;
+		this.paymentTwo = paymentTwo;
+		this.paymentStatus = paymentStatus;
+	}
+
+	public UsedItemsBoard(String categorycode, String usedBoardTitle, String usedBoardWriter, String nickName,
+			String usedBoardContent, String comprice, String saleStatus, String itemCondition, int likeCount,
+			String paymentOne, String paymentTwo, String paymentStatus) {
+		super();
+		this.categorycode = categorycode;
+		this.usedBoardTitle = usedBoardTitle;
+		this.usedBoardWriter = usedBoardWriter;
+		this.nickName = nickName;
+		this.usedBoardContent = usedBoardContent;
+		this.comprice = comprice;
+		this.saleStatus = saleStatus;
+		this.itemCondition = itemCondition;
+		this.likeCount = likeCount;
+		this.paymentOne = paymentOne;
+		this.paymentTwo = paymentTwo;
+		this.paymentStatus = paymentStatus;
+	}
+
+
+	public UsedItemsBoard(int usedBoardNo, String categorycode, String usedBoardTitle, String usedBoardWriter,
+			String nickName, String usedBoardContent, String comprice, String saleStatus, String itemCondition,
+			int likeCount, String paymentOne, String paymentTwo, String paymentStatus) {
+		super();
+		this.usedBoardNo = usedBoardNo;
+		this.categorycode = categorycode;
+		this.usedBoardTitle = usedBoardTitle;
+		this.usedBoardWriter = usedBoardWriter;
+		this.nickName = nickName;
+		this.usedBoardContent = usedBoardContent;
+		this.comprice = comprice;
+		this.saleStatus = saleStatus;
+		this.itemCondition = itemCondition;
+		this.likeCount = likeCount;
+		this.paymentOne = paymentOne;
+		this.paymentTwo = paymentTwo;
+		this.paymentStatus = paymentStatus;
+	}
 
 
 	public UsedItemsBoard(int usedBoardNo, int category, String categorycode, String usedBoardTitle,
@@ -102,6 +163,18 @@ public class UsedItemsBoard {
 		this.titleImg = titleImg;
 	}
 
+	
+	
+
+
+	public String getComprice() {
+		return comprice;
+	}
+
+
+	public void setComprice(String comprice) {
+		this.comprice = comprice;
+	}
 
 
 	public String getPaymentStatus() {
@@ -278,28 +351,25 @@ public class UsedItemsBoard {
 	}
 
 
-
 	@Override
 	public String toString() {
 		return "UsedItemsBoard [usedBoardNo=" + usedBoardNo + ", category=" + category + ", categorycode="
 				+ categorycode + ", usedBoardTitle=" + usedBoardTitle + ", usedBoardWriter=" + usedBoardWriter
 				+ ", nickName=" + nickName + ", usedBoardContent=" + usedBoardContent + ", price=" + price
-				+ ", saleStatus=" + saleStatus + ", itemCondition=" + itemCondition + ", likeCount=" + likeCount
-				+ ", createDate=" + createDate + ", paymentOne=" + paymentOne + ", paymentTwo=" + paymentTwo
-				+ ", paymentStatus=" + paymentStatus + ", status=" + status + ", titleImg=" + titleImg
-				+ ", getPaymentStatus()=" + getPaymentStatus() + ", getNickName()=" + getNickName()
-				+ ", getUsedBoardNo()=" + getUsedBoardNo() + ", getCategory()=" + getCategory() + ", getCategorycode()="
-				+ getCategorycode() + ", getUsedBoardTitle()=" + getUsedBoardTitle() + ", getUsedBoardWriter()="
-				+ getUsedBoardWriter() + ", getUsedBoardContent()=" + getUsedBoardContent() + ", getPrice()="
-				+ getPrice() + ", getSaleStatus()=" + getSaleStatus() + ", getItemCondition()=" + getItemCondition()
+				+ ", comprice=" + comprice + ", saleStatus=" + saleStatus + ", itemCondition=" + itemCondition
+				+ ", likeCount=" + likeCount + ", createDate=" + createDate + ", paymentOne=" + paymentOne
+				+ ", paymentTwo=" + paymentTwo + ", paymentStatus=" + paymentStatus + ", status=" + status
+				+ ", titleImg=" + titleImg + ", getComprice()=" + getComprice() + ", getPaymentStatus()="
+				+ getPaymentStatus() + ", getNickName()=" + getNickName() + ", getUsedBoardNo()=" + getUsedBoardNo()
+				+ ", getCategory()=" + getCategory() + ", getCategorycode()=" + getCategorycode()
+				+ ", getUsedBoardTitle()=" + getUsedBoardTitle() + ", getUsedBoardWriter()=" + getUsedBoardWriter()
+				+ ", getUsedBoardContent()=" + getUsedBoardContent() + ", getPrice()=" + getPrice()
+				+ ", getSaleStatus()=" + getSaleStatus() + ", getItemCondition()=" + getItemCondition()
 				+ ", getLikeCount()=" + getLikeCount() + ", getCreateDate()=" + getCreateDate() + ", getPaymentOne()="
 				+ getPaymentOne() + ", getPaymentTwo()=" + getPaymentTwo() + ", getStatus()=" + getStatus()
 				+ ", getTitleImg()=" + getTitleImg() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";
 	}
-
-
-	
 	
 
 

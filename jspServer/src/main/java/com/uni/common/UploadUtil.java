@@ -31,10 +31,10 @@ public class UploadUtil {
 	}
 	
 	/* 파일 저장 */
-	public void saveFiles(Part filePart, String folderPath) {
+	public void saveFiles(Part filePart, String fileName, String folderPath) {
 		
 		String realPath = folderPath; // 절대 경로
-		String filePath = realPath + filePart.getSubmittedFileName(); // 파일을 포함한 절대 경로
+		String filePath = realPath + fileName; // 파일을 포함한 절대 경로
 		
 		try(
 			// InputStream, OutputStream 객체생성

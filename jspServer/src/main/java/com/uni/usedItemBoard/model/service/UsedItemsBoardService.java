@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
+import com.uni.usedItemBoard.model.vo.LikeProduct;
 import com.uni.usedItemBoard.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
@@ -148,6 +149,87 @@ public class UsedItemsBoardService {
 		ArrayList<UsedItemsBoard> list = new UsedItemsBoardDao().selecLikeDescList(conn, pi);
 		close(conn);
 		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> relationBoard(String category, String title) {
+		Connection conn = getConnection();
+		
+		ArrayList<UsedItemsBoard> bList = new UsedItemsBoardDao().relationBoard(conn, category, title);
+		close(conn);
+		return bList;
+	}
+
+	public ArrayList<UsedItemsBoard> popularList() {
+		Connection conn = getConnection();
+		
+		ArrayList<UsedItemsBoard> bList = new UsedItemsBoardDao().popularList(conn);
+		close(conn);
+		return bList;
+	}
+
+	public int statusUpdate(String status, int bNo) {
+		Connection conn = getConnection();
+		
+		int result = new UsedItemsBoardDao().statusUpdate(conn, status, bNo);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	public int plusLike(int bNo, int uNo) {
+		Connection conn = getConnection();
+		
+		int result1 = new UsedItemsBoardDao().plusLike(conn, bNo);
+		int result2 = new UsedItemsBoardDao().createLike(conn, bNo, uNo);
+		
+		if(result1*result2 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1*result2;
+	}
+
+	public int minusLike(int bNo, int uNo) {
+		Connection conn = getConnection();
+		
+		int result1 = new UsedItemsBoardDao().minusLike(conn, bNo);
+		int result2 = new UsedItemsBoardDao().deleteLike(conn, bNo, uNo);
+		if(result1*result2 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1*result2;
+	}
+
+	public int delateUsedItemBoard(int bNo) {
+		Connection conn = getConnection();
+		
+		int result1 = new UsedItemsBoardDao().delateUsedItemBoard(conn, bNo);
+		int result2 = new UsedItemsBoardDao().deleteLikeAll(conn, bNo);
+		
+		if(result1*result2 > 0 || result1 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1;
+	}
+
+	public ArrayList<LikeProduct> selectLike(int bNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<LikeProduct> like = new UsedItemsBoardDao().selectLike(conn, bNo);
+		close(conn);
+		return like;
 	}
 
 

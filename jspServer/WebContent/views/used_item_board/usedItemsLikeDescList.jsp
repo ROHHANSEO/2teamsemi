@@ -58,10 +58,10 @@
 								</div>
 								<div class="secondLine">
 									<span class="price">
-										<%= ub.getPrice() %>원
+										<%= ub.getComprice() %>원
 									</span>
 									<span class="status">
-										<%= ub.getItemCondition() %>
+										<%= ub.getSaleStatus() %>
 									</span>
 								</div>
 							</div>
