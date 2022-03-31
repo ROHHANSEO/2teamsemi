@@ -3,7 +3,8 @@
 <%
     String msg = (String)request.getAttribute("msg");
 	String msg2 = (String)request.getAttribute("msg2");
-	ArrayList<UsedItemsBoard> list = (ArrayList<UsedItemsBoard>)request.getAttribute("content");
+	ArrayList<UsedItemsBoard> content = (ArrayList<UsedItemsBoard>)request.getAttribute("content");
+	ArrayList<UsedItemsBoard> payment = (ArrayList<UsedItemsBoard>)request.getAttribute("payment");
 %>
 <!DOCTYPE html>
 <html>
@@ -47,7 +48,7 @@
 	        	</div>
         	<%} %>
         	
-        	<%if(msg.equals("구매기록")) {%>
+        	<%if(msg.equals("결제기록")) {%>
 	        	<div class="void_text_box">
 	        		<span class="void_view"><%=msg %>이 없습니다.</span>
 	        	</div>
@@ -60,7 +61,7 @@
         	<%} %>
         <%} else { %>
 	        <%if(msg.equals("판매기록")){ %>
-	        	<%for(UsedItemsBoard board : list) {%>
+	        	<%for(UsedItemsBoard board : content) {%>
 			        <div class="content_box">
 	                    <input class="bno" type="hidden" value="<%=board.getUsedBoardNo()%>">
 			            <div class="main_box">
@@ -76,7 +77,7 @@
 			            </div>
 			            <div class="main_content_box">
 			                <div class="statuss">
-			                    <span class="status status<%=board.getUsedBoardNo()%>"><%=board.getItemCondition() %></span>
+			                    <span class="status status<%=board.getUsedBoardNo()%>"><%=board.getSaleStatus() %></span>
 			                    <span class="status_swap">상태변경</span>
 			                    <div class="status_level_box">
 			                        <div class="status_level"><span>거래완료</span></div>
@@ -98,31 +99,37 @@
 			            </div>
 			        </div>
 	        	<%} %>
-	        <%} else if(msg.equals("구매기록")) {%>
-	        <div class="content_box">
-	            <div>
-	                <div class="date_box">
-	                    <span class="date">날짜</span>
-	                </div>
-	                <div class="del_up_box">
-	                    <span class="content_delete">삭제</span>
-	                </div>
-	            </div>
-	            <div class="main_content_box">
-	                <div class="statuss">
-	                    <span class="status">거래중</span>
-	                </div>
-	                <div class="content_title">
-	                    <div class="img_box">
-	                        <img class="content_img" src="" alt="">
-	                    </div>
-	                    <div class="title_name_box">
-	                        <span class="content_title_name">판매 제품명</span>
-	                        <span class="content_price">판매가격 : <span class="price">50,000원</span> </span>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
+	        <%} else if(msg.equals("결제기록")) {%>
+	        <%for(UsedItemsBoard pay : payment) {%>
+			       		        <div class="content_box">
+	                    <input class="bno" type="hidden" value="<%=pay.getUsedBoardNo()%>">
+			            <div class="main_box">
+	                        <input class="select_delete_checkbox" type="checkbox" value="<%=pay.getUsedBoardNo()%>">
+			                <div class="date_box">
+			                    <span class="date"><%=pay.getCreateDate() %></span>
+			                </div>
+			                <div class="del_up_box">
+			                    <span class="content_delete">삭제</span>
+			                </div>
+			            </div>
+			            <div class="main_content_box">
+			                <div class="statuss">
+			                    <span class="status status<%=pay.getUsedBoardNo()%>"><%=pay.getSaleStatus() %></span>
+			                </div>
+			                <div class="content_title">
+			                    <div class="img_box">
+	                                <a href="<%=request.getContextPath()%>/detailview.do?bNo=<%=pay.getUsedBoardNo()%>">
+	                                	<img class="content_img" src="<%=request.getContextPath() %>/resources/usedboard_upfiles/<%= pay.getTitleImg() %>" alt="대표 이미지">
+	                                </a>
+			                    </div>
+			                    <div class="title_name_box">
+			                        <span class="content_title_name"><a href="<%=request.getContextPath()%>/detailview.do?bNo=<%=pay.getUsedBoardNo()%>"><%=pay.getUsedBoardTitle() %></a></span>
+			                        <span class="content_price">판매가격 : <span class="price"><%=pay.getPrice() %>원</span> </span>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+	        	<%} %>
 	        <%} else if(msg.equals("경매정산")) {%>
 	        <div class="content_box">
 	            <div>

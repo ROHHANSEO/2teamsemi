@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    #userLogModal {
+    #userManagementModal {
         background-color: rgba(0, 0, 0, 0.5);
         position: absolute;
         top: 0;
@@ -18,34 +18,34 @@
         align-items: center;
     }
 
-    #userLogModal #modal_box {
+    #userManagementModal #modal_box {
         width: 400px;
         background-color: #fff;
         padding: 20px 0 20px 0;
         border-radius: 30px;
     }
 
-    #modal_box .modal_header {
+    #userManagementModal .modal_header {
         background-color: #993333;
         color: #fff;
         text-align: center;
     }
 
-    #userLogModal .modal_header .modal_title {
+    #userManagementModal .modal_header .modal_title {
         font-size: 30px;
     }
 
-    #userLogModal #modal_box .modal_body {
+    #userManagementModal #modal_box .modal_body {
         height: 400px;
         position: relative;
     }
 
-    #userLogModal .modal_body .pwd_text {
+    #userManagementModal .modal_body .pwd_text {
         display: block;
         font-size: 20px;
     }
 
-    #userLogModal .modal_body .content_box {
+    #userManagementModal .modal_body .content_box {
         position: absolute;
         top: 150px;
         left: 50%;
@@ -53,18 +53,18 @@
         text-align: center;
     }
 
-    #userLogModal input[type=password]{
+    #userManagementModal input[type=password]{
         margin-top: 30px;
         width: 300px;
         height: 30px;
         border-radius: 5px;
     }
 
-    #userLogModal .modal_footer {
+    #userManagementModal .modal_footer {
         text-align: center;
     }
 
-    #userLogModal .modal_footer button{
+    #userManagementModal .modal_footer button{
         width: 150px;
         height: 40px;
         display: inline-block;
@@ -75,30 +75,63 @@
         z-index: 99;
     }
     
-    .modal_body .user_log_table{
+    .modal_body .management_user_list_table{
         width: 100%;
     	margin-top: 20px;
     }
     
 
-    #userLogModal .modal_body {
+    #userManagementModal .modal_body {
         overflow-y: scroll;
+    }
+    
+    #userManagementModal .search_input {
+    	width: 250px;
+    	height: 30px;
+    }
+
+    #userManagementModal .search_btn {
+        width: 40px;
+        height: 30px;
+    }
+    
+    #userManagementModal .search_user_box{
+        width: 300px;
+    	margin: 10px auto;
+    }
+
+    .management_user_list_table tr{
+        height: 30px;
+    }
+
+    .management_user_list_table {
+        border-collapse: collapse;
+    }
+
+    #userManagementModal .UserManagementInfo:hover th{
+        border-bottom: 1px solid #993333;
+        color: #993333;
+        cursor: pointer;
     }
 </style>
 </head>
 <body>
-    <div id="userLogModal" class="modal_view">
+    <div id="userManagementModal" class="modal_view">
         <div id="modal_box">
             <div class="modal_header">
-                <span class="modal_title">회원목록</span>
+                <span class="modal_title">회원 관리</span>
             </div>
+           	<div class="search_user_box">
+           		<input class="search_input" type="text" placeholder="검색할 아이디 입력">
+                <button class="search_btn" type="button">검색</button>
+           	</div>
             <div class="modal_body">
                 <div>
-					<table class="user_log_table">
+					<table class="management_user_list_table">
 						<tr>
 							<th class="userNo">회원번호</th>
-							<th>아이디</th>
-							<th>제재횟수</th>
+							<th class="userId">아이디</th>
+							<th>회원상태</th>
 						</tr>
 					</table>
                 </div>

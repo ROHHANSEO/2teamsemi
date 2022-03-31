@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8">  
 <title>Insert title here</title>
 <link rel="stylesheet" href="../../resources/css/mypage/myPageList.css">
 </head>
@@ -14,7 +14,7 @@
                 <ul role="list">
                     <span>내기록</span>
                     <li class="sales"><a href="<%=request.getContextPath()%>/salesRecordPage">판매기록</a></li>
-                    <li class="purchase"><a href="<%=request.getContextPath()%>/purchaseRecordPage">구매기록</a></li>
+                    <li class="purchase"><a href="<%=request.getContextPath()%>/paymentRecordPage">결제기록</a></li>
                     <li class="auction"><a href="<%=request.getContextPath()%>/auctionRecordPage">경매정산</a></li>
                     <li class="community"><a href="<%=request.getContextPath()%>/communityRecordPage">내가 쓴 커뮤니티글</a></li>
                 </ul>

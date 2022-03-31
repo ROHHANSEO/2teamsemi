@@ -21,6 +21,7 @@ public class UsedItemsBoard {
 	private String paymentStatus;	// 판매 상태 (Y, N)
 	private String status;			// 게시글 상태값(Y, N)
 	private String titleImg;		// 게시글의 타이틀 이미지 (실제 서버에 업로드되어있는 이름)
+	private int buyer;
 	
 
 	public UsedItemsBoard(String categorycode, String usedBoardTitle, String usedBoardWriter, String usedBoardContent,
@@ -165,6 +166,16 @@ public class UsedItemsBoard {
 
 	
 	
+
+
+	public int getBuyer() {
+		return buyer;
+	}
+
+
+	public void setBuyer(int buyer) {
+		this.buyer = buyer;
+	}
 
 
 	public String getComprice() {
