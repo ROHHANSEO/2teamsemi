@@ -194,7 +194,7 @@
 	<div class="enrollTitlesection"><!-- 카테고리 선택 div -->
 		<span class="titleNamepart"> 카테고리 <span class="dotpoint">*</span></span>
 		<div class="categorytogglepart">
-			<select id="large" class="firstcategory" name="category1" required>
+			<select id="large" class="firstcategory" name="large" required>
 				<option value="대분류"> 대분류 </option>
 				<%for(Category ca : cList){ %>
 						<option value="<%=ca.getCode()%>"><%=ca.getName() %></option>

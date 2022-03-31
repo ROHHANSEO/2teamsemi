@@ -15,6 +15,7 @@ import java.util.Properties;
 
 
 import com.uni.event.model.vo.*;
+import com.uni.usedItemBoard.model.vo.UsedAttachment;
 
 public class EventDao {
 	
@@ -153,30 +154,7 @@ public class EventDao {
 	  
 	 
 
-	public int insertNotice(Connection conn, Event ev) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertNotice");
-		
-		
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, ev.getNoticeTitle());
-			pstmt.setString(2, ev.getCategory());
-			pstmt.setString(3, ev.getNoticeContent());
-			pstmt.setInt(4, Integer.parseInt(ev.getUserid()));
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
+	
 
 	public int updateNotice(Connection conn, Event event) {
 		int result = 0; 
@@ -267,26 +245,30 @@ public class EventDao {
 		return listCount;
 	}
 
-	public int insertEvent(Connection conn, Event sc) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		System.out.println(sc +"==dao에서 sc값 잘 받나 확인");
-		String sql = prop.getProperty("insertEvent");
-		//category, title, content, writer
-		//INSERT INTO SERVICE_CENTER VALUES(SEQ_NNO.NEXTVAL, ?, ?, ?, SYSDATE, DEFAULT, DEFAULT,?)
+	
+
+	public int insertNoticeAttachment(Connection conn, ArrayList<NoticeAttachment> fileList) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("insertNoticeAttachment"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, sc.getCategory());//카테고리
-			pstmt.setString(2, sc.getNoticeTitle());//제목
-			pstmt.setString(3, sc.getNoticeContent());//내용		
-			pstmt.setInt(4, Integer.parseInt(sc.getUserid()));//작성자 번호는 perseint해줘야 한다.
-			
-			result=pstmt.executeUpdate();
+			for(int i = 0 ; i < fileList.size() ; i++) {
+				NoticeAttachment at = fileList.get(i);
+				
+				pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+				
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getFilePath());
+				
+				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
+				System.out.println("Dao event result => " + result); // 임의 확인
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			close(pstmt);
+			close(pstmt); // pstmt를 닫는다
 		}
 		return result;
 	}
@@ -322,7 +304,6 @@ public class EventDao {
 		}
 		return list;
 	}
-		
 
 	
 

@@ -10,6 +10,12 @@
 	String upPrice = dc.format(ad.getItemUp());//올리는 값
 	String writer = ad.getAuctionId();
 
+	int firstI = 0;//맨첫번째 값
+	String tot = null;
+	String tot2 = null;
+	tot = sr.get(firstI).getChangeP();
+	tot2 = sr.get(firstI).getUserNo();//낙찰자 아이디
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -141,7 +147,7 @@
 	}
 	table {
 	    width: -webkit-fill-available;
-	    margin-top: 20px;
+
 	    border-collapse: collapse;
 	    text-align: center;
 	}
@@ -192,8 +198,14 @@
 		cursor: pointer;
 		color:white;
 	}
-
-
+	.auctionF{
+		font-width:500px;
+		text-align:center;
+	}
+	.topdeall{
+		margin-top:25px;
+	}
+	
 </style>
 
 </head>
@@ -209,9 +221,9 @@
 					<ul class="main2">
 						<%if(user != null && user.getUserId().equals(writer)){ %> 
 						<li><a href="#"> 글 수정하기 </a></li>
-						<li><a href="deleteAuctionDetail.do?scno=<%=ad.getAuctionNo()%>"> 글 삭제하기 </a></li>
+						<li><a href="#" onclick="deleteItem()"> 글 삭제하기 </a></li>
 						<%}else if(user != null && !user.getUserId().equals(writer)){ %>
-						<li><a href="#"> 게시글 신고 </a></li>
+						<li><a href="#" onclick="blockAuction()"> 게시글 신고 </a></li>
 						<%} %>
 					</ul>
 					
@@ -253,7 +265,7 @@
 			 </div>
 			 </div>
 			 <div class="startP"> <span>경매 시작가</span><span><%=startprice %>원</span></div>
-			 <div class="startP"> <span>현재가</span><span class="nowP"><%=startprice %>원</span> </div>
+			 <div class="startP"> <span>현재가</span><span class="nowP"><%=tot%>원</span> </div>
 			 <div class="startD"> 
 			 	<p class="font15 time-title">경매 마감시간</p> 
 			 	<div class="time font40">
@@ -267,7 +279,7 @@
 			 <div class="buttonS"> 
 			 	<button type="button" class="buttonde buttondee a" >즉시 구매 <%=directPrice%>원</button>
 			 	<button type="button" class="buttonde buttondee b" onclick="upPrice()" >경매가 <%=upPrice%>원 올리기</button>
-			 	<button type="button" class="buttondefi" onclick="alert('h')" disabled>낙찰자 결제하기</button>
+			 	<button type="button" class="buttondefi c" onclick="paydeal()" disabled>낙찰자 결제하기</button>
 			 </div>
 		</div>
 	</div>
@@ -277,15 +289,18 @@
 		<div><%=ad.getAuctionContent() %></div>
 		</div>
 	</div>
-	<div><!-- 입찰 기록 테이블 -->
-		<table>
-			<thead style="background-color:lightgray;">
-				<tr>
-					<th> 회원 이름 </th>
-					<th> 입찰 금액 </th>
-					<th> 입찰 시간 </th>
-				</tr>
-			</thead>
+	<table class="topdeall">
+	<thead style="background-color:lightgray;">
+			<tr>
+				<th width="20%"> 회원 이름 </th>
+				<th width="40%"> 입찰 금액 </th>
+				<th width="40%"> 입찰 시간 </th>
+			</tr>
+		</thead>
+	</table>
+	<div style="width:100%; height:300px; overflow:auto"><!-- 입찰 기록 테이블 -->
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			
 			<tbody class="auctionF">
 				<%--<tr>
 					<td> 닉네임 </td>
@@ -297,6 +312,13 @@
 					<td> 505,000원 </td>
 					<td> 2022-03-01 19:55:01</td>
 				</tr> --%>
+				<%for(sellRecord ss: sr){ %><!-- 낙찰받은 내용 리스트 -->
+				<tr>
+					<td width="20%"><%=ss.getUserNo() %></td><!-- 유저닉네임 -->
+					<td width="42%"><%=ss.getChangeP() %></td>
+					<td width="38%"><%=ss.getGetTime() %></td>
+				</tr>
+				<%} %>
 			</tbody>
 		</table>
 	</div>
@@ -320,6 +342,128 @@
 			$(".buttonde").removeClass("buttondee");
 			
 		<%}%>
+		/*글삭제 알림 먼저 뜨고 삭제0*/
+		function deleteItem(){
+			var alertt = confirm("글을 삭제하시겠습니까?");
+			if(alertt){
+				location.href="deleteAuctionDetail.do?scno="+<%=ad.getAuctionNo()%>;
+			}else{
+				return;
+			}
+			
+		}
+		/*글신고 버튼*/
+		function blockAuction(){
+			var alertt = confirm("글을 신고하시겠습니까?");
+			if(alertt){//확인 누를시에 
+				window.name = "auctionBlock";
+	    		 window.open("<%= request.getContextPath()%>/blockAuction.do?scno=<%=ad.getAuctionNo()%>&btitle=<%=ad.getAuctionTitle()%>","_blank", "width=500, height=330, top=350, left=600");
+				
+			}else{
+				alert("취소되었습니다")
+				return;
+			}
+		}
+		//테스트완료
+		let timerId = setInterval(function(){
+					
+			var end = '<%=ad.getDatenext()%>';
+		
+			/*var end1 = end.substr(0,4);
+			var end2 = end.substr(4,2);
+			var end3 = end.substr(6,2);
+			var end4 = end.substr(8,2);
+			var end5 = end.substr(10,2);
+			var end6 = end.substr(12,2);*/
+
+			//var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
+			var nowTime = new Date();
+			var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 19, 03, 00);
+			//성공
+			console.log(nowTime)
+			
+			var nowt = nowTime.getTime();//지금 시간
+			var nextt = nextTime.getTime();//이후 시간
+			//console.log(pt)
+			
+			
+			 if(nowt<nextt){
+				$(".time").fadeIn();
+				sec = parseInt(nextt-nowt)/1000;
+				day = parseInt(sec/60/60/24);
+				sec= (sec - (day*60*60*24));
+				hour = parseInt(sec/60/60);
+			    sec = (sec - (hour*60*60));
+			    min = parseInt(sec/60);
+			    sec = parseInt(sec-(min*60));
+			    if(hour<10){hour="0"+hour;}
+			    if(min<10){min="0"+min;}
+			    if(sec<10){sec="0"+sec;}
+			    $(".hours").html(hour);
+			    $(".minutes").html(min);
+			    $(".seconds").html(sec);
+			}else if(nowt>nextt){
+				clearTimeout(timerId);
+				//경매 종료로 내용 변경
+				$("p.time-title").html("경매 종료");
+				//옆에 시간 부분 사라지게 하기
+				$(".time").fadeOut();
+				
+				setTimeout("changeevery();",2000);
+				
+				//모든 사람들 다 버튼 만지지 못하도록 버튼 이벤트 적용
+				/*$(".a").attr("disabled", true);
+				$(".b").attr("disabled", true);
+				$(".buttonde").removeClass("buttondee");
+				//만약에 낙찰자면 버튼이 활성화 되게 하기
+				/*$(".buttondefi").attr("disabled",false);
+				//버튼 호버하였을시에 첫번째 기능, 두번째는 평상시
+				$(".buttondefi").hover(function(){
+					$(this).addClass("kk");
+				}, function(){
+					$(this).removeClass("kk");
+				})
+				//경매 시간 끝나고서는 다른 두 버튼들은 사용 안되도록 하기
+				$(".buttondee").attr("disabled",true);
+				//다른 두 버튼 호버 적용도 삭제
+				$(".buttondee").removeClass("buttonde");
+				*/
+			}
+			 
+		},1000);
+		
+		function changeevery(){
+			
+			<%if(user == null){%>
+				var alertv = confirm("경매가 마감되었습니다. 메인으로 나가시겠습니까?");
+				if(alertv){
+				 	location.href="<%=request.getContextPath()%>/auctionPage.do";
+				}else{
+					return;
+				}
+			<%} else if(user != null && user.getUserId().equals(tot2)){%><!-- 낙찰자 -->
+				$(".a").attr("disabled", true);
+				$(".b").attr("disabled", true);
+				$(".buttonde").removeClass("buttondee");
+				$(".buttondefi").attr("disabled",false);
+				$(".buttondefi").hover(function(){
+					$(this).addClass("kk");
+				}, function(){
+					$(this).removeClass("kk");
+				})
+				
+			<%}else if(user != null && !user.getUserId().equals(tot2)){%>
+				$(".a").attr("disabled", true);
+				$(".b").attr("disabled", true);
+				$(".buttonde").removeClass("buttondee");
+				var alertt = confirm("경매가 마감되었습니다. 메인으로 나가시겠습니까?");
+				if(alertt){
+				 	location.href="<%=request.getContextPath()%>/auctionPage.do";
+				}else{
+					return;
+				}
+			<%}%>
+		}
 		
 		/*경매가 올리기 버튼을 눌렀을 시에*/
 		
@@ -348,7 +492,8 @@
 				success:function(a){
 					alert("성공")
 					console.log(a)
-					$(".nowP").empty();//안에 내용을 비워주다
+					location.reload();
+					<%--$(".nowP").empty();//안에 내용을 비워주다
 					$(".nowP").text(a.itemPrice+'원');//위에 현재 가격 적어주기
 					var dealer = $("<td>").text('<%=user.getUserId()%>');//회원이름
 					var price = $("<td>").text(a.itemPrice);//오른가격
@@ -367,15 +512,19 @@
 					var time = $("<td>").text(dateString);//날짜
 					
 					var tr = $("<tr>").append(dealer,price,time);
-					$(".auctionF").prepend(tr);
+					$(".auctionF").prepend(tr);--%>
 				}, 
 				error:function(e){
 					alert("실패")
 				}
 			})
 			<%}else if(ad.getAuctionId().equals(user.getUserId())){%>
-			alert("게시물 작성자는 가격을 올릴 수 없습니다.")
+				alert("게시물 작성자는 가격을 올릴 수 없습니다.")
 			<%}%>
+		}
+		
+		function paydeal(){
+			alert("낙찰자 결제 성공~!")
 		}
 
 		/* 게시글 수정, 삭제 등 버튼들 나오는 부분*/
@@ -399,66 +548,7 @@
 			$('.main3').hide();
 		});
 		
-
-		/*마감 시간*/
 		
-		function remaindTime(){
-			
-			var end = '<%=ad.getDatenext()%>';
-		
-			/*var end1 = end.substr(0,4);
-			var end2 = end.substr(4,2);
-			var end3 = end.substr(6,2);
-			var end4 = end.substr(8,2);
-			var end5 = end.substr(10,2);
-			var end6 = end.substr(12,2);*/
-			
-			//var postTime = new Date(now.substr(0,4), now.substr(4,2)-1, now.substr(6,2), now.substr(8,2), now.substr(10,2), now.substr(12,2));
-			var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
-			var nowTime = new Date();
-			//성공
-			//console.log(nowTime)
-			//console.log(nextTime)
-			var nowt = nowTime.getTime();//지금 시간
-			//var pt = postTime.getTime();//이전시간
-			var nextt = nextTime.getTime();//이후 시간
-			
-			//et -> 마감 시간, nt -> 지금 시간
-			if(nowt<nextt){
-				$(".time").fadeIn();
-				sec = parseInt(nextt-nowt)/1000;
-				day = parseInt(sec/60/60/24);
-				sec= (sec - (day*60*60*24));
-				hour = parseInt(sec/60/60);
-			    sec = (sec - (hour*60*60));
-			    min = parseInt(sec/60);
-			    sec = parseInt(sec-(min*60));
-			    if(hour<10){hour="0"+hour;}
-			    if(min<10){min="0"+min;}
-			    if(sec<10){sec="0"+sec;}
-			    $(".hours").html(hour);
-			    $(".minutes").html(min);
-			    $(".seconds").html(sec);
-			}else if(nowt>nextt){
-				//경매 종료로 내용 변경
-				$("p.time-title").html("경매 종료");
-				//옆에 시간 부분 사라지게 하기
-				$(".time").fadeOut();
-				//만약에 낙찰자면 버튼이 활성화 되게 하기
-				$(".buttondefi").attr("disabled",false);
-				//버튼 호버하였을시에 첫번째 기능, 두번째는 평상시
-				$(".buttondefi").hover(function(){
-					$(this).addClass("kk");
-				}, function(){
-					$(this).removeClass("kk");
-				})
-				//경매 시간 끝나고서는 다른 두 버튼들은 사용 안되도록 하기
-				$(".buttondee").attr("disabled",true);
-				//다른 두 버튼 호버 적용도 삭제
-				$(".buttondee").removeClass("buttonde");
-			}
-		}
-		setInterval(remaindTime,1000);
 	//<!-- Initialize Swiper -->
 	const swiper = new Swiper('.swiper-container', {
 		//기본 셋팅

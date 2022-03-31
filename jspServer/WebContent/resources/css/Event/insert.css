@@ -1,107 +1,118 @@
+@charset "UTF-8";
 .container{
-		display: flex;
-		justify-content: center;
-		width:70%;
-		margin:0 auto;
-		margin-top:50px;
-	}
-
-h3{
-	float:center;
-	margin:0 auto;
-	align:center;
-	margin-top:10px;
-	color: #993333;	
+	display: flex;
+	width: 100vw;
+}
+form{
+	margin: 0 auto;
+   	width: 70vw;
+}
+.whole{
+	display: flex;
+	padding: 15px;
+	border-bottom: 1px solid black;
+}
+.info{
+	margin-right: 30px;
+}
+#imagin{
+    width: 60vw;
+    border: 1px solid;
+}
+#camera{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #efefef;
+    width: 59vw;
+    height: 200px;
+    text-align: center;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+.article{
+	display: flex;
+}
+.article1{
+	margin: 10px;
 }
 
-.bts7{
-	width:100px;
-	height:40px;
+.previewImg {
+    margin: 10px;
+    margin-right: 0px;
+    margin-top: 0px;
+    position: relative;
+    background: #000000;
+    height: 200px;
+
+}
+#sortimg {
+	list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#title{
+	width: 15em;
+}
+.titleline{
+	margin-right: 94px;
+}
+.priceline{
+	margin-right: 89px;
+}
+.productline{
+	margin-right: 47px;
+}
+.categoryline{
+	margin-right: 55px;
+}
+.itempline{
+	margin-right: 45px;
+}
+.but{
+	text-align: end;
+}
+input[type = "file"]{
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	position: absolute;
+}
+.checkarea{
+	width: 50vw;
+	display: flex;
+	justify-content: space-between;
+}
+.product{
+	font-size: 11px;
+}
+.count{
+	display: flex;
+	flex-direction: column-reverse;
+}
+#content{
+	resize: none;
+	width: 40vw;
 }
 
-/*전체 페이지 div*/
-	.enrollForm1{
-       	width:70%;
-       	margin:0 auto;
-       	height: 550px;
+/* li 호버시 어두워짐 */
+ul .previewImg:hover img {
+    opacity: 0.7;
+}
+ul>.previewImg:hover .del{ 
+	opacity: 1;
+    color: white;
+    font-size: 70px;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    font-family: monospace;
+    font-weight: bold;
+}
 
-      }
-     /*header 글작성 글*/
-     .headerenrollForm{
-     	margin-top:2%;
-     	font-size:30px;
-     }
-     /*글 작성 아래 라인*/
-     .underheaderenrollF{
-     	margin-top: 10px;
-     	border-top: 2px solid black;
-     }
-     /*제목 div*/
-     .enrollTitlesection{
-     	height:50px;
-     	line-height:50px;
-		width:100%;
-		display:flex;
-		align-items: center;
-		border-bottom:1px solid black;
-     }
-     .titleNamepart, .counttitlename, .counttitlelength{
-     	width:100%;
-     }
-     /*counttitlename :제목 입력부분 */
-     .counttitlename{
-     	width : 40%;
-     	padding-left: 12px;
-		height:60%;
-     }
-     /*titleNamepart : 제목 글씨부분*/
-     .titleNamepart{
-     	font-size:19px;
-     	width:18%;
-     	height:50px;
-     	margin:0 0 0 15px;
-     	line-height:37px;
-     	
-     }
-     /*dotpoint:*이부분 */
-     .dotpoint{
-     	color: red;
-     	font-weight: 800;
-     	font-size:20px;
-     	vertical-align: 5px;
-     }
-     /*counttitlelength : count하는 부분*/
-     .counttitlelength, .countContentlength{
-     	margin-left:15px;
-     	height:70%;
-     	width:30%;
-     }
-  	
-     /*enrollcontentsection:내용 div 부분*/
-     .enrollcontentsection{
-     	display:flex;
-     	margin-top:15px;
-     }
-   
-     /*등록하기 버튼*/
-     .gotoSubmitbutton, .gobackServiceCenterMain{
-	    position: relative;
-	    display: inline-block;
-     	margin-top:15px;
-     }
-    
-  	/*카테고리 select 부분*/
-     .categoryList{
-     	width: 200px; /* 가로 사이즈 */
-	    padding: 8px; /* 내부여백 */
-	    padding-left: 12px;
-	    border: 1px solid #ddd;
-	    background: no-repeat right 50%; /* 화살표 위치 */
-	    background-size: 30px; /* 화살표 크기 */
-	    border-radius: 4px;
-	    box-sizing: border-box;
-	    font-size: 12px;
-	    color: #000;
-	    outline:none;
-	    height:35px;
-     }
+.del{
+	position:absolute;
+	opacity: 0;
+}
