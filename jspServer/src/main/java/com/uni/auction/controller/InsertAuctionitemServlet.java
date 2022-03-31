@@ -157,10 +157,9 @@ public class InsertAuctionitemServlet extends HttpServlet {
 			System.out.println("서블렛 ub 객체 생성 =>"+ub);
 		}
 
-	
 		
 		
-		
+		//폼 전체 값
 		int result = new AuctionService().insertAuctionItem(ub, fileList);
 		
 		if(result > 0) {

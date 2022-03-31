@@ -12,6 +12,7 @@ import com.uni.auction.model.dao.AuctionDao;
 import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
+import com.uni.auction.model.vo.sellRecord;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
@@ -82,18 +83,21 @@ public class AuctionService {
 
 	public int insertAuctionItem(Auction ub, ArrayList<AuctionAttachment> fileList) {
 		Connection conn = getConnection();
-		
+		//게시글 내용
 		int result1 = new AuctionDao().insertAuctionItem(conn, ub);
+		//사진
 		int result2 = new AuctionDao().insertAuctionAttachment(conn, fileList);
+		//가격 정보 처음에 넣어줘야 한다. 
+		int result3 = new AuctionDao().insertAuctionDeal(conn,ub);
 		
-		if(result1 > 0 && result2 > 0) {
+		if(result1 > 0 && result2 > 0 && result3>0) {
 			commit(conn);
 		}else {
 			rollback(conn);
 		}
 		
 		close(conn);
-		return result1*result2;
+		return result1*result2*result3;
 	}
 
 	public Auction selectAuction(int scno) {//디테일 옥션 정보들 받아오는 것
@@ -125,6 +129,39 @@ public class AuctionService {
 		}
 		close(conn);
 		return result;
+	}
+
+	public int updateStatus(String status, int scno) {
+		Connection conn = getConnection();
+		
+		int result = new AuctionDao().updateStatus(conn, status, scno);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+
+
+	public int changePrice(Auction a) {
+		Connection conn = getConnection();
+		
+		int result = new AuctionDao().changePrice(conn,a);
+		close(conn);
+		
+		return result;
+	}
+
+	public ArrayList<sellRecord> selectSellRecord(int scno) {
+		Connection conn = getConnection();
+		ArrayList<sellRecord> sr = new AuctionDao().selectSellRecord(conn, scno);
+		close(conn);
+		
+		return sr;
 	}
 
 	
