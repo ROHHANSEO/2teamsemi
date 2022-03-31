@@ -8,6 +8,7 @@ import static com.uni.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.uni.admin.model.vo.BlockBoard;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.LikeProduct;
@@ -232,13 +233,13 @@ public class UsedItemsBoardService {
 		return like;
 	}
 
-	public ArrayList<Category> selectAllCategory() {
+	public String selectAllCategory(String code) {
 		Connection conn = getConnection();
 		
-		ArrayList<Category> cList = new UsedItemsBoardDao().selectAllCategory(conn);
-		System.out.println("서비스 allcategory ==> "+ cList);
+		String category = new UsedItemsBoardDao().selectAllCategory(conn, code);
+		System.out.println("서비스 allcategory ==> "+ category);
 		close(conn);
-		return cList;
+		return category;
 	}
 
 	public int deleteAttachment(int bNo) {
@@ -268,6 +269,33 @@ public class UsedItemsBoardService {
 		
 		close(conn);
 		return result1*result2;
+	}
+
+	public int reportUsedItemBoard(BlockBoard bb) {
+		Connection conn = getConnection();
+		
+		
+		int result1 = new UsedItemsBoardDao().reportUsedItemBoard(conn, bb);
+		
+		if(result1 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1;
+	}
+
+	public ArrayList<UsedItemsBoard> SearchfiveList(String search) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardDao().SearchfiveList(conn, search);
+		System.out.println("서비스 ubList =>" + ubList);
+		close(conn);
+		
+		return ubList;// 리스트 반환
 	}
 
 

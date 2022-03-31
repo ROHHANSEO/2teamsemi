@@ -19,6 +19,7 @@ import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
 import com.uni.auction.model.vo.sellRecord;
+import com.uni.event.model.vo.Event;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 
@@ -674,6 +675,43 @@ public class AuctionDao {
 		return sr;
 	}
 
+	public ArrayList<Auction> SearchfiveList(Connection conn, String search) {
+		ArrayList<Auction> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("SearchfiveList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"$");
+			pstmt.setString(2, "%"+search+"$");
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+				Auction ac = new Auction();
+				
+				ac.setAuctionNo(rset.getInt("BOARD_NO"));
+				ac.setAuctionTitle(rset.getString("AUCTION_TITLE"));
+				ac.setCount(rset.getInt("COUNT"));
+				ac.setPriceFo(dc.format(rset.getInt("ITEM_DIRECT")));
+				ac.setSellStatus(rset.getString("SELL_STATUS"));
+				ac.setTitleImg(rset.getString("ORIGIN_NAME"));
+				
+				list.add(ac);
+			}
+			System.out.println("다오 => "+list);
+      } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+}
+
 	public int insertBlock(Connection conn, BlockBoard bb) {
 		int result = 0; // 성공한 수를 반환하기 위한 값
 		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
@@ -692,6 +730,7 @@ public class AuctionDao {
 			System.out.println("차단 다오왔다감");
 			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
 			System.out.println("insertBlock => " + result); // 임의 확인
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -701,8 +740,6 @@ public class AuctionDao {
 		return result; // int로 반환
 	}
 
-	
-	
 	
 
 

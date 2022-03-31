@@ -238,6 +238,9 @@
 	.relation-title, .relation-price, .relation-status{
 		font-size: 14px;
 	}
+	.buy {
+	    color: #ffd700;
+	}
 </style>
 </head>
 <body>
@@ -260,7 +263,7 @@
 					<!-- div class="swiper-slide" 를 추가하면된다 -->
 					<% for(int i = 0 ; i < fileList.size() ; i++){ %>
 						<div class="swiper-slide">
-							<img width="400px" height="400px" src="<%= request.getContextPath() %>/resources/usedboard_upfiles/<%= fileList.get(i).getOriginName() %>">
+							<img width="400px" height="400px" src="<%= request.getContextPath() %>/resources/usedboard_upfiles/<%= fileList.get(i).getChangeName() %>">
 						</div>
 					<% } %>
 					</div>
@@ -275,7 +278,7 @@
 				<div class="flexin">
 					<div id="titleandsell">
 						<div id="title"><%= ub.getUsedBoardTitle() %></div>
-						<% if(ub.getCategorycode() == "1160000"){ %>
+						<% if(ub.getCategorycode().equals("1160000")){ %>
 							<div class="buy">
 								삽니다
 							</div>
@@ -309,7 +312,7 @@
 								</ul>
 								<% }else{ %> <!-- 작성자가 아닐경우나오는 메뉴 -->
 									<ul class="writer-menu">
-										<li class="writer-update"><a>게시글 신고하기</a></li>
+										<li class="writer-update" onclick="reportBoard();"><a>게시글 신고하기</a></li>
 									</ul>
 								<% } %>
 							</div>
@@ -435,6 +438,13 @@
     <script src="../../resources/library/swiper.min.js"></script>
     <script>
 		
+    
+	    function reportBoard(){// 게시글 신고하기
+	    	
+			window.name = "reportBoardsub";
+			 window.open("<%= request.getContextPath()%>/reportUsedBoard.do?bNo=<%=ub.getUsedBoardNo()%>&bTitle=<%=ub.getUsedBoardTitle()%>","_blank", "width=500, height=330, top=350, left=600");
+		}
+    
     	function warning(){
 			let result =  confirm("수정하기 시 사진이 초기화되며, 카테고리를 선택할 수 없습니다. 진행하겠습니까?")
 			

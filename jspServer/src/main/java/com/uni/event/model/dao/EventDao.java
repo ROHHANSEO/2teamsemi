@@ -270,8 +270,39 @@ public class EventDao {
 		}finally {
 			close(pstmt); // pstmt를 닫는다
 		}
+		return result;
+	}
+
+	public ArrayList<Event> SearchfiveList(Connection conn, String search) {
+		ArrayList<Event> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		
-		return result; // int로 반환
+		String sql = prop.getProperty("SearchfiveList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"$");
+			pstmt.setString(2, "%"+search+"$");
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Event ev = new Event();
+				ev.setNoticeno(rset.getInt("NOTICE_NO"));
+				ev.setNoticeTitle(rset.getString("NOTICE_TITLE"));
+				ev.setNoticeContent(rset.getString("NOTICE_CONTENT").substring(0, 50));
+				
+				list.add(ev);
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 
 	

@@ -8,7 +8,7 @@ public class UsedAttachment {
 	private String originName;	// 파일 원본명
 	private String filePath;	// 파일이 저장된 폴더 경로
 	private Date uploadDate;	// 파일 업로드일
-	private int fileLevel;		// 0:타이틀이미지, 1:내용이미지
+	private String changeName;	// 파일 변경명
 	private String status;		// 파일 상태값
 	
 	public UsedAttachment() {
@@ -26,14 +26,14 @@ public class UsedAttachment {
 
 
 	public UsedAttachment(int fileNo, int refBoardNo, String originName, String filePath, Date uploadDate,
-			int fileLevel, String status) {
+			String changeName, String status) {
 		super();
 		this.fileNo = fileNo;
 		this.refBoardNo = refBoardNo;
 		this.originName = originName;
 		this.filePath = filePath;
 		this.uploadDate = uploadDate;
-		this.fileLevel = fileLevel;
+		this.changeName = changeName;
 		this.status = status;
 	}
 
@@ -76,14 +76,18 @@ public class UsedAttachment {
 	public void setUploadDate(Date uploadDate) {
 		this.uploadDate = uploadDate;
 	}
-
-	public int getFileLevel() {
-		return fileLevel;
+	
+	public String getChangeName() {
+		return changeName;
 	}
 
-	public void setFileLevel(int fileLevel) {
-		this.fileLevel = fileLevel;
+
+
+	public void setChangeName(String changeName) {
+		this.changeName = changeName;
 	}
+
+
 
 	public String getStatus() {
 		return status;
@@ -93,12 +97,16 @@ public class UsedAttachment {
 		this.status = status;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Attachment [fileNo=" + fileNo + ", refBoardNo=" + refBoardNo + ", originName=" + originName
-				+ ", filePath=" + filePath + ", uploadDate=" + uploadDate
-				+ ", fileLevel=" + fileLevel + ", status=" + status + "]";
+		return "UsedAttachment [fileNo=" + fileNo + ", refBoardNo=" + refBoardNo + ", originName=" + originName
+				+ ", filePath=" + filePath + ", uploadDate=" + uploadDate + ", changeName=" + changeName + ", status="
+				+ status + "]";
 	}
+
+	
 
 	
 	
