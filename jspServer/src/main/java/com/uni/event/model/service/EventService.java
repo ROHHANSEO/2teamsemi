@@ -123,6 +123,19 @@ public class EventService {
 
 
 
+	public ArrayList<Event> SearchfiveList(String search) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<Event> eList = new EventDao().SearchfiveList(conn, search);
+		System.out.println("서비스 eList =>" + eList);
+		close(conn);
+		
+		return eList;// 리스트 반환
+	}
+
+
+
 	
 	
 	

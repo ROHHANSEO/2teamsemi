@@ -6,3 +6,4 @@ $("#main_nav .nav ul div").hover(function(){
     $(this).removeClass("active");
     $("#main_nav .nav ul div a").removeClass("active");
 })
+

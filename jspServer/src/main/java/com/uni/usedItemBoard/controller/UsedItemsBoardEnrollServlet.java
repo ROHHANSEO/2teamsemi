@@ -37,15 +37,15 @@ public class UsedItemsBoardEnrollServlet extends HttpServlet {
 		
 		UsedItemsBoard ub = new UsedItemsBoardService().selectUsedBoard(bNo);
 		ArrayList<UsedAttachment> ua = new UsedItemsBoardService().selectAttachment(bNo);
-		ArrayList<Category> cList = new UsedItemsBoardService().selectAllCategory();
-		System.out.println("인롤 서블릿 allcategory ==> " + cList);
+		String category = new UsedItemsBoardService().selectAllCategory(ub.getCategorycode());
+		System.out.println("인롤 서블릿 category ==> " + category);
 		System.out.println("인롤 서블릿 ub ==> " + ub);
 		System.out.println("인롤 서블릿 ua ==> " + ua);
 		
 		if(ub != null) {
 			request.setAttribute("ub", ub);
 			request.setAttribute("ua", ua);
-			request.setAttribute("cList", cList);
+			request.setAttribute("category", category);
 			request.getRequestDispatcher("views/used_item_board/usedItemsEnrollForm.jsp").forward(request, response);
 		}
 	}

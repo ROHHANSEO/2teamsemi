@@ -18,6 +18,7 @@ import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
 import com.uni.auction.model.vo.sellRecord;
+import com.uni.event.model.vo.Event;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 
@@ -539,6 +540,43 @@ public class AuctionDao {
 		}
 		
 		return sr;
+	}
+
+	public ArrayList<Auction> SearchfiveList(Connection conn, String search) {
+		ArrayList<Auction> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("SearchfiveList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"$");
+			pstmt.setString(2, "%"+search+"$");
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+				Auction ac = new Auction();
+				
+				ac.setAuctionNo(rset.getInt("BOARD_NO"));
+				ac.setAuctionTitle(rset.getString("AUCTION_TITLE"));
+				ac.setCount(rset.getInt("COUNT"));
+				ac.setPriceFo(dc.format(rset.getInt("ITEM_DIRECT")));
+				ac.setSellStatus(rset.getString("SELL_STATUS"));
+				ac.setTitleImg(rset.getString("ORIGIN_NAME"));
+				
+				list.add(ac);
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 
 	

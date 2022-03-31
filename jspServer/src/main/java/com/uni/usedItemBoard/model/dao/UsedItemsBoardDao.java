@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.uni.admin.model.vo.BlockBoard;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.LikeProduct;
 import com.uni.usedItemBoard.model.vo.PageInfo;
@@ -100,7 +101,7 @@ public class UsedItemsBoardDao {
 											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("ORIGIN_NAME")
+											rset.getString("CHANGE_NAME")
 											));
 			}
 			System.out.println("다오 => "+list);
@@ -159,7 +160,8 @@ public class UsedItemsBoardDao {
 				pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
 				
 				pstmt.setString(1, at.getOriginName());
-				pstmt.setString(2, at.getFilePath());
+				pstmt.setString(2, at.getChangeName());
+				pstmt.setString(3, at.getFilePath());
 				
 				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
 				System.out.println("Dao result => " + result); // 임의 확인
@@ -341,6 +343,7 @@ public class UsedItemsBoardDao {
 			while(rset.next()) {
 				at = new UsedAttachment(rset.getInt("FILE_NO"), 
 									  rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
 				ua.add(at);
 			}
 			System.out.println("다오 ua => "+ua);
@@ -378,7 +381,7 @@ public class UsedItemsBoardDao {
 											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("ORIGIN_NAME")
+											rset.getString("CHANGE_NAME")
 											));
 				board.setCreateDate(rset.getDate("CREATE_DATE"));
 				list.add(board);
@@ -433,7 +436,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -461,7 +464,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -489,7 +492,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -516,7 +519,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -545,7 +548,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -575,7 +578,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -604,7 +607,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -635,7 +638,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -665,7 +668,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -695,7 +698,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -728,7 +731,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -760,7 +763,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -792,7 +795,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -824,7 +827,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -857,7 +860,7 @@ public class UsedItemsBoardDao {
 												dc.format(rset.getInt("PRICE")),
 												rset.getString("SALE_STATUS"),
 												rset.getInt("LIKE_COUNT"),
-												rset.getString("ORIGIN_NAME")
+												rset.getString("CHANGE_NAME")
 												));
 				}
 				System.out.println("다오 => "+list);
@@ -905,7 +908,7 @@ public class UsedItemsBoardDao {
 											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("ORIGIN_NAME")
+											rset.getString("CHANGE_NAME")
 											));
 			}
 			System.out.println("다오 => "+list);
@@ -952,7 +955,7 @@ public class UsedItemsBoardDao {
 											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("ORIGIN_NAME")
+											rset.getString("CHANGE_NAME")
 											));
 			}
 			System.out.println("다오 => "+list);
@@ -999,7 +1002,7 @@ public class UsedItemsBoardDao {
 											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("ORIGIN_NAME")
+											rset.getString("CHANGE_NAME")
 											));
 			}
 			System.out.println("다오 => "+list);
@@ -1045,7 +1048,7 @@ public class UsedItemsBoardDao {
 											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("ORIGIN_NAME")
+											rset.getString("CHANGE_NAME")
 											));
 			}
 			System.out.println("다오 => "+list);
@@ -1086,7 +1089,7 @@ public class UsedItemsBoardDao {
 											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("ORIGIN_NAME")
+											rset.getString("CHANGE_NAME")
 											));
 			}
 			System.out.println("다오 => "+list);
@@ -1309,8 +1312,8 @@ public class UsedItemsBoardDao {
 		return like;
 	}
 
-	public ArrayList<Category> selectAllCategory(Connection conn) {
-		ArrayList<Category> cList = new ArrayList<>();
+	public String selectAllCategory(Connection conn, String code) {
+		String category = "";
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -1321,17 +1324,15 @@ public class UsedItemsBoardDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
+			pstmt.setString(1, code);
+			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				cList.add(new Category(rset.getString("CATEGORYCODE"), 
-									  Integer.parseInt(rset.getString("CATEGORY_NO")), 
-									  rset.getString("CAT_LEVEL"), 
-									  rset.getString("CATEGORYNAME"), 
-									  rset.getString("CATEGORYDEREF"), 
-									  rset.getString("CATEGORYDEREF2")));
+				category = rset.getString("CATEGORYNAME");
+									
 			}
-			System.out.println("다오 allcategory => "+cList);
+			System.out.println("다오 category => "+category);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1340,7 +1341,7 @@ public class UsedItemsBoardDao {
 			close(pstmt);
 		}
 		
-		return cList;
+		return category;
 	}
 
 	public int deleteAttachment(Connection conn, int bNo) {
@@ -1410,7 +1411,8 @@ public class UsedItemsBoardDao {
 
 				pstmt.setInt(1, bNo);
 				pstmt.setString(2, at.getOriginName());
-				pstmt.setString(3, at.getFilePath());
+				pstmt.setString(3, at.getChangeName());
+				pstmt.setString(4, at.getFilePath());
 				
 				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
 				System.out.println("Dao result => " + result); // 임의 확인
@@ -1423,6 +1425,67 @@ public class UsedItemsBoardDao {
 		}
 		
 		return result; // int로 반환
+	}
+
+	public int reportUsedItemBoard(Connection conn, BlockBoard bb) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("reportUsedItemBoard"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setInt(1, bb.getBoardNo());
+			pstmt.setString(2, bb.getContent());
+			pstmt.setString(3, bb.getTitle());
+			pstmt.setString(4, bb.getCategoryNm());
+			pstmt.setString(5, bb.getBoardTitle());
+			
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao report result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public ArrayList<UsedItemsBoard> SearchfiveList(Connection conn, String search) {
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("SearchfiveList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"$");
+			pstmt.setString(2, "%"+search+"$");
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				// 객체를 생성하여 list에 담는다
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											dc.format(rset.getInt("PRICE")),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("CHANGE_NAME")
+											));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 
 }

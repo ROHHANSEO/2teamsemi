@@ -13,6 +13,8 @@ import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
 import com.uni.auction.model.vo.sellRecord;
+import com.uni.event.model.dao.EventDao;
+import com.uni.event.model.vo.Event;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
@@ -162,6 +164,17 @@ public class AuctionService {
 		close(conn);
 		
 		return sr;
+	}
+
+	public ArrayList<Auction> SearchfiveList(String search) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<Auction> acList = new AuctionDao().SearchfiveList(conn, search);
+		System.out.println("서비스 acList =>" + acList);
+		close(conn);
+		
+		return acList;// 리스트 반환
 	}
 
 	

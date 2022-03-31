@@ -16,9 +16,11 @@
     <header id="main_header">
         <div id="header">
             <div id="logo"><a href="/"><img src="../../resources/images/logo.gif" alt="메인로고이미지"></a></div>
-            <div id="search">
-                
-            </div>
+            <form id="searchform" method="post" action="<%=request.getContextPath()%>/searchList.do">
+                <input type="search" name="search" id="search">
+                <button onclick="cleansearch();" id="cancelbutton"><img id="cancel" src="../../resources/images/cancelbutton.png"></button>
+                <a href="" id="searchbutton"><button type="submit" id="opercity"><img id="searchicon" src="../../resources/images/searchIcon.png"></button></a>
+            </form>
             <%if(user==null) { %>
             <div id="header_top_right">
                 <a href="<%=request.getContextPath()%>/loginPage" class="login_page">로그인</a>

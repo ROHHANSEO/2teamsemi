@@ -4,7 +4,7 @@
 <%
 	UsedItemsBoard ub = (UsedItemsBoard)request.getAttribute("ub"); 
 	ArrayList<UsedAttachment> ua = (ArrayList<UsedAttachment>)request.getAttribute("ua");
-	ArrayList<Category> cList = (ArrayList<Category>)request.getAttribute("cList");
+	String category = String.valueOf(request.getAttribute("category"));
 	
 	String itemCondition = ub.getItemCondition();
 	String selectedCondition[] = new String[2];
@@ -62,12 +62,7 @@
 					<div id="category">
 						<div id="categorydiv">
 							<select id="centerselect" name="centerselect">
-							<option value="<%= category1 %>" selected>
-							<% for(int i = 0 ; i < cList.size() ; i++){%> 
-								<% if(cList.get(i).getCode().equals(category1)){%>
-								<%= cList.get(i).getName() %>
-							<% } } %>
-							</option>
+							<option value="<%= category1 %>" selected><%= category %></option>
 							</select>
 						</div>
 					</div>

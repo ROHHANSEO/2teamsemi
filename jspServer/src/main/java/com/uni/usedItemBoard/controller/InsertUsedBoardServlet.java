@@ -2,7 +2,9 @@ package com.uni.usedItemBoard.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -75,10 +77,27 @@ public class InsertUsedBoardServlet extends HttpServlet {
 				// 파일의 이름을 String형으로 받음
 				String fileName = part.getSubmittedFileName();
 				
-				System.out.println("fileName ==> "+ fileName); // 확인용
-			
+				// 업로드 날짜 받기
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String currentTime = sdf.format(new Date());
+				
+				// 수정명 : 파일업로드한시간(년월일시분초) + 10000~99999사이의 랜덤값 (5자리랜덤값) + 확장자
+				int ranNum = (int)(Math.random()*90000+10000);
+				
+				// 확장자
+				String ext = "";
+				
+				// 도트
+				int dot = fileName.lastIndexOf(".");
+				ext = fileName.substring(dot);
+				
+				String rename =  currentTime + ranNum + ext;
+				
+				
+				System.out.println("fileName rename ==> "+ rename); // 확인용
+				
 				// uploadUtil의 saveFiles 메소드 사용하여 파일을 저장
-				uploadUtil.saveFiles(part, fileName, uploadUtil.createFilePath());
+				uploadUtil.saveFiles(part, rename, uploadUtil.createFilePath());
 				
 				// UsedAttachment객체 생성
 				UsedAttachment at = new UsedAttachment();
@@ -86,6 +105,7 @@ public class InsertUsedBoardServlet extends HttpServlet {
 				// 저장경로와 이름 저장
 				at.setFilePath(uploadUtil.createFilePath());
 				at.setOriginName(fileName);
+				at.setChangeName(rename);
 				
 				// fileList에 담기
 				fileList.add(at);
@@ -115,7 +135,7 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			// for문 이용하여 결제 방식 넣기
 			for(int i = 0 ; i < payments.length ; i++) {
 				// 처음 인덱스에 직접 결제가 존재 할 시
-				if(!payments[0].isEmpty() && payments[0].contains("직접 결제")) {
+				if(!payments[0].isEmpty() && payments[0].contains("바로 결제")) {
 					paymentOne = "Y";
 					System.out.println(paymentOne);
 				}else {

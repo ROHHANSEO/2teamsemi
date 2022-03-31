@@ -28,6 +28,15 @@ public class BlockBoard {
 	
 	
 	
+	public BlockBoard(String title, int boardNo, String content, String boardTitle, String categoryNm) {
+		super();
+		this.title = title;
+		this.boardNo = boardNo;
+		this.content = content;
+		this.boardTitle = boardTitle;
+		this.categoryNm = categoryNm;
+	}
+
 	public BlockBoard(int blockNo, String title, String categoryNm) {
 		super();
 		this.blockNo = blockNo;

@@ -168,7 +168,7 @@
 						$.each(list, function(index, obj){
 							console.log("들어옴")
 							
-							let listprice = obj.price;
+							let listprice = obj.comprice;
 							let listcondition = obj.itemCondition;
 							let listtitle = obj.usedBoardTitle;
 							let listlike = obj.likeCount;
