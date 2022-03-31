@@ -78,7 +78,69 @@ thead{
 	height:28px;
 }
 
-.enrollevent{
+.pagingArea{
 	margin:0 auto;
-	margin-bottom: 20px;
+	margin-bottom: 100px;
 }
+
+.bbc{
+	width:80px;
+	height:35px;
+}
+
+ .formgroupmiddle{
+        	width:80%;
+        	margin-top:3%;
+ 			margin-bottom:3%;
+ 			left:50%;
+ 			transform:translateX(-50%);
+ 			position:relative;
+        	height:50px;
+        }
+        .seacrchidichinput{
+        	display: inline-block ;
+        	position:absolute;
+        	left:50%;
+        	transform:translateX(-50%);
+        	line-height:50px;
+        	height:35px;
+			width:550px;
+        }
+		.optionserachCList{
+        	height:30px;
+        	width:50px;
+        	
+        }
+        .seacrchinput{
+        	height:30px;
+			width:400px;
+        }
+        .form-controlsearchbutton{
+        	height:33px;
+        	width:60px;
+        }
+
+        .serviceCentermiddle{
+            display: flex;
+            flex-wrap: wrap;
+            margin: 80px auto 0 auto;
+            text-align: center;
+            width: 70%;
+
+        }
+        .serviceCentermiddle .all{
+        	cursor: pointer;
+            border-width: 1px;
+            border-color: black;
+            border-style: solid;
+            line-height: 70px;
+            flex: 1 1 15%;
+            height: 70px;
+            width: 50px;
+        }
+        .serviceCentermiddle .all:hover{
+        	background-color:#993333;
+        	color:white;
+        }
+        
+        
