@@ -142,6 +142,9 @@
 	
 		<!-- 맨 끝으로 (>>) -->
 		<button class="commonwritebutton bts" onclick="location.href='<%=request.getContextPath()%>/eventpage.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
+	
+	
+	
 	</div> 
 	
 	

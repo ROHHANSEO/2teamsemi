@@ -18,47 +18,99 @@
     	<%@ include file = "../common/header.jsp" %>
     </div>
 	
-	<div class="outer">
-		<br>
-		<h2 align="center">이벤트&공지사항 수정</h2>
-		
-		<form id="updateForm" action="<%= request.getContextPath() %>/updateNotice.do" method="post" >
-			<input type="hidden" name="nno" value="<%= e.getNoticeno() %>">
-			<table align="center">
-				<tr>
-					<td>제목</td>
-					<td colspan="3"><input type="text" id="Title" name="title" value="<%= e.getNoticeTitle() %>"></td>
-				</tr>
+	<div class="container">
+		<form name ="useditemform" class="item"
+			action="<%= request.getContextPath() %>/updateNotice.do" method="post" 
+			enctype="multipart/form-data">
+			<h1>이벤트&공지사항 글 수정하기</h1>
+			<div>
+				<input type="hidden" name="nno">
+				<div class="whole">
+					<input type="hidden" name="nno" value="<%= e.getNoticeno() %>">
+					<div class="whole">
+					<div class="titleline">
+					<h3>
+						제목<a style="color: red;">*</a>
+					</h3>
+					<input type="text" name="title" id="title" placeholder="제목을 입력하세요"
+						maxlength="40" value="<%= e.getNoticeTitle()%>" required>
+					<div>ㅤ</div>
+					<div class="count">
+						<div>
+							<small><c id="countone"> 0</c>/20</small>
+						</div>
+					</div>
+				</div>
 				
-				<tr>
-					<td>내용</td>
-					<td colspan="3"></td>
-				</tr>
-				<tr>
-					<td colspan="4">
-						<textarea name="content" cols="60" rows="15" style="resize:none;"><%= e.getNoticeContent() %></textarea>
-					</td>
-				</tr>	
-			</table>
-			<br>
-			
-			
-			<div class="btns" align="center">
-				<button type="button" class="commonwritebutton ses2" onclick="location.href='<%=request.getContextPath() %>/eventpage.do'">취소</button>
-				<button type="submit" class="commonwritebutton ses1" >수정</button>
+				<div class="whole">
+					<div class="categoryline">
+						<h3>
+							분류<a style="color: red;">*</a>
+						</h3>
+					</div>
+					<div>
+						<input type="radio" id="new" value="새상품" name="productStatus"> 공지사항
+						<input type="radio" value="중고상품" name="productStatus" id="used" > 이벤트
+					</div>
+				</div>
+				
+				<div class="whole">
+					<div class="info">
+						<h3>
+							이미지 선택<a style="color: red;">*</a>
+						</h3>
+						<small> 최대 10개의<br> 이미지 가능
+						</small>
+					</div>
+					<div>
+						<div class="article">
+							<div id="imagin">
+								<div id="camera">
+									<input type="file" name="file1" id="file1" accept='.gif, .jpg, .png'  multiple />
+									<img src="https://img.icons8.com/material-rounded/24/000000/camera--v2.png" />
+									<br> 이미지 선택
+								</div>
+								<ul id="sortimg">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				<div>
+					<div class="whole">
+						<div class="itempline">
+							<h3>
+								내용<a style="color: red;">*</a>
+							</h3>
+						</div>
+						<div class="itempline">
+							<textarea name="content" id="content" cols="30" rows="10"
+								placeholder="내용을 입력하세요." maxlength="2000" required><%= e.getNoticeContent() %></textarea>
+						</div>
+						<div class="count">
+							<div>
+								<small><c id="counter">0</c>/2000</small>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div>ㅤ</div>
+				<div class="but">
+					<input id="ret" class="commonsubmit" type="button" value="취소하기"
+						onclick="location.href='<%=request.getContextPath()%>/eventpage.do'">
+					<input id="add" class="commonsubmit" type="button" value="수정하기"
+						oncick="checkform()">
+				<div>ㅤ</div>
 			</div>
 		</form>
 	</div>
-	<script>
-	
-	if ($("#text").val() == "") {
-		alert("제목을 정확히 입력해주세요");
-		return;
-		}
-	
-	
-	</script>
-	<%@ include file="../common/footer.jsp" %>
-	
+	<script src="../../resources/library/jquery-3.6.0.min.js"></script>
+	<script src="../../resources/js/usedItemBoard/EnrollForm.js"></script>
+	<div>
+		<%@ include file="../common/footer.jsp"%>
+	</div>
 </body>
 </html>

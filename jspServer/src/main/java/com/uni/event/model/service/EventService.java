@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.uni.event.model.dao.EventDao;
 import com.uni.event.model.vo.Event;
+import com.uni.event.model.vo.NoticeAttachment;
 import com.uni.event.model.vo.PageInfo;
 
 
@@ -107,16 +108,20 @@ public class EventService {
 
 
 
-	public int insertnotice(Event sc) {
+
+
+
+	public int insertNotice(ArrayList<NoticeAttachment> fileList) {
 		Connection conn = getConnection();
 		
-		int result = new EventDao().insertEvent(conn,sc);
+		int result = new EventDao().insertNoticeAttachment(conn, fileList);
 		
-		if(result > 0) {
+		if(result > 0 ) {
 			commit(conn);
 		}else {
 			rollback(conn);
 		}
+		
 		close(conn);
 		return result;
 	}
