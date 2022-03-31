@@ -8,6 +8,7 @@ import static com.uni.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.uni.admin.model.vo.BlockBoard;
 import com.uni.auction.model.dao.AuctionDao;
 import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
@@ -39,6 +40,18 @@ public class AuctionService {
 		
 		return listCount;//리스트 카운트 다시 서블렛으로 보내주기
 	}
+	
+
+	public int getCaListCount(String li) {//카테고리 별 리스트 개수 받아오기
+		Connection conn = getConnection();
+		
+		//int로 리스트 갯수 받아오기 
+		int listCount = new AuctionDao().getCaListCount(conn, li);
+		System.out.println("service listCount ===" + listCount);
+		close(conn);
+		
+		return listCount;//리스트 카운트 다시 서블렛으로 보내주기
+	}
 
 	public ArrayList<Auction> selectList(PageInfo pi) {//맞는 페이지의 LIST받아오기
 		Connection conn = getConnection();
@@ -51,6 +64,19 @@ public class AuctionService {
 		close(conn);
 		return list;
 	}
+	//카테고리 눌렀을시에 가져오는 리스트
+	public ArrayList<Auction> selectCList(PageInfo pi, String li) {
+		Connection conn = getConnection();
+		//pi는 페이지 정보
+		
+		//리스트 받아오기 
+		ArrayList<Auction> list = new AuctionDao().selectCList(conn, pi, li);
+		
+		System.out.println("service selectList ==="+list);
+		close(conn);
+		return list;
+	}
+
 
 	public ArrayList<Category> totCategoryList() {
 		Connection conn = getConnection();
@@ -151,6 +177,12 @@ public class AuctionService {
 		Connection conn = getConnection();
 		
 		int result = new AuctionDao().changePrice(conn,a);
+
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
 		close(conn);
 		
 		return result;
@@ -159,10 +191,29 @@ public class AuctionService {
 	public ArrayList<sellRecord> selectSellRecord(int scno) {
 		Connection conn = getConnection();
 		ArrayList<sellRecord> sr = new AuctionDao().selectSellRecord(conn, scno);
+
 		close(conn);
 		
 		return sr;
 	}
+
+	public int insertBlock(BlockBoard bb) {
+		Connection conn = getConnection();
+		
+		int result = new AuctionDao().insertBlock(conn,bb);
+		
+
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+
 
 	
 

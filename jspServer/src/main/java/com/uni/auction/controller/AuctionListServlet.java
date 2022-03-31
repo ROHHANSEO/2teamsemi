@@ -33,7 +33,9 @@ public class AuctionListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String category = request.getParameter("category");//카테고리명을 받아온다. \
 		
+		System.out.println(category +"카테고리ㅣㅣ");
 		//페이징 처리 
 		
 		int listCount; 		// 총게시글 갯수 
@@ -44,10 +46,13 @@ public class AuctionListServlet extends HttpServlet {
 		
 		int pageLimit; 		// 한페이지 하단에 보여질 페이지 최대갯수
 		int boardLimit; 	// 한페이지에 보여질 게시글 최대갯수 
-		
+		if(category == null) {
 		//총개시글 갯수 
 		listCount = new AuctionService().getListCount();
-		
+		}else {
+		//총개시글 갯수 
+		listCount = new AuctionService().getCaListCount(category);
+		}
 		//현재페이지
 		currentPage = 1;
 		
@@ -77,17 +82,29 @@ public class AuctionListServlet extends HttpServlet {
 		// 페이지인포 객체를 생성 
 		PageInfo pi = new PageInfo(listCount, currentPage, startPage, endPage, maxPage, pageLimit, boardLimit);
 		
-		ArrayList<Auction> aulist = new AuctionService().selectList(pi);
-		System.out.println("Alist 옥션 리스트 =="+aulist);
 		
-		ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
-		
+	
+		if(category == null) {
+			ArrayList<Auction> aulist = new AuctionService().selectList(pi);
+
+			System.out.println("Alist 옥션 리스트 =="+aulist);
+			
+			ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
+			
 		// 담은 ArrayList 객체인 list를 속성에 담고
 		request.setAttribute("aulist", aulist);
 		// pi 객체 또한 속성에 담는다
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		}else {
+			ArrayList<Auction> kklist = new AuctionService().selectCList(pi, category);
+			ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
+			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
+			request.setAttribute("kklist", kklist);
+		}
 		request.getRequestDispatcher("views/auction/auctionListView.jsp").forward(request, response);
+		
 	}
 
 	/**

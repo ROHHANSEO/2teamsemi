@@ -3,6 +3,7 @@
 <%
 	   	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");
 		ArrayList<Auction> aulist = (ArrayList<Auction>)request.getAttribute("aulist");
+		ArrayList<Auction> kklist = (ArrayList<Auction>)request.getAttribute("kklist");
 		
 		PageInfo pi = (PageInfo)request.getAttribute("pi");
 		
@@ -138,7 +139,7 @@
 	<div class="wtotal">
 		<div class="categorylist"><!-- 카테고리div 부분 -->
 		<%for(Category ca : list){%>
-		<div class="categorydiv"><p><%=ca.getName() %></p>
+		<div class="categorydiv" ><p class= "aaaaa"><%=ca.getName() %></p>
 		</div>
 		<%} %>
 		</div>
@@ -160,6 +161,7 @@
 			</div>
 		</div>
 		<div class="auctionTot"><!-- 게시글  -->
+		<% if (aulist != null){%>
 			<%for(Auction al : aulist){ %>
 			<div class="itemLIst">
 				<div class="auctionList"><!-- 이미지 부분 -->
@@ -174,6 +176,23 @@
 				</div>
 			</div>
 			<%} %>
+		<%}else{ %>
+			<%for(Auction al : kklist){ %>
+				<div class="itemLIst">
+					<div class="auctionList"><!-- 이미지 부분 -->
+						<input type="hidden" value="<%=al.getAuctionNo()%>" class="auctionno">
+						<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="200" height="200">
+					</div>
+					<div class="contentPart"><!-- 글부분 -->
+						<div class="statusauction"> <p><%=al.getSellStatus() %> </p></div>
+						<div class="titleauction"> <p><%=al.getAuctionTitle() %> </p></div>
+						<div class="priceContent"> <span class="a" ><%=al.getPriceFo() %>원 </span><p class="b">즉시구매가 </p></div>
+						<div class="endauction"> <p>경매 마감 : <%=al.getDateget() %></p></div>
+					</div>
+				</div>
+			<%} %>
+		
+		<%} %>
 		</div>
 		<!-- 페이징바 만들기 -->
 		<div class="pagingArea" align="center">
@@ -213,17 +232,83 @@
 	
 	<%@ include file = "../common/footer.jsp" %> 
 	<script>
+		<%if (aulist != null){%>
 		$(".categorydiv").click(function(){
 			var input = $(this).text();
 			console.log(input)
 			$(".selectparta").text(input);
 		})
+		<%}%>
 		$(".itemLIst").click(function(){
 			var scno = $(this).children().children().val();
 			console.log(scno)
 			location.href="<%=request.getContextPath()%>/detailAuction.do?scno="+scno;
 		})
-	
+		
+
+		//버튼 눌렀을 시에 카테고리별로 리스트 보이게 하기 
+		<%--$(".aaaaa").click(function(){
+			$(".pagingArea").hide();//페이징바 안보이게 
+			$(".auctionTot").empty();
+			var li = $(this).text();
+			$.ajax({
+				url:"auctionPage.do", 
+				data:{
+					li:li
+				}, 
+				type:"get", 
+				success:function(list){
+					console.log(list)
+					console.log("카테고리 보내기 성공")
+					if(list.length == 0){
+						$(".wtotal").css("height", "800");
+						alert("게시글이 없습니다!")
+					}else if(list.legth != 0){
+						var html = '';	
+							<%--
+							<div class="itemLIst">
+								<div class="auctionList"><!-- 이미지 부분 -->
+									<input type="hidden" value="<%=al.getAuctionNo()%>" class="auctionno">
+									<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="200" height="200">
+								</div>
+								<div class="contentPart"><!-- 글부분 -->
+									<div class="statusauction"> <p><%=al.getSellStatus() %> </p></div>
+									<div class="titleauction"> <p><%=al.getAuctionTitle() %> </p></div>
+									<div class="priceContent"> <span class="a" ><%=al.getPriceFo() %>원 </span><p class="b">즉시구매가 </p></div>
+									<div class="endauction"> <p>경매 마감 : <%=al.getDateget() %></p></div>
+								</div>list[key]
+							</div>
+						$.each(list, function(index, obj){
+							html += 	'<div class="itemLIst">';
+							html +=			'<div class="auctionList">';
+							html +=				'<input type="hidden" value="'+obj.auctionNo+'"class="auctionno">';
+							html +=				'<img src="'+<%=request.getContextPath() %>/resources/auction_upfiles/obj.titleImg+'" width="200" height="200">';
+							html +=			'</div>';
+							html +=			'<div class="contentPart">';
+							html +=				'<div class="statusauction"> <p>'+obj.sellStatus +'</p></div>';
+							html +=				'<div class="titleauction"> <p>'+obj.getAuctionTitle +'</p></div>';
+							html +=				'<div class="priceContent"> <span class="a" >'+obj.priceFo+'원 </span><p class="b">즉시구매가 </p></div>';
+							html +=				'<div class="endauction"> <p>경매 마감 :'+ obj.getDateget+'</p></div>';
+							html +=			'</div>';
+							html +=		'</div>';
+						}
+						
+						$(".auctionTot").append(html);
+						
+						})
+					}
+				}, 
+				error:function(e){
+					console.log("카테고리 보내기 실패")
+				}
+			})
+		})--%>
+		$(".aaaaa").click(function(){
+			var category = $(this).text();
+			console.log(category)
+			location.href="<%=request.getContextPath()%>/auctionPage.do?category="+category;
+		})
+			
 		
 	</script>
 </body>
