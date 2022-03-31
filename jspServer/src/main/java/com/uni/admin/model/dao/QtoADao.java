@@ -605,6 +605,114 @@ public class QtoADao {
 		return user;
 	}
 
+	public ArrayList<User> searchUserId(Connection conn, String userId) {
+		ArrayList<User> user = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("searchUserId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "%"+userId+"%");
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				user.add(new User(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("CITI_NO"),
+						rset.getString("PHONE"),
+						rset.getString("NICK_NAME"),
+						rset.getString("EMAIL"),
+						rset.getString("GENDER"),
+						rset.getString("ADMIN_STATUS"),
+						rset.getString("STATUS"),
+						rset.getInt("BAN_COUNT")
+						));
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return user;
+	}
+
+	public User selectUser(Connection conn, int userNo) {
+		User user = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectUser");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				user = new User(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("CITI_NO"),
+						rset.getString("PHONE"),
+						rset.getString("NICK_NAME"),
+						rset.getString("EMAIL"),
+						rset.getString("GENDER"),
+						rset.getString("ADMIN_STATUS"),
+						rset.getString("STATUS"),
+						rset.getInt("BAN_COUNT")
+						);
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return user;
+	}
+
+	public int statusChange(Connection conn, String status, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("statusChange");
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, status);
+			pstmt.setInt(2, userNo);
+			
+			result = pstmt.executeUpdate(); 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
 
 
 }

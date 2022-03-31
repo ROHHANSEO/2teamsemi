@@ -2,6 +2,7 @@ package com.uni.admin.model.service;
 
 import static com.uni.common.JDBCTemplate.*;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -150,6 +151,36 @@ public class QtoAService {
 		ArrayList<User> user = new QtoADao().BanUserList(conn);
 		close(conn);
 		return user;
+	}
+
+	public ArrayList<User> searchUserId(String userId) {
+		Connection conn = getConnection();
+		
+		ArrayList<User> user = new QtoADao().searchUserId(conn,userId);
+		close(conn);
+		return user;
+	}
+
+	public User selectUser(int userNo) {
+		Connection conn = getConnection();
+		
+		User user = new QtoADao().selectUser(conn,userNo);
+		close(conn);
+		return user;
+	}
+
+	public int statusChange(String status, int userNo) {
+		Connection conn = getConnection();
+		
+		int result = new QtoADao().statusChange(conn, status, userNo);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 
 }

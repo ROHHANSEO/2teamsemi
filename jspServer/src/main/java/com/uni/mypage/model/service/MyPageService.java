@@ -3,8 +3,11 @@ package com.uni.mypage.model.service;
 import static com.uni.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
+import com.uni.auction.model.vo.Auction;
 import com.uni.mypage.model.dao.MyPageDao;
+import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 public class MyPageService {
 
@@ -58,6 +61,22 @@ public class MyPageService {
 		}
 		close(conn);
 		return result;
+	}
+
+	public ArrayList<UsedItemsBoard> patmentList(int userNo) {
+		Connection conn = getConnection();
+
+		ArrayList<UsedItemsBoard> list = new MyPageDao().patmentList(conn,userNo);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<Auction> actionList(int userNo) {
+		Connection conn = getConnection();
+
+		ArrayList<Auction> list = new MyPageDao().actionList(conn,userNo);
+		close(conn);
+		return list;
 	}
 
 }

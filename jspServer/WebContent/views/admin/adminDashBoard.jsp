@@ -37,12 +37,26 @@
    			border-bottom: 1px solid #993333;
    			font-weight: 600;
         }
+        
+        .void_box{
+            /* display: inline-block; */
+		    /* border: 1px solid black; */
+		    /* background-color: lightgray; */
+		    width: 40%;
+		    border-radius: 20px;
+		    display: inline-block;
+		    margin: 30px;
+		    /* cursor: pointer;*/
+    	}
 </style>
 </head>
 <body>
 <%@include file="../common/header.jsp" %>
 <%@include file="../admin/AdminTitle.jsp" %>
 <%@include file="../common/userLogModal.jsp" %>
+<%@include file="../common/banUserModal.jsp" %>
+<%@include file="../common/userManagement.jsp" %>
+<%@include file="../common/selectUserManagement.jsp" %>
     <section id="dashboard_area">
         <div class="article_area dashboard_user_list">
             <span class="content_text">회원 목록</span>
@@ -53,11 +67,9 @@
         <div class="article_area dashboard_user_management">
             <span class="content_text">회원 관리</span>
         </div>
-        <div class="article_area dashboard_admin_code">
-            <span class="content_text">운영자 코드 관리</span>
-        </div>
+        <div class="void_box"></div>
     </section>
 <%@include file="../common/footer.jsp" %>
-    
+    <script src="../../resources/js/admin/adminDashBoardModal.js"></script>
 </body>
 </html>
