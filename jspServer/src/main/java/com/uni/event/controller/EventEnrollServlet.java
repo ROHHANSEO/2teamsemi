@@ -32,23 +32,30 @@ public class EventEnrollServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String noticeTitle = request.getParameter("title");
-		String noticeContent = request.getParameter("content");
-		String userid = String.valueOf(((User)request.getSession().getAttribute("user")).getUserNo());
-		System.out.println("______전______" + noticeContent);
-		Event ev = new Event(noticeTitle, userid, noticeContent.replaceAll("\n", "<br>"));
-		System.out.println("______후______" + noticeContent.replaceAll("\n", "<br>"));
-		System.out.println("title===" + noticeTitle);
-		int result = new EventService().insertNotice(ev);
+		String category = request.getParameter("category");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		
-		if(result>0) {
-			request.getSession().setAttribute("msg", "공지사항이 성공적으로 등록되었습니다.");
+		String writer=String.valueOf(((User)request.getSession().getAttribute("user")).getUserNo());
+		
+		System.out.println(title +"   ==insertservlet에서");//제목 성공
+		//System.out.println("_____전______ "+ content);
+		//category, title,content,writer
+		Event sc = new Event(category,title.replaceAll("\u0020", "&nbsp;"),content.replaceAll("\n", "<br>").replaceAll("\u0020", "&nbsp;"));
+		//System.out.println("_____후______ "+  title.replaceAll("\n", "<br>"));
+		//System.out.println(category + "===insertservlet category들어왔나");
+		
+		int result = new EventService().insertnotice(sc);
+		if(result > 0) {
+			request.getSession().setAttribute("msg", "게시글 등록 성공");
 			response.sendRedirect("eventpage.do");
 		}else {
-			request.setAttribute("msg", "공지사항등록실패");
-			request.getRequestDispatcher("view/common/errorPage.jsp").forward(request, response);
+			request.setAttribute("msg","고객센터 글 작성이 실패하였습니다.");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+
 		}
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

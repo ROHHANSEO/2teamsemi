@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.uni.event.model.dao.EventDao;
 import com.uni.event.model.vo.Event;
+import com.uni.event.model.vo.PageInfo;
 
 
 
@@ -62,15 +63,14 @@ public class EventService {
 	
 
 
-	public int insertNotice(Event ev) {
-		Connection conn = getConnection();//connection 연결
-		
-		int result = new EventDao().insertNotice(conn, ev);
-		System.out.println("ev====" + ev);
+
+	public int updateNotice(Event event) {
+		Connection conn = getConnection();
+		int result = new EventDao().updateNotice(conn, event);//NoticeDao 에 보낸다.
 		
 		
 		if(result>0) {
-			commit(conn);	
+			commit(conn);
 		}else {
 			rollback(conn);
 		}
@@ -80,12 +80,39 @@ public class EventService {
 
 
 
-	public int updateNotice(Event event) {
+	public ArrayList<Event> selectList(PageInfo pi) {
 		Connection conn = getConnection();
-		int result = new EventDao().updateNotice(conn, event);//NoticeDao 에 보낸다.
+		//pi는 페이지 정보
 		
+		//리스트 받아오기 
+		ArrayList<Event> list = new EventDao().selectList(conn, pi);
 		
-		if(result>0) {
+		System.out.println("service selectList eventservice ==="+list);
+		close(conn);
+		return list;
+	}
+
+
+
+	public int getListCount() {
+		Connection conn = getConnection();
+		
+		//int로 리스트 갯수 받아오기 
+		int listCount = new EventDao().getListCount(conn);
+		System.out.println("service listCount =====>" + listCount);
+		close(conn);
+		
+		return listCount;//리스트 카운트 다시 서블렛으로 보내주기
+	}
+
+
+
+	public int insertnotice(Event sc) {
+		Connection conn = getConnection();
+		
+		int result = new EventDao().insertEvent(conn,sc);
+		
+		if(result > 0) {
 			commit(conn);
 		}else {
 			rollback(conn);

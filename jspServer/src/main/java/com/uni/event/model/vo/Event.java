@@ -25,6 +25,15 @@ public class Event {
 		
 	}
 	
+	public Event ( int noticeno, String noticeTitle, int userno, int count, Date createDate) {
+		super();
+		this.noticeno = noticeno;
+		this.noticeTitle = noticeTitle;
+		this.userno = userno;
+		this.count = count;
+		this.createDate = createDate;
+	}
+	
 	
 
 	public Event(int noticeno,  String noticeTitle, Date createDate ){
@@ -65,6 +74,17 @@ public class Event {
 	}
 
 
+
+	public Event(int noticeno, String noticetitle, String noticeContent, int userno, int count, Date createDate) {
+		super();
+		this.noticeno = noticeno;
+		this.noticeTitle = noticeTitle;
+		this.userid = userid;
+		this.category = category;
+		this.noticeContent=noticeContent;
+		this.count = count;
+		this.createDate = createDate;
+	}
 
 	public int getNoticeno() {
 		return noticeno;

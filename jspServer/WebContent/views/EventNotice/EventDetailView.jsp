@@ -23,8 +23,8 @@
 		<br>
 		<div class="sos1" align="right">
 		<% if(user != null && user.getUserId().equals("admin")) { %> 
-		<a class="commonwritebutton ss5" href="updateEvent.do?nno=<%=e.getNoticeno()%>">수정</a>  &nbsp;
-		<a class="commonwritebutton ss501" href="deleteEvent.do?nno=<%=e.getNoticeno()%>">삭제</a>
+		<a class="commonwritebutton sse1" href="updateEvent.do?nno=<%=e.getNoticeno()%>">수정</a>  &nbsp;
+		<a class="commonwritebutton sse2" href="deleteEvent.do?nno=<%=e.getNoticeno()%>">삭제</a>
 		<% } %>
 		</div>
 		<div class="etitle">
@@ -51,10 +51,12 @@
 			 
 			
 		</div>
+		
+		
 		</div>
-		<div class="sss">
-		 <a  class="commonwritebutton sss" href="eventpage.do?nno=<%=e.getNoticeno()%>">목록으로</a>
-		</div>
+		
+		 <a  class="commonwritebutton sss " href="eventpage.do?nno=<%=e.getNoticeno()%>">목록으로</a>
+		
 		
 
 
