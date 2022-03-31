@@ -17,6 +17,7 @@ import java.util.Properties;
 import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
+import com.uni.auction.model.vo.sellRecord;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 
@@ -302,6 +303,29 @@ public class AuctionDao {
 		return result; // int로 반환
 	
 	}
+	//경매 시작할때 베이스로 먼저 작성자가 넣은 값을 넣어주기(성공)
+	public int insertAuctionDeal(Connection conn, Auction ub) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("insertAuctionDeal"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		//INSERT INTO SELL_RECORD VALUES(SEQ_SR.NEXTVAL,?, ?, ?,SYSDATE, DEFAULT)
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+
+			pstmt.setInt(1, Integer.parseInt(ub.getAuctionWriter())); // 회원번호
+			pstmt.setInt(2, ub.getItemPrice());	// 경매 시작가 
+	
+			System.out.println("다오왔다감");
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		return result; // int로 반환
+	}
 
 	public int insertAuctionAttachment(Connection conn, ArrayList<AuctionAttachment> fileList) {
 		int result = 0; // 성공한 수를 반환하기 위한 값
@@ -432,6 +456,93 @@ public class AuctionDao {
 		
 		return result;
 	}
+
+	public int updateStatus(Connection conn, String status, int scno) {//상태값 변경
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateStatus");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, status);//넣어줄 상태값
+			pstmt.setInt(2, scno);//게시물 번호
+			result = pstmt.executeUpdate();
+			System.out.println("auction updateStatus" + result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+
+	public int changePrice(Connection conn, Auction a) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("changePrice");
+		//INSERT INTO SELL_RECORD VALUES(SEQ_SR.NEXTVAL,?, ?, ?,SYSDATE, DEFAULT)
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			pstmt.setInt(1, a.getAuctionNo());
+			pstmt.setInt(2, Integer.parseInt(a.getAuctionWriter())); // 회원번호
+			pstmt.setInt(3, a.getItemPrice());	// 경매 시작가 
+	
+			System.out.println("다오왔다감");
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		return result; // int로 반환
+	}
+
+	public ArrayList<sellRecord> selectSellRecord(Connection conn, int scno) {
+		ArrayList<sellRecord> sr = new ArrayList<>();
+		sellRecord srm = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSellRecord");
+		//SELECT AUCTION_REF, USER_ID, AUCTION_PRICE, TO_CHAR(AUCTION_TIME,'YYYY-MM--DD HH24:MI:SS'),A.STATUS \
+		//FROM SELL_RECORD A JOIN MEMBER B ON(A.USER_NO=B.USER_NO) \
+		//WHERE AUCTION_REF = ? ORDER BY AUCTION_TIME DESC
+		//연관 게시글, 유저 아이디, 가격, 변환 날짜, 낙찰여부
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, scno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				srm = new sellRecord(rset.getInt("AUCTION_REF"), 
+									  rset.getString("USER_ID"),
+									  rset.getInt("AUCTION_PRICE"), 
+									  rset.getString(4),
+									  rset.getString("STATUS"));
+				sr.add(srm);
+			}
+			System.out.println("다오 sr => "+sr);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return sr;
+	}
+
+	
+	
 	
 
 

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.uni.auction.model.service.AuctionService;
 import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
+import com.uni.auction.model.vo.sellRecord;
 
 /**
  * Servlet implementation class DetailAuctionServlet
@@ -35,16 +36,17 @@ public class DetailAuctionServlet extends HttpServlet {
 		int scno = Integer.parseInt(request.getParameter("scno"));
 		System.out.println(scno +"scno 옥션 디테일");
 		
-		Auction ac = new AuctionService().selectAuction(scno);
-		ArrayList<AuctionAttachment> at = new AuctionService().selectAttachment(scno);
+		Auction ac = new AuctionService().selectAuction(scno);//게시물 정보
+		ArrayList<AuctionAttachment> at = new AuctionService().selectAttachment(scno);//게시물 사진
+		ArrayList<sellRecord> sr = new AuctionService().selectSellRecord(scno);//입찰 내역
 		
 		System.out.println("디테일 옥션 + "+ ac);
 		//System.out.println("디테일 옥션 + "+ at);
-		
+		System.out.println("디테일 옥션 +"+sr);
 		if(ac != null & !at.isEmpty()) {
 			request.setAttribute("ac", ac);//옥션 정보 
 			request.setAttribute("fileList", at);//사진 정보들 
-			
+			request.setAttribute("sr", sr);//입찰 내역
 			request.getRequestDispatcher("views/auction/auctionDetail.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "게시물 등록 실패");
