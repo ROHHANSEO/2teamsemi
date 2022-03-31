@@ -1,12 +1,9 @@
 function deletebye(index){
 
     console.log(index)
-    let deleteE = document.getElementById("image"+index)
-    console.log(deleteE)
-    // 만약 같고온 이미지가 
-    //if($("#image"+index) == ){
-
-    //}
+    let deleteE = $("#exsting"+index).attr('title');
+    console.log("deleteE타이틀 : "+deleteE)
+    
     $("#image"+index).parent().remove()
     
 }
@@ -21,10 +18,8 @@ $(function(){
     $("#file1").change(function(e){
         //ul 내용 비워주기
         $('#sortimg').empty();
-        console.log("e : "+e);
-        console.log("e.target : "+e.target)
-        console.log("e.target.files : "+e.target.files);
-        console.log("e.target.files[0] : "+e.target.files[0]);
+        // 기존 있던 파일도 비워준다.
+        $('#original').empty(); 
 
         var files = e.target.files;
         var arr = Array.prototype.slice.call(files);
@@ -90,6 +85,7 @@ $(function(){
 
 
     })
+
 // 게시글 체크
 function checkform() {
     

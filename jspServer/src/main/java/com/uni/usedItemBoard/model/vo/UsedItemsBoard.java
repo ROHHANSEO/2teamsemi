@@ -24,14 +24,14 @@ public class UsedItemsBoard {
 	
 
 	public UsedItemsBoard(String categorycode, String usedBoardTitle, String usedBoardWriter, String usedBoardContent,
-			int price, String saleStatus, String paymentOne, String paymentTwo) {
+			int price, String itemCondition, String paymentOne, String paymentTwo) {
 		super();
 		this.categorycode = categorycode;
 		this.usedBoardTitle = usedBoardTitle;
 		this.usedBoardWriter = usedBoardWriter;
 		this.usedBoardContent = usedBoardContent;
 		this.price = price;
-		this.saleStatus = saleStatus;
+		this.itemCondition = itemCondition;
 		this.paymentOne = paymentOne;
 		this.paymentTwo = paymentTwo;
 	}

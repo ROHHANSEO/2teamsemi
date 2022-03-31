@@ -3,10 +3,9 @@
 	import="java.util.ArrayList, com.uni.usedItemBoard.model.vo.*"%>
 <%
 	UsedItemsBoard ub = (UsedItemsBoard)request.getAttribute("ub"); 
-	ArrayList<UsedAttachment> ua = (ArrayList<UsedAttachment>)request.getAttribute("ua"); 
-	ArrayList<Category> cList = (ArrayList<Category>) request.getAttribute("cList");
+	ArrayList<UsedAttachment> ua = (ArrayList<UsedAttachment>)request.getAttribute("ua");
+	ArrayList<Category> cList = (ArrayList<Category>)request.getAttribute("cList");
 	
-	int category = ub.getCategory();
 	String itemCondition = ub.getItemCondition();
 	String selectedCondition[] = new String[2];
 	
@@ -16,6 +15,8 @@
 	}
 	
 	String price = String.join("", ub.getComprice().split(","));
+	
+	String category1 = ub.getCategorycode();
 	
 %>
 <!DOCTYPE html>
@@ -35,6 +36,7 @@
 			enctype="multipart/form-data">
 			<h1>중고거래 수정하기</h1>
 			<div>
+				<input type="hidden" name="bNo" value="<%=ub.getUsedBoardNo()%>">
 				<div class="whole">
 					<div class="titleline">
 						<h3>
@@ -59,19 +61,13 @@
 					</div>
 					<div id="category">
 						<div id="categorydiv">
-							<select id="large" name="large">
-								<option value="대분류">대분류</option>
-								<%
-								for (int i = 0; i < cList.size(); i++) {
-								%>
-								<option value="<%=cList.get(i).getCode()%>"><%=cList.get(i).getName()%></option>
-								<%
-								}
-								%>
-							</select> <select name="middle" id="middle">
-								<option id="examplemiddle" value="중분류">중분류</option>
-							</select> <select id="small" name="small">
-								<option id="examplesmall" value="소분류">소분류</option>
+							<select id="centerselect" name="centerselect">
+							<option value="<%= category1 %>" selected>
+							<% for(int i = 0 ; i < cList.size() ; i++){%> 
+								<% if(cList.get(i).getCode().equals(category1)){%>
+								<%= cList.get(i).getName() %>
+							<% } } %>
+							</option>
 							</select>
 						</div>
 					</div>
@@ -86,7 +82,6 @@
 					</div>
 					<div>
 						<div class="article">
-							<input type="hidden" value="<% for(int i = 0 ; i < ua.size() ; i++){ %><%=ua.get(i).getOriginName() %>,<% } %>">
 							<div id="imagin">
 								<div id="camera">
 									<input type="file" name="file1" id="file1" accept='.gif, .jpg, .png'  multiple />
@@ -94,14 +89,6 @@
 									<br> 이미지 선택
 								</div>
 								<ul id="sortimg">
-									<% for(int i = 0 ; i < ua.size() ; i++){ // 이미지 로드 %>
-										<li class="previewImg">
-											<a id="image<%= i %>" name="image" onclick="deletebye(<%= i %>)">
-												<span class="del">x</span>
-												<img src="<%= request.getContextPath() %>/resources/usedboard_upfiles/<%= ua.get(i).getOriginName() %>" width="200" height="200">
-											</a>
-										</li>						
-									<% } %>
 								</ul>
 							</div>
 						</div>
@@ -174,9 +161,6 @@
 			</div>
 		</form>
 	</div>
-	<script>
-		
-	</script>
 	<script src="../../resources/library/jquery-3.6.0.min.js"></script>
 	<script src="../../resources/js/usedItemBoard/EnrollForm.js"></script>
 	<div>

@@ -232,6 +232,44 @@ public class UsedItemsBoardService {
 		return like;
 	}
 
+	public ArrayList<Category> selectAllCategory() {
+		Connection conn = getConnection();
+		
+		ArrayList<Category> cList = new UsedItemsBoardDao().selectAllCategory(conn);
+		System.out.println("서비스 allcategory ==> "+ cList);
+		close(conn);
+		return cList;
+	}
+
+	public int deleteAttachment(int bNo) {
+		Connection conn = getConnection();
+		
+		int result = new UsedItemsBoardDao().deleteAttachment(conn, bNo);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	public int updateUsedBoard(UsedItemsBoard ub, ArrayList<UsedAttachment> fileList) {
+		Connection conn = getConnection();
+		
+		int result1 = new UsedItemsBoardDao().updateUsedBoard(conn, ub);
+		int result2 = new UsedItemsBoardDao().insertNewUsedAttachment(conn, ub.getUsedBoardNo(), fileList);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1*result2;
+	}
+
 
 	
 }
