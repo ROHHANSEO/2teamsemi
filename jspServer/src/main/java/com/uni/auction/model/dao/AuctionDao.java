@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.uni.admin.model.vo.BlockBoard;
 import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
@@ -22,6 +23,7 @@ import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 
 public class AuctionDao {
+	DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
 	private Properties prop = new Properties();
 
 	public AuctionDao() {
@@ -101,6 +103,60 @@ public class AuctionDao {
 		}
 		return listCount;
 	}
+	
+	//카테고리 별로 갯수가져오기
+	public int getCaListCount(Connection conn, String li) {
+		int listCount = 0;
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getCaListCount");;
+		//신발, 의류, 패션 잡화, 라이프, 테크, 진품명품, 기타
+		int front = 0;
+		int top = 0;
+		if(li.equals("신발")) {
+			front = 2010000;
+			top = 2010211;
+		}else if(li.equals("의류")) {
+			front = 2020000;
+			top = 2021011;
+		}else if(li.equals("패션 잡화")) {
+			front = 2030000;
+			top = 2030500;
+		}else if(li.equals("라이프")) {
+			front = 2040000;
+			top = 2040800;
+		}else if(li.equals("테크")) {
+			front = 2050000;
+			top = 2050500;
+		}else if(li.equals("진품명품")) {
+			front = 2060000;
+			top = 2060600;
+		}
+		//SELECT COUNT(*) FROM AUCTION_SELL 
+		//WHERE CATEGORY_NO=2 AND STATUS= 'Y' AND CATEGORYCODE BETWEEN ? AND ?
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, front);
+			pstmt.setInt(2, top);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+				
+			}
+			System.out.println("다오 listCount => " + listCount);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
+	
 
 	//맞는 페이지의 리스트를 받아오는 것
 	public ArrayList<Auction> selectList(Connection conn, PageInfo pi) {
@@ -134,7 +190,7 @@ public class AuctionDao {
 			
 			// 여러행을 받아오기 때문에 while문
 			while(rset.next()) {
-				DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+				
 				// 객체를 생성하여 list에 담는다
 				
 				list.add(new Auction(rset.getInt("BOARD_NO"),
@@ -159,6 +215,83 @@ public class AuctionDao {
 		
 		return list;
 	}
+	//카테고리 선택 리스트 안의 값들
+	public ArrayList<Auction> selectCList(Connection conn, PageInfo pi, String li) {
+		ArrayList<Auction> list = new ArrayList<>();
+		
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectCList");
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		
+		//신발, 의류, 패션 잡화, 라이프, 테크, 진품명품, 기타
+		int front = 0;
+		int top = 0;
+		if(li.equals("신발")) {
+			front = 2010000;
+			top = 2010211;
+		}else if(li.equals("의류")) {
+			front = 2020000;
+			top = 2021011;
+		}else if(li.equals("패션 잡화")) {
+			front = 2030000;
+			top = 2030500;
+		}else if(li.equals("라이프")) {
+			front = 2040000;
+			top = 2040800;
+		}else if(li.equals("테크")) {
+			front = 2050000;
+			top = 2050500;
+		}else if(li.equals("진품명품")) {
+			front = 2060000;
+			top = 2060600;
+		}
+		
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setInt(1, front);
+			pstmt.setInt(2, top);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				
+				// 객체를 생성하여 list에 담는다
+				
+				list.add(new Auction(rset.getInt("BOARD_NO"),
+									rset.getString("CATEGORYCODE"),
+									rset.getString("AUCTION_TITLE"),
+									dc.format(rset.getInt("ITEM_DIRECT")),
+									rset.getString("SELL_STATUS"),
+									rset.getInt("COUNT"),
+									rset.getString("ORIGIN_NAME"),
+									rset.getString(9)
+									));
+			}
+			System.out.println("다오 카테도리  => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
 
 	public ArrayList<Category> totCategoryList(Connection conn) {
 		ArrayList<Category> list = null;
@@ -524,7 +657,7 @@ public class AuctionDao {
 			while(rset.next()) {
 				srm = new sellRecord(rset.getInt("AUCTION_REF"), 
 									  rset.getString("USER_ID"),
-									  rset.getInt("AUCTION_PRICE"), 
+									  dc.format(rset.getInt("AUCTION_PRICE")), 
 									  rset.getString(4),
 									  rset.getString("STATUS"));
 				sr.add(srm);
@@ -539,6 +672,33 @@ public class AuctionDao {
 		}
 		
 		return sr;
+	}
+
+	public int insertBlock(Connection conn, BlockBoard bb) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("insertBlock"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		//INSERT INTO BLOCK_BOARD VALUES(SEQ_ALL.NEXTVAL, 2, ?, SYSDATE, ?, ?, ?, DEFAULT, ?)
+		//게시글 번호, 신고 내용, 신고 제목, 카테고리 신고, 게시물 제목
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+
+			pstmt.setInt(1, bb.getBoardNo());	// 게시글 번호
+			pstmt.setString(2, bb.getContent());	// 신고 내용 
+			pstmt.setString(3, bb.getTitle());	// 신고 제목
+			pstmt.setString(4, bb.getCategoryNm());	// 카테고리 신고
+			pstmt.setString(5, bb.getBoardTitle());	// 게시물 제목
+	
+			System.out.println("차단 다오왔다감");
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("insertBlock => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		return result; // int로 반환
 	}
 
 	
