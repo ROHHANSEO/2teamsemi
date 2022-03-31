@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.service.UsedItemsBoardService;
 
 /**
@@ -30,9 +31,10 @@ public class DelateUsedItemBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bNo = Integer.parseInt(request.getParameter("bNo"));
 		
-		int result = new UsedItemsBoardService().delateUsedItemBoard(bNo);
+		int result1 = new UsedItemsBoardService().delateUsedItemBoard(bNo);
+		int result2 = new UsedItemsBoardService().deleteAttachment(bNo);
 		
-		if(result > 0) {
+		if(result1*result2 > 0) {
 			response.sendRedirect("usedBoardList.do");
 		}else {
 			request.setAttribute("msg", "중고 판매 게시글 삭제 실패");

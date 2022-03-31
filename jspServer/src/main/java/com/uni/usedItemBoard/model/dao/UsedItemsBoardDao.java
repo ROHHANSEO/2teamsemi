@@ -130,7 +130,7 @@ public class UsedItemsBoardDao {
 			pstmt.setInt(3, Integer.parseInt(ub.getUsedBoardWriter())); // 회원번호
 			pstmt.setString(4, ub.getUsedBoardContent()); // 내용
 			pstmt.setInt(5, ub.getPrice());					// 가격
-			pstmt.setString(6, ub.getSaleStatus()); // 상품상태
+			pstmt.setString(6, ub.getItemCondition()); // 상품상태
 			pstmt.setString(7, ub.getPaymentOne());	// 직접결제(Y,N)
 			pstmt.setString(8, ub.getPaymentTwo()); // 만나서결제(Y,N)
 			
@@ -1309,5 +1309,120 @@ public class UsedItemsBoardDao {
 		return like;
 	}
 
+	public ArrayList<Category> selectAllCategory(Connection conn) {
+		ArrayList<Category> cList = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectAllCategory");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				cList.add(new Category(rset.getString("CATEGORYCODE"), 
+									  Integer.parseInt(rset.getString("CATEGORY_NO")), 
+									  rset.getString("CAT_LEVEL"), 
+									  rset.getString("CATEGORYNAME"), 
+									  rset.getString("CATEGORYDEREF"), 
+									  rset.getString("CATEGORYDEREF2")));
+			}
+			System.out.println("다오 allcategory => "+cList);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return cList;
+	}
+
+	public int deleteAttachment(Connection conn, int bNo) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("deleteAttachment"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setInt(1, bNo);
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public int updateUsedBoard(Connection conn, UsedItemsBoard ub) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("updateUsedBoard"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setString(1, ub.getUsedBoardTitle());
+			pstmt.setString(2, ub.getUsedBoardContent());
+			pstmt.setInt(3, ub.getPrice());
+			pstmt.setString(4, ub.getItemCondition());
+			pstmt.setString(5, ub.getPaymentOne());
+			pstmt.setString(6, ub.getPaymentTwo());
+			
+			pstmt.setInt(7, ub.getUsedBoardNo());
+			
+			System.out.println("다오왔다감");
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+	
+	public int insertNewUsedAttachment(Connection conn, int bNo, ArrayList<UsedAttachment> fileList) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("insertNewUsedAttachment"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		try {
+			for(int i = 0 ; i < fileList.size() ; i++) {
+				UsedAttachment at = fileList.get(i);
+				
+				pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+
+				pstmt.setInt(1, bNo);
+				pstmt.setString(2, at.getOriginName());
+				pstmt.setString(3, at.getFilePath());
+				
+				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
+				System.out.println("Dao result => " + result); // 임의 확인
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
 
 }

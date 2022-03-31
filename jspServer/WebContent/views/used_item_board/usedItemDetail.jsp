@@ -293,7 +293,7 @@
 							<div class="hidden"> <!-- ul태그를 감싸주는 div -->
 								<% if(user != null && ub.getUsedBoardWriter().equals(String.valueOf(user.getUserNo()))){ %> <!-- 로그인이 되어있고 작성자이면-->
 								<ul class="writer-menu"> <!-- 작성자가 보이는 ul 메뉴 -->
-									<li class="writer-update borderline"><a href="<%= request.getContextPath() %>/updateUsedEnroll.do?bNo=<%= ub.getUsedBoardNo() %>">글 수정하기</a>
+									<li class="writer-update borderline"><a onclick="warning()" href="<%= request.getContextPath() %>/updateUsedEnroll.do?bNo=<%= ub.getUsedBoardNo() %>">글 수정하기</a>
 									</li>
 									<li class="writer-delete borderline">
 										<a href="<%= request.getContextPath() %>/deleteUsedBoard.do?bNo=<%= ub.getUsedBoardNo() %>">글 삭제하기</a>
@@ -435,6 +435,14 @@
     <script src="../../resources/library/swiper.min.js"></script>
     <script>
 		
+    	function warning(){
+			let result =  confirm("수정하기 시 사진이 초기화되며, 카테고리를 선택할 수 없습니다. 진행하겠습니까?")
+			
+			if(result == true){
+				return true;
+			}
+			return false;
+    	}
     
 		// 도트를 클릿 했을 때
 		$(".menu-click").click(function showdiv() {

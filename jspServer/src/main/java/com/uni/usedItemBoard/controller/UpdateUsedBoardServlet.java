@@ -15,7 +15,6 @@ import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
-import com.uni.common.MyFileRenamePolicy;
 import com.uni.common.UploadUtil;
 import com.uni.usedItemBoard.model.service.UsedItemsBoardService;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
@@ -23,21 +22,21 @@ import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 import com.uni.user.model.vo.User;
 
 /**
- * Servlet implementation class InsertUsedBoardServlet
+ * Servlet implementation class UpdateUsedBoardServlet
  */
-@WebServlet("/insertUsed.do")
+@WebServlet("/updateUsedItems.do")
 @MultipartConfig(
 	    fileSizeThreshold = 1024*1024,
 	    maxFileSize = 1024*1024*10, //10메가
 	    maxRequestSize = 1024*1024*10*10 // 10메가 10개까지
 	)
-public class InsertUsedBoardServlet extends HttpServlet {
+public class UpdateUsedBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
-     * @see HttpServlet#HttpServlet()
+     * 	@see HttpServlet#HttpServlet()
      */
-    public InsertUsedBoardServlet() {
+    public UpdateUsedBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,10 +45,11 @@ public class InsertUsedBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		//multipart 됏는지 확인
 		if(ServletFileUpload.isMultipartContent(request)) {
 			request.setCharacterEncoding("UTF-8"); // 인코딩
+			
+			int bNo = Integer.parseInt(request.getParameter("bNo"));
 			
 			UploadUtil uploadUtil = UploadUtil.create(request.getServletContext()); // UploadUtil 객체 생성 --> 저장하기 위해
 			
@@ -62,6 +62,19 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			ArrayList<UsedAttachment> fileList = new ArrayList<>();
 			
 			int index = 0; // 인덱스 생성 --> 첫 파일에 1을 붙여줄 것이기 때문
+			int result1 = 0; // result1 생성 --> 파일 삭제를 위해
+			
+			// 기존 파일 리스트 가져와 삭제하기
+			ArrayList<UsedAttachment> existing = new UsedItemsBoardService().selectAttachment(bNo);
+			for(int i = 0 ; i < existing.size() ; i++) {
+				System.out.println(existing.get(i).getOriginName());
+				File deleteFile = new File(uploadUtil.createFilePath()+existing.get(i).getOriginName());
+				System.out.println("deleteFile => "+deleteFile);
+				
+				deleteFile.delete();
+				
+				result1 = new UsedItemsBoardService().deleteAttachment(bNo);
+			}
 			
 			// for each문 사용
 			for(Part part : parts) {
@@ -75,8 +88,16 @@ public class InsertUsedBoardServlet extends HttpServlet {
 				// 파일의 이름을 String형으로 받음
 				String fileName = part.getSubmittedFileName();
 				
-				System.out.println("fileName ==> "+ fileName); // 확인용
-			
+				
+				// index가 0이면 --> 첫 파일이면
+				if(index == 0) {
+					fileName = 1+fileName; // 앞에 1을 붙여줌
+					index++;
+					System.out.println("fileName ==> "+ fileName); // 확인용
+				}else {
+					index++;
+				}
+				
 				// uploadUtil의 saveFiles 메소드 사용하여 파일을 저장
 				uploadUtil.saveFiles(part, fileName, uploadUtil.createFilePath());
 				
@@ -89,6 +110,8 @@ public class InsertUsedBoardServlet extends HttpServlet {
 				
 				// fileList에 담기
 				fileList.add(at);
+				
+				
 			}
 			System.out.println("서블렛 fileList ==> " + fileList); // 값 확인용
 		
@@ -103,6 +126,7 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			
 			// 상품상태
 			String productStatus = request.getParameter("productStatus");
+			System.out.println(productStatus);
 			
 			//가격
 			int price = Integer.parseInt(request.getParameter("price"));
@@ -134,38 +158,13 @@ public class InsertUsedBoardServlet extends HttpServlet {
 			}
 			
 			// 카테고리 고유코드
-			String categoryLarge = request.getParameter("large");
-			String categoryMiddle = request.getParameter("middle");
-			String categorySmall = request.getParameter("small");
+			String centerselect = request.getParameter("centerselect");
 			
-			System.out.println("대분류 =>" + categoryLarge);
-			System.out.println("중분류 =>" + categoryMiddle);
-			System.out.println("소분류 =>" + categorySmall);
+			UsedItemsBoard ub = new UsedItemsBoard(centerselect, title, writer, content, price, productStatus, paymentOne, paymentTwo);
+			ub.setUsedBoardNo(bNo);
+			System.out.println("서블렛 ub 객체 생성 =>"+ub);
 			
-			UsedItemsBoard ub = null;
-			// 대분류만 선택시
-			if(categoryMiddle.equals("중분류")) {
-				// 보드 객체생성 및 담기(아직 안담음)
-				System.out.println("대분류만 선택 되었습니다.");
-				ub = new UsedItemsBoard(categoryLarge, title, writer, content, price, productStatus, paymentOne, paymentTwo);
-				System.out.println("서블렛 ub 객체 생성 =>"+ub);
-			}
-			if(categoryMiddle.equals("중분류") == false && categorySmall.equals("소분류") == true) {
-				// 중분류만 선택시
-				System.out.println("중분류까지만 선택 되었습니다.");
-				ub = new UsedItemsBoard(categoryMiddle, title, writer, content, price, productStatus, paymentOne, paymentTwo);
-				System.out.println("서블렛 ub 객체 생성 =>"+ub);
-			}
-			if(categoryMiddle.equals("중분류") == false && categorySmall.equals("소분류") == false){
-				// 소분류 까지 선택시
-				System.out.println("소분류까지 선택 되었습니다.");
-				ub = new UsedItemsBoard(categorySmall, title, writer, content, price, productStatus, paymentOne, paymentTwo);
-				System.out.println("서블렛 ub 객체 생성 =>"+ub);
-			}
-			
-
-			
-			int result = new UsedItemsBoardService().insertUsedBoard(ub, fileList);
+			int result = new UsedItemsBoardService().updateUsedBoard(ub, fileList);
 			
 			if(result > 0) {
 				response.sendRedirect("usedBoardList.do");// 화면전환
@@ -176,7 +175,7 @@ public class InsertUsedBoardServlet extends HttpServlet {
 					failedFile.delete();
 				}
 				
-				request.setAttribute("msg", "게시물 등록 실패");
+				request.setAttribute("msg", "게시물 수정 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
 			

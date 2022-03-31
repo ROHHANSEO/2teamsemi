@@ -72,4 +72,13 @@ public class UploadUtil {
 		if(!folders.exists()) // 폴더가 존재 하지않으면
 			folders.mkdirs(); // 생성
 	}
+	
+	public String createFilePathAuction() {
+	      // 저장하는 경로 지정
+	      String savePath = app.getRealPath("/resources") + "\\auction_upfiles\\";
+	      
+	      createFolders(savePath); // 존재여부 및 생성하는 메소드 실행
+	      
+	      return savePath;
+	   }
 }
