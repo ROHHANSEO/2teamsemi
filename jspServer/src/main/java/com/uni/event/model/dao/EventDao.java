@@ -282,8 +282,8 @@ public class EventDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%"+search+"$");
-			pstmt.setString(2, "%"+search+"$");
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(2, "%"+search+"%");
 			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {

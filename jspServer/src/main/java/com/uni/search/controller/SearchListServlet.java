@@ -1,4 +1,4 @@
-package com.uni.common.controller;
+package com.uni.search.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class SearchListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String search = request.getParameter("search");
-		
+		System.out.println(search);
 		ArrayList<Event> eList = new EventService().SearchfiveList(search);
 		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardService().SearchfiveList(search);
 		ArrayList<Auction> acList = new AuctionService().SearchfiveList(search);
@@ -59,7 +59,7 @@ public class SearchListServlet extends HttpServlet {
 		request.setAttribute("ubList", ubList);
 		request.setAttribute("acList", acList);
 		
-		request.getRequestDispatcher("views/common/combineSearchList.jsp").forward(request, response);
+		request.getRequestDispatcher("views/search/combineSearchList.jsp").forward(request, response);
 		
 	}
 
