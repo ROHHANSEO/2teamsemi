@@ -268,9 +268,58 @@ $(function(){
             $("input[type=password]").val("")
         }
     })
+    
+    $(".admin_code_cancel_btn").click(function(){
+        $("#admin_code_modal1").hide();
 
+    })
+    
     $(".admin_code_modal_btn").click(function(){
         $("#admin_code_modal2").hide();
         location.href="/";
+    })
+
+
+    //찜리스트 찜해제, 재설정기능
+    $(".heart_img_box").click(function() {
+			
+        let like = $('.heart_img_box')
+        let bNo = $(this).children(".bNo").val();
+        let uNo = $(this).children(".uNo").val();
+        
+        // colorchange 클래스가 존재하면(찜하지 않았을 시)
+        if(like.hasClass('colorchange')){
+            
+            // sql 문에 찜을 -1
+            $.ajax({
+                url:'notLike.do',	
+                data:{
+                    bNo:bNo,
+                    uNo:uNo
+                },
+                type:'get',
+                success:function(){
+                    
+                    // 클래스를 지운다
+                    like.removeClass('colorchange')
+                }
+            })
+        }else{ // 존재하지 않으면
+            
+            // sql문에 찜을 +1
+            $.ajax({
+                url:'like.do',
+                data:{
+                    bNo:bNo,
+                    uNo:uNo
+                },
+                type:'get',
+                success:function(){
+                    
+                    // 클래스를 추가한다
+                    like.addClass('colorchange')
+                }
+            })
+        }
     })
 

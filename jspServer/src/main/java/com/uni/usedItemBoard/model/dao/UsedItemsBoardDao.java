@@ -312,6 +312,7 @@ public class UsedItemsBoardDao {
 						  rset.getString("PAYMENT_ONE"),
 						  rset.getString("PAYMENT_TWO"),
 						  rset.getString("PAYMENT_STATUS"));
+				ub.setBuyer(rset.getInt("PRICE"));
 			}
 			System.out.println("다오 ub => "+ub);
 		} catch (SQLException e) {

@@ -36,7 +36,7 @@ public class CategoryMiddleServlet extends HttpServlet {
 		String category = request.getParameter("category");
 		ArrayList<Category> middle = new AuctionService().selectMiddle(category);
 		
-		System.out.println("서블렛 미들 셀렉트"+middle);
+		//System.out.println("서블렛 미들 셀렉트"+middle);
 		if(!category.isEmpty()) {
 			response.setContentType("application/json; charset=utf-8"); // 꼭 이렇게 응답해야한다
 			new Gson().toJson(middle, response.getWriter()); // 응답할 리스트적기 

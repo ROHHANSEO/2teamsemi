@@ -11,7 +11,7 @@ public class paymentService {
 
 	public int Itempayment(payment pay) {
 		Connection conn = getConnection();
-		
+		System.out.println("서비스------");
 		int result = new paymentDao().Itempayment(conn,pay);
 		if(result > 0) {
 			commit(conn);

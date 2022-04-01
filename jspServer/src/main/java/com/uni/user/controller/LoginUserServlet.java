@@ -36,7 +36,7 @@ public class LoginUserServlet extends HttpServlet {
 		String userPwd = request.getParameter("password");
 		//checkbox 값은 체크시 on 미체크시 null 출력
 		String check = request.getParameter("loginCip");
-		System.out.println(check);
+		System.out.println("checkbox================================"+check);
 		
 		User user = new UserService().loginUser(new User(userId, userPwd));
 		
@@ -45,14 +45,16 @@ public class LoginUserServlet extends HttpServlet {
 			session.setAttribute("user", user);
 			session.setAttribute("userPwd", userPwd);
 			
-//			if(check.equals("Y")) {
-//				Cookie loginCookie = new Cookie("loginCookie",session.getId());
-//				loginCookie.setPath("/");
-//				long limitTime = 60*60*24*90;
-//				loginCookie.setMaxAge((int)limitTime);
-//				response.addCookie(loginCookie);
-//				
-//			}
+			if(check != null &&check.equals("on")) {
+				Cookie loginCookie = new Cookie("loginCookie",session.getId());
+				loginCookie.setPath("/");
+				long limitTime = 60*60*24*90;
+				loginCookie.setMaxAge((int)limitTime);
+				response.addCookie(loginCookie);
+				
+				new UserService().autoLogin(session.getId(),user.getUserNo());
+				
+			}
 			
 			response.sendRedirect("/");
 		} else {

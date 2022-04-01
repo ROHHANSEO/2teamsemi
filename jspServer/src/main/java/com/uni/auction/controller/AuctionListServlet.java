@@ -35,7 +35,7 @@ public class AuctionListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String category = request.getParameter("category");//카테고리명을 받아온다. \
 		
-		System.out.println(category +"카테고리ㅣㅣ");
+		//System.out.println(category +"카테고리ㅣㅣ");
 		//페이징 처리 
 		
 		int listCount; 		// 총게시글 갯수 
@@ -85,12 +85,9 @@ public class AuctionListServlet extends HttpServlet {
 		
 	
 		if(category == null) {
-			ArrayList<Auction> aulist = new AuctionService().selectList(pi);
-
-			System.out.println("Alist 옥션 리스트 =="+aulist);
-			
-			ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
-			
+		ArrayList<Auction> aulist = new AuctionService().selectList(pi);
+		//System.out.println("Alist 옥션 리스트 =="+aulist);
+		ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
 		// 담은 ArrayList 객체인 list를 속성에 담고
 		request.setAttribute("aulist", aulist);
 		// pi 객체 또한 속성에 담는다
@@ -101,6 +98,7 @@ public class AuctionListServlet extends HttpServlet {
 			ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
+			System.out.println("이건 pipipi" +pi);
 			request.setAttribute("kklist", kklist);
 		}
 		request.getRequestDispatcher("views/auction/auctionListView.jsp").forward(request, response);

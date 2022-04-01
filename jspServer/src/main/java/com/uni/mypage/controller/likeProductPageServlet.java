@@ -1,25 +1,29 @@
-package com.uni.user.controller;
+package com.uni.mypage.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.uni.mypage.model.service.MyPageService;
+import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
+import com.uni.user.model.vo.User;
+
 /**
- * Servlet implementation class logoutServlet
+ * Servlet implementation class likeProductPageServlet
  */
-@WebServlet("/logout")
-public class logoutServlet extends HttpServlet {
+@WebServlet("/likeProductPage")
+public class likeProductPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public logoutServlet() {
+    public likeProductPageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,11 +32,20 @@ public class logoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().invalidate();
-		Cookie cookie = new Cookie("loginCookie",null);
-		cookie.setMaxAge(0);
-		response.addCookie(cookie);
-		response.sendRedirect("/");
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		System.out.println(userNo);
+		
+		ArrayList<UsedItemsBoard> list = new MyPageService().likeProductList(userNo);
+		
+		request.setAttribute("msg", "찜 리스트");
+		
+		if(!list.isEmpty()) {
+			request.setAttribute("msg2", "true");
+			request.setAttribute("likeProduct", list);
+		} else {
+			request.setAttribute("msg2", "void");
+		}
+		request.getRequestDispatcher("views/mypage/salesRecordPage.jsp").forward(request, response);
 	}
 
 	/**

@@ -35,14 +35,14 @@ public class auctionUpPriceServlet extends HttpServlet {
 		String dealer = String.valueOf(((User)request.getSession().getAttribute("user")).getUserNo());//버튼 누른사람
 		int scno = Integer.parseInt(request.getParameter("scno"));//게시글 번호
 		int changeP = Integer.parseInt(request.getParameter("changeP"));//바뀔값(현재값+올릴값)
-		System.out.println(scno);//확인완료
+		//System.out.println(scno);//확인완료
 		Auction a = new Auction();
 		a.setAuctionNo(scno);
 		a.setAuctionWriter(dealer);
 		a.setItemPrice(changeP);//바뀔값
 		
 		int result = new AuctionService().changePrice(a);
-		System.out.println(changeP);
+		//System.out.println(changeP);
 		if (result >0 ) {
 			response.setContentType("application/json; charset=utf-8"); // 꼭 이렇게 응답해야한다
 			new Gson().toJson(a, response.getWriter()); // 응답할 리스트적기

@@ -473,6 +473,7 @@ public class AuctionDao {
 				
 				pstmt.setString(1, at.getOriginName());
 				pstmt.setString(2, at.getFilePath());
+				pstmt.setString(3, at.getFilePath());
 				
 				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
 				System.out.println("Dao result => " + result); // 임의 확인
@@ -740,6 +741,7 @@ public class AuctionDao {
 		return result; // int로 반환
 	}
 
+
 	public ArrayList<Auction> searchAuctionList(Connection conn, String search, PageInfo pi) {
 		ArrayList<Auction> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -776,6 +778,38 @@ public class AuctionDao {
 									));
 			}
 			System.out.println("다오 => "+list);
+      		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public String selectAllcategory(Connection conn, String categorycode) {
+		String category = "";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectAllCategory");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, categorycode);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				category = rset.getString("CATEGORYNAME");
+									
+			}
+			System.out.println("다오 category => "+category);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -783,8 +817,93 @@ public class AuctionDao {
 			close(rset);
 			close(pstmt);
 		}
-		return list;
+		return category;
 	}
+
+	public int deleteAttachment(Connection conn, int scno) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("deleteAttachment"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setInt(1, scno);
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public int updateAuction(Connection conn, Auction at) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("updateAuction"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setString(1, at.getAuctionTitle());
+			pstmt.setString(2, at.getAuctionContent());
+			pstmt.setInt(3, at.getItemPrice());
+			pstmt.setInt(4, at.getItemUp());
+			pstmt.setInt(5, at.getItemDirect());
+			pstmt.setString(6, at.getItemCondition());
+			pstmt.setInt(7, at.getAuctionNo());
+			
+			
+			System.out.println("다오왔다감");
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	public int insertNewAuctionAttachment(Connection conn, int bNo, ArrayList<AuctionAttachment> fileList) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("insertNewAuctionAttachment"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		try {
+			for(int i = 0 ; i < fileList.size() ; i++) {
+				AuctionAttachment at = fileList.get(i);
+				
+				pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+
+				pstmt.setInt(1, bNo);
+				pstmt.setString(2, at.getOriginName());
+				pstmt.setString(3, at.getChangeName());
+				pstmt.setString(4, at.getFilePath());
+				
+				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
+				System.out.println("Dao result => " + result); // 임의 확인
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	
 
 	public int getListSearchCount(Connection conn, String search) {
 		int listCount = 0;

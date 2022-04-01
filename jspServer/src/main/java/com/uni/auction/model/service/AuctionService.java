@@ -247,6 +247,49 @@ public class AuctionService {
 		close(conn);
 		
 		return listCount;//리스트 카운트 다시 서블렛으로 보내주기
+  }
+
+	public String selectAllcategory(String categorycode) {
+		Connection conn = getConnection();
+
+		String category = new AuctionDao().selectAllcategory(conn, categorycode);
+		System.out.println("서비스 allcategory ==> "+ category);
+		close(conn);
+		return category;
+	}
+
+	public int deleteAttachment(int scno) {
+		Connection conn = getConnection();
+		
+		int result = new AuctionDao().deleteAttachment(conn, scno);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	public int updateAuctionItem(Auction at, ArrayList<AuctionAttachment> fileList) {
+		Connection conn = getConnection();
+		
+		int result1 = new AuctionDao().updateAuction(conn, at);
+		int result2 = new AuctionDao().insertNewAuctionAttachment(conn, at.getAuctionNo(), fileList);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1*result2;
+	}
+
+	public int increaseCount(int scno) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	
