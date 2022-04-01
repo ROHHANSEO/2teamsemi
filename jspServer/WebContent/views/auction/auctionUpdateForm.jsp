@@ -1,13 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.usedItemBoard.model.vo.*"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.auction.model.vo.*, com.uni.usedItemBoard.model.vo.*"%>
 <%
-	ArrayList<Category> cList = (ArrayList<Category>) request.getAttribute("category");
+	Auction ac = (Auction)request.getAttribute("ac"); 
+	ArrayList<AuctionAttachment> at = (ArrayList<AuctionAttachment>)request.getAttribute("at");
+	String category = String.valueOf(request.getAttribute("category"));
+	
+	String itemCondition = ac.getItemCondition();
+	String selectedCondition[] = new String[2];
+	
+	switch(itemCondition){
+	case "새상품" : selectedCondition[0]="checked"; break;
+	case "중고상품" : selectedCondition[1]="checked"; break;
+	}
+
+	
+	String category1 = ac.getCategorycode();//고유코드
+	
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>경매 글 작성페이지</title>
+<title>경매 게시글 수정</title>
 <link rel="stylesheet" href="../../resources/css/common/common.css">
 <style type="text/css">
 	.enrollForm1{
@@ -179,92 +193,87 @@
 </style>
 </head>
 <body>
-	<%@include file="../common/header.jsp"%>
+	<%@include file = "../common/header.jsp" %>
 	<div class = "enrollForm1">
-	<div class="headerenrollForm"><!-- 고객센터 글 작성 위에 부분 -->
-		<p> 경매 게시판 글 작성</p>
-	</div>
-	<div class="underheaderenrollF"></div><!-- 라인 부분 -->
-	<form name="auctionForm" class="auctionForm" action="<%=request.getContextPath()%>/insertAuctionform.do" method="post" enctype="multipart/form-data">
-	<div class="enrollTitlesection"><!-- 제목 div -->
-		<span class="titleNamepart"> 제목<span class="dotpoint">*</span></span>
-		<input type="text" name="title" class="counttitlename" placeholder="제목을 입력해주세요" required >
-		<span class="counttitlelength">0 / 40</span>
-	</div>
-	<div class="enrollTitlesection"><!-- 카테고리 선택 div -->
-		<span class="titleNamepart"> 카테고리 <span class="dotpoint">*</span></span>
-		<div class="categorytogglepart">
-			<select id="large" class="firstcategory" name="large" required>
-				<option value="대분류"> 대분류 </option>
-				<%for(Category ca : cList){ %>
-						<option value="<%=ca.getCode()%>"><%=ca.getName() %></option>
-				<%} %>
-			</select>
-			<select id="middle" class="firstcategory" name="middle">
-				<option id="examplemiddle" value="중분류">중분류</option>
-			</select>
-			<select id = "small" class="firstcategory" name="small">
-				<option id="examplesmall" value="소분류">소분류</option>
-			</select> 
+		<div class="headerenrollForm"><!-- 고객센터 글 작성 위에 부분 -->
+			<p> 경매 게시판 수정하기 </p>
 		</div>
-	</div>
-	<div class="imgDiv"><!-- 이미지 div -->
-		<div>
-		<span class="titleNamepart"> 이미지 선택<span class="dotpoint">*</span></span>
-		<p class="a">최대 10개의 </p><p class="a">이미지 가능</p>
+	
+		<div class="underheaderenrollF"></div><!-- 라인 부분 -->
+		<form name="auctionForm" class="auctionForm" action="<%=request.getContextPath()%>/updateAuctionItem.do" method="post" enctype="multipart/form-data">
+		<div class="enrollTitlesection"><!-- 제목 div -->
+			<input type="hidden" name="scno" value="<%=ac.getAuctionNo()%>">
+			<span class="titleNamepart"> 제목<span class="dotpoint">*</span></span>
+			<input type="text" name="title" class="counttitlename" value=<%=ac.getAuctionTitle() %> placeholder="제목을 입력해주세요" required >
+			<span class="counttitlelength">0 / 40</span>
 		</div>
-		<div class="divdiv">
-			<div class="article">
-				<div id="imagin">
-					<div id="camera">
-						<input type="file" name="file1" id="file1" accept='.gif, .jpg, .png' multiple />
-						<img src="https://img.icons8.com/material-rounded/24/000000/camera--v2.png" />
-						<br> 이미지 선택
-					</div>
-					<ul id="sortimg">
-					</ul>
+		<div class="enrollTitlesection"><!-- 카테고리 선택 div -->
+			<span class="titleNamepart"> 카테고리 <span class="dotpoint">*</span></span>
+			<div class="categorytogglepart">
+				<div id="categorydiv">
+					<select id="centerselect" class="firstcategory" name="centerselect">
+					<option value="<%= category1 %>" selected><%= category %></option>
+					</select>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="itemstatusDiv"><!-- 상품 상태 선택 div -->
-		<span class="titleNamepart"> 상품 상태 <span class="dotpoint">*</span></span>
-		<div class="radioDiv">
-			<input type="radio" id="new" value="새상품" name="productStatus"checked> 새상품 
-			<input type="radio" value="중고상품" name="productStatus" id="used"> 중고 상품
+		<div class="imgDiv"><!-- 이미지 div -->
+			<div>
+			<span class="titleNamepart"> 이미지 선택<span class="dotpoint">*</span></span>
+			<p class="a">최대 10개의 </p><p class="a">이미지 가능</p>
+			</div>
+			<div class="divdiv">
+				<div class="article">
+					<div id="imagin">
+						<div id="camera">
+							<input type="file" name="file1" id="file1" accept='.gif, .jpg, .png' multiple />
+							<img src="https://img.icons8.com/material-rounded/24/000000/camera--v2.png" />
+							<br> 이미지 선택
+						</div>
+						<ul id="sortimg">
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-	<div class="auctionprice"><!-- 경매가격 선택 div -->
-		<span class="titleNamepart"> 가격 <span class="dotpoint">*</span></span>
-		<div>
-			<input type="text" name="fprice" id="fprice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"  placeholder="경매 시작가를 적어주세요" class="fprice" required> 원
+		<div class="itemstatusDiv"><!-- 상품 상태 선택 div -->
+			<span class="titleNamepart"> 상품 상태 <span class="dotpoint">*</span></span>
+			<div class="radioDiv">
+				<input type="radio" id="new" value="새상품" name="productStatus"<%= selectedCondition[0] %>> 새상품 
+				<input type="radio" value="중고상품" name="productStatus" id="used" <%= selectedCondition[0] %>> 중고 상품
+			</div>
 		</div>
-	</div>
-	<div class="auctionprice"><!-- 올릴경매가 div -->
-		<span class="titleNamepart"> 올릴 경매가 <span class="dotpoint">*</span></span>
-		<div>
-			<input type="text" name="sprice" id="sprice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"  placeholder="올릴 경매가를 적어주세요" class="fprice" required> 원
+		<div class="auctionprice"><!-- 경매가격 선택 div -->
+			<span class="titleNamepart"> 가격 <span class="dotpoint">*</span></span>
+			<div>
+				<input type="text" name="fprice" id="fprice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"  value="<%=ac.getItemPrice() %>" placeholder="경매 시작가를 적어주세요" class="fprice" required> 원
+			</div>
 		</div>
-	</div>
-	<div class="auctionprice"><!--즉시 판매가  div -->
-		<span class="titleNamepart"> 즉시 판매가 <span class="dotpoint">*</span></span>
-		<div>
-			<input type="text" name="tprice" id="tprice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"  placeholder="즉시 판매가를 적어주세요" class="fprice" required> 원
+		<div class="auctionprice"><!-- 올릴경매가 div -->
+			<span class="titleNamepart"> 올릴 경매가 <span class="dotpoint">*</span></span>
+			<div>
+				<input type="text" name="sprice" id="sprice" value="<%=ac.getItemUp() %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"  placeholder="올릴 경매가를 적어주세요" class="fprice" required> 원
+			</div>
 		</div>
-	</div>
-	<div class="enrollcontentsection"><!-- 내용 작성 div -->
-		<span class="titleNamepart"> 글 내용<span class="dotpoint">*</span></span>
-		<div class="contentpart">
-			<textarea name ="content" class="contentWritePart" cols="70" rows="15" style="resize:none;" required></textarea>
+		<div class="auctionprice"><!--즉시 판매가  div -->
+			<span class="titleNamepart"> 즉시 판매가 <span class="dotpoint">*</span></span>
+			<div>
+				<input type="text" name="tprice" id="tprice" value="<%=ac.getItemDirect() %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="즉시 판매가를 적어주세요" class="fprice" required> 원
+			</div>
 		</div>
-		<span class="countContentlength">0 / 2000</span>
-	</div>
-	<div class="deleteorsubmit" align="right"><!-- 삭제, 등록버튼 -->
-		<button type="submit" class="commonsubmit gotoSubmitbutton" > 등록하기 </button>
-		<button type="button" class="commonsubmit gobackServiceCenterMain" onclick="askcancel();"> 취소하기 </button>
-	</div>
-	</form>
-		
+		<div class="enrollcontentsection"><!-- 내용 작성 div -->
+			<span class="titleNamepart"> 글 내용<span class="dotpoint">*</span></span>
+			<div class="contentpart">
+				<textarea name ="content" class="contentWritePart" cols="70" rows="15" style="resize:none;" required><%=ac.getAuctionContent() %></textarea>
+			</div>
+			<span class="countContentlength">0 / 2000</span>
+		</div>
+		<div class="deleteorsubmit" align="right"><!-- 삭제, 등록버튼 -->
+			<button type="submit" class="commonsubmit gotoSubmitbutton" > 등록하기 </button>
+			<button type="button" class="commonsubmit gobackServiceCenterMain" onclick="askcancel();"> 취소하기 </button>
+		</div>
+		</form>
+			
 	</div>
 	<%@ include file = "../common/footer.jsp" %> 
 	<script>
@@ -519,4 +528,5 @@
 	</script>
 	
 </body>
+
 </html>

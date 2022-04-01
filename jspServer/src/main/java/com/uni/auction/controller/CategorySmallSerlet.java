@@ -36,7 +36,7 @@ public class CategorySmallSerlet extends HttpServlet {
 		String category = request.getParameter("category");
 		ArrayList<Category> small = new AuctionService().selectCategoryetc(category);
 		
-		System.out.println("서블렛 small 옵션 =>" + small);
+		//System.out.println("서블렛 small 옵션 =>" + small);
 		if(!category.isEmpty()) {
 			response.setContentType("application/json; charset=utf-8"); // 꼭 이렇게 응답해야한다
 			new Gson().toJson(small, response.getWriter()); // 응답할 리스트적기 
