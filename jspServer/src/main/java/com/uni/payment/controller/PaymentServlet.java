@@ -31,12 +31,19 @@ public class PaymentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println(request.getParameter("merchant_uid")+"=======================uid코드");
+		System.out.println(request.getParameter("boardNo")+"=======================uid코드");
+		System.out.println(request.getParameter("buyerNo")+"=======================uid코드");
+		System.out.println(request.getParameter("price")+"=======================uid코드");
+		
+		
 		String merchantUid = request.getParameter("merchant_uid");
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		int buyerNo = Integer.parseInt(request.getParameter("buyerNo"));
-		int price = Integer.parseInt(request.getParameter("amount"));
+		int price = Integer.parseInt(request.getParameter("price"));
 		
 		payment pay = new payment(merchantUid,buyerNo,boardNo,price);
+		System.out.println("결제자 정보================="+pay);
 		
 		int result = new paymentService().Itempayment(pay);
 		

@@ -1,8 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.uni.user.model.service.UserService"%>
 <%@ page import = "com.uni.user.model.vo.User" %>
+<%@ page import = "javax.servlet.http.HttpSession" %>
 <%
-	User user = (User)session.getAttribute("user");
+
+
+	Cookie[] cookies = request.getCookies();
+	User user = null;
+	
+	if(cookies != null){
+	  for(Cookie tempCookie : cookies){
+	      if(tempCookie.getName().equals("loginCookie")){
+				String cookie = tempCookie.getValue();
+				user = new UserService().autoLoginUser(cookie);
+
+				request.getSession().setAttribute("user", user);
+				
+	      }
+	  }
+	  
+	  if(user == null){
+			user = (User)session.getAttribute("user");
+	  }
+	  
+	}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -45,17 +67,8 @@
         </div>
         <nav id="main_nav">
             <div class="nav">
-                <div class="category">
-                    <div class="category_box">
-                        <i class="berger1"></i>
-                        <i class="berger2"></i>
-                        <i class="berger3"></i>
-                    </div>
-                </div>
                 <ul>
-                    <li><a href="<!--이동할 jsp가 위치한 경로입력 할 것-->"><div>시세</div></a></li>
                     <li><a href="<%=request.getContextPath()%>/auctionPage.do"><div>경매</div></a></li>
-                    <li><a href="<%=request.getContextPath() %>/communitypage.do"><div>커뮤니티</div></a></li>
                     <li><a href="<%=request.getContextPath()%>/usedBoardList.do"><div>중고거래</div></a></li>
                     <li><a href="<%=request.getContextPath() %>/eventpage.do"><div>이벤트</div></a></li>
                     <li><a href="<%=request.getContextPath()%>/serviceCenter.do"><div>고객센터</div></a></li>
@@ -65,5 +78,12 @@
     </header>
     <script src="../../resources/library/jquery-3.6.0.min.js"></script>
     <script src="../../resources/js/common/common.js"></script>
+    <script>
+    	$(function(){
+    		$.ajax({
+    			
+    		})
+    	})
+    </script>
 </body>
 </html>

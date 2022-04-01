@@ -277,7 +277,7 @@
 			<div id="product">
 				<div class="flexin">
 					<div id="titleandsell">
-						<div id="title"><%= ub.getUsedBoardTitle() %></div>
+						<div id="title" class="product_name"><%= ub.getUsedBoardTitle() %></div>
 						<% if(ub.getCategorycode().equals("1160000")){ %>
 							<div class="buy">
 								삽니다
@@ -354,6 +354,7 @@
 						</div>
 					</div>
 					<div class="two">
+						<input class="product_price" type="hidden" value=<%=ub.getBuyer() %>>
 						<%= ub.getComprice() %> 원	
 					</div>
 					<div class="three">
@@ -400,7 +401,7 @@
 							</button>
 						<% } %>
 						<button class="chatting">채팅 거래</button>
-						<button class="buyme">구매하기</button>
+						<button class="buyme" onclick="requestPay()">구매하기</button>
 					</div>
 				</div>
 			</div>
@@ -436,6 +437,8 @@
     	<%@ include file = "../common/footer.jsp" %>
     </div>
     <script src="../../resources/library/swiper.min.js"></script>
+    <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+	<script src="../../resources/js/common/payment.js"></script>
     <script>
 		
     

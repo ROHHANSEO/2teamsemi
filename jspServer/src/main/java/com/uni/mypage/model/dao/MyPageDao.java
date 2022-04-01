@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.uni.auction.model.vo.Auction;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
+import com.uni.usedItemBoard.model.vo.LikeProduct;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 public class MyPageDao {
@@ -144,7 +145,7 @@ public class MyPageDao {
 		ArrayList<UsedItemsBoard> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("patmentList");
+		String sql = prop.getProperty("paymentList");
 		
 		
 		try {
@@ -183,7 +184,7 @@ public class MyPageDao {
 		ArrayList<Auction> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("patmentList");
+		String sql = prop.getProperty("actionList");
 		
 		
 		try {
@@ -193,19 +194,57 @@ public class MyPageDao {
 			
 			rset = pstmt.executeQuery();
 			
-//			while(rset.next()) {
-//				Auction board = null;
-//				
-//											rset.getInt("BOARD_NO"),
-//											rset.getString("AUCTION_TITLE"),
-//											dc.format(rset.getInt("PRICE")),
-//											rset.getString("SELL_STATUS"),
-//											rset.getInt("BUY_USER"),
-//											rset.getString("ORIGIN_NAME")
-//											
-//			board.setCreateDate(rset.getDate("CREATE_DATE"));
-//			list.add(board);
-//			}
+			while(rset.next()) {
+				Auction board = null;
+				
+				board.setAuctionNo(rset.getInt("BOARD_NO"));
+				board.setAuctionTitle(rset.getString("AUCTION_TITLE"));
+				board.setStatus(rset.getString("SELL_STATUS"));
+				board.setTitleImg(rset.getString("ORIGIN_NAME"));
+				board.setCreateDate(rset.getDate("CREATE_DATE"));
+				
+
+				list.add(board);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+
+	public ArrayList<UsedItemsBoard> likeProductList(Connection conn, int userNo) {
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("likeProductList");
+		System.out.println(sql);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				UsedItemsBoard board = (new UsedItemsBoard(
+											rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											dc.format(rset.getInt("PRICE")),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("ORIGIN_NAME")
+											));
+			board.setCreateDate(rset.getDate("CREATE_DATE"));
+			board.setUsedBoardWriter(rset.getString("WRITER_NO"));
+			list.add(board);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

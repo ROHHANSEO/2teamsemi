@@ -117,4 +117,33 @@ public class UserService {
 		return user;	
 	}
 
+	public void autoLogin(String id, int userNo) {
+		Connection conn = getConnection();
+		int result = 0;
+
+
+		result = new UserDao().autoLogin(conn,id,userNo);
+
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+	}
+	
+	public User autoLoginUser(String cookie) {
+		Connection conn = getConnection();
+		System.out.println(cookie);
+		
+		int userNo = new UserDao().searchCookie(conn,cookie);
+		
+		User user = new UserDao().selectUser(conn,userNo);
+		
+		close(conn);
+		System.out.println(user);
+		return user;
+	}
+
 }

@@ -36,7 +36,7 @@ public class paymentDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("Itempayment");
-
+		System.out.println("sql"+sql);
 
 		try {
 			pstmt = conn.prepareStatement(sql);
