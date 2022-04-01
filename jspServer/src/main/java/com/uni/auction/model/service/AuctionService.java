@@ -227,6 +227,28 @@ public class AuctionService {
 		return result;
 	}
 
+	public ArrayList<Auction> searchAuctionList(String search, PageInfo pi) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<Auction> acList = new AuctionDao().searchAuctionList(conn, search, pi);
+		System.out.println("서비스 acList =>" + acList);
+		close(conn);
+		
+		return acList;// 리스트 반환
+	}
+
+	public int getListSearchCount(String search) {
+		Connection conn = getConnection();
+		
+		//int로 리스트 갯수 받아오기 
+		int listCount = new AuctionDao().getListSearchCount(conn, search);
+		System.out.println("service listCount ===" + listCount);
+		close(conn);
+		
+		return listCount;//리스트 카운트 다시 서블렛으로 보내주기
+  }
+
 	public String selectAllcategory(String categorycode) {
 		Connection conn = getConnection();
 

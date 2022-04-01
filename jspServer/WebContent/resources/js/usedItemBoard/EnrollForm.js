@@ -1,8 +1,6 @@
 function deletebye(index){
 
     console.log(index)
-    let deleteE = $("#exsting"+index).attr('title');
-    console.log("deleteE타이틀 : "+deleteE)
     
     $("#image"+index).parent().remove()
     
@@ -18,8 +16,6 @@ $(function(){
     $("#file1").change(function(e){
         //ul 내용 비워주기
         $('#sortimg').empty();
-        // 기존 있던 파일도 비워준다.
-        $('#original').empty(); 
 
         var files = e.target.files;
         var arr = Array.prototype.slice.call(files);

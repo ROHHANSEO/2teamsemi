@@ -1,6 +1,6 @@
 package com.uni.usedItemBoard.model.service;
 
-import static com.uni.common.JDBCTemplate.close;
+import static com.uni.common.JDBCTemplate.close; 
 import static com.uni.common.JDBCTemplate.commit;
 import static com.uni.common.JDBCTemplate.getConnection;
 import static com.uni.common.JDBCTemplate.rollback;
@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.uni.admin.model.vo.BlockBoard;
+import com.uni.auction.model.dao.AuctionDao;
+import com.uni.auction.model.vo.Auction;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.LikeProduct;
@@ -292,6 +294,28 @@ public class UsedItemsBoardService {
 		
 		// 성공한 행 리스트담음
 		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardDao().SearchfiveList(conn, search);
+		System.out.println("서비스 ubList =>" + ubList);
+		close(conn);
+		
+		return ubList;// 리스트 반환
+	}
+
+	public int getListSearchCount(String search) {
+		Connection conn = getConnection();
+		
+		//int로 리스트 갯수 받아오기 
+		int listCount = new UsedItemsBoardDao().getListSearchCount(conn, search);
+		System.out.println("service listCount ===" + listCount);
+		close(conn);
+		
+		return listCount;//리스트 카운트 다시 서블렛으로 보내주기
+	}
+
+	public ArrayList<UsedItemsBoard> searchUsedItemsList(String search, PageInfo pi) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardDao().searchUsedItemsList(conn, search, pi);
 		System.out.println("서비스 ubList =>" + ubList);
 		close(conn);
 		
