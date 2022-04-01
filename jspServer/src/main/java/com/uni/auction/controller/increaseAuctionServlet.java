@@ -33,14 +33,14 @@ public class increaseAuctionServlet extends HttpServlet {
 		System.out.println("카운트 scno "+ scno);
 		
 		
-		/*int result = new AuctionService().increaseCount(scno);
+		int result = new AuctionService().increaseCount(scno);
 		
 		//System.out.println(result +"서버 통신 성고후에ㅔㄷ지;ㅈㄱㄷ");
 		if(result>0) {
 			request.setAttribute("msg", "성공");
 		}else {
 			request.setAttribute("msg", "비밀번호 변경에 실패했습니다.");
-		}*/
+		}
 	}
 
 	/**

@@ -2,7 +2,9 @@ package com.uni.auction.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -78,18 +80,28 @@ public class InsertAuctionitemServlet extends HttpServlet {
 			// 파일의 이름을 String형으로 받음
 			String fileName = part.getSubmittedFileName();
 			System.out.println("fileName ==> "+ fileName); // 확인용
+		
+			// 업로드 날짜 받기
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String currentTime = sdf.format(new Date());
 			
-			// index가 0이면 --> 첫 파일이면
-            if(index == 0) {
-               fileName = 1+fileName; // 앞에 1을 붙여줌
-               index++;
-               System.out.println("fileName ==> "+ fileName); // 확인용
-            }else {
-               index++;
-            }
-            
+			// 수정명 : 파일업로드한시간(년월일시분초) + 10000~99999사이의 랜덤값 (5자리랜덤값) + 확장자
+			int ranNum = (int)(Math.random()*90000+10000);
+			
+			// 확장자
+			String ext = "";
+			
+			// 도트
+			int dot = fileName.lastIndexOf(".");
+			ext = fileName.substring(dot);
+			
+			String rename =  currentTime + ranNum + ext;
+			
+			
+			System.out.println("fileName rename ==> "+ rename); // 확인용
+			
             // uploadUtil의 saveFiles 메소드 사용하여 파일을 저장
-            uploadUtil.saveFiles(part, fileName, uploadUtil.createFilePathAuction());
+            uploadUtil.saveFiles(part, rename, uploadUtil.createFilePathAuction());
 			
 			
 			// AuctionAttachment객체 생성
@@ -98,12 +110,12 @@ public class InsertAuctionitemServlet extends HttpServlet {
 			// 저장경로와 이름 저장
 			at.setFilePath(uploadUtil.createFilePathAuction());
 			at.setOriginName(fileName);
-			
+			at.setChangeName(rename);
 			// fileList에 담기
 			fileList.add(at);
 		}
-		System.out.println("서블렛 fileList ==> " + fileList); // 값 확인용
-				
+		//System.out.println("서블렛 fileList ==> " + fileList); // 값 확인용
+		System.out.println("서블렛 fileList ==> " + fileList); // 값 확인용	
 		
 		
 		// 작성자, 제목, 내용 받아오기
@@ -111,9 +123,9 @@ public class InsertAuctionitemServlet extends HttpServlet {
 		String title = request.getParameter("title").replaceAll("\u0020", "&nbsp;");
 		String content = request.getParameter("content").replaceAll("\u0020", "&nbsp;").replaceAll("\n", "<br>"); 
 		
-		System.out.println("writer 서블렛 ==> "+writer);
-		System.out.println("title 서블렛 ==> "+title);
-		System.out.println("content 서블렛 ==> "+content);
+		//System.out.println("writer 서블렛 ==> "+writer);
+		//System.out.println("title 서블렛 ==> "+title);
+		//System.out.println("content 서블렛 ==> "+content);
 		
 		// 상품상태
 		String productStatus = request.getParameter("productStatus");

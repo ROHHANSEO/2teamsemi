@@ -16,6 +16,7 @@ import com.uni.auction.model.vo.PageInfo;
 import com.uni.auction.model.vo.sellRecord;
 import com.uni.event.model.dao.EventDao;
 import com.uni.event.model.vo.Event;
+import com.uni.serviceCenter.model.dao.ServiceCenterDao;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
@@ -288,8 +289,17 @@ public class AuctionService {
 	}
 
 	public int increaseCount(int scno) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = getConnection();
+		
+		int result = new AuctionDao().increaseCount(conn,scno);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 
 	
