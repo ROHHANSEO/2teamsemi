@@ -376,9 +376,9 @@
 			var end5 = end.substr(10,2);
 			var end6 = end.substr(12,2);*/
 
-			//var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
+			var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
 			var nowTime = new Date();
-			var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 19, 03, 00);
+			//var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 19, 03, 00);
 			//성공
 			console.log(nowTime)
 			

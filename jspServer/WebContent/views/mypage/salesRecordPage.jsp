@@ -5,6 +5,7 @@
 	String msg2 = (String)request.getAttribute("msg2");
 	ArrayList<UsedItemsBoard> content = (ArrayList<UsedItemsBoard>)request.getAttribute("content");
 	ArrayList<UsedItemsBoard> payment = (ArrayList<UsedItemsBoard>)request.getAttribute("payment");
+	ArrayList<UsedItemsBoard> likeProduct = (ArrayList<UsedItemsBoard>)request.getAttribute("likeProduct");
 %>
 <!DOCTYPE html>
 <html>
@@ -59,6 +60,13 @@
 	        		<span class="void_view"><%=msg %>이 없습니다.</span>
 	        	</div>
         	<%} %>
+        	
+        	<%if(msg.equals("찜 리스트")) {%>
+	        	<div class="void_text_box">
+	        		<span class="void_view"><%=msg %>가 없습니다.</span>
+	        	</div>
+        	<%} %>
+        	
         <%} else { %>
 	        <%if(msg.equals("판매기록")){ %>
 	        	<%for(UsedItemsBoard board : content) {%>
@@ -93,7 +101,7 @@
 			                    </div>
 			                    <div class="title_name_box">
 			                        <span class="content_title_name"><a href="<%=request.getContextPath()%>/detailview.do?bNo=<%=board.getUsedBoardNo()%>"><%=board.getUsedBoardTitle() %></a></span>
-			                        <span class="content_price">판매가격 : <span class="price"><%=board.getPrice() %>원</span> </span>
+			                        <span class="content_price">판매가격 : <span class="price"><%=board.getComprice() %>원</span> </span>
 			                    </div>
 			                </div>
 			            </div>
@@ -124,7 +132,7 @@
 			                    </div>
 			                    <div class="title_name_box">
 			                        <span class="content_title_name"><a href="<%=request.getContextPath()%>/detailview.do?bNo=<%=pay.getUsedBoardNo()%>"><%=pay.getUsedBoardTitle() %></a></span>
-			                        <span class="content_price">판매가격 : <span class="price"><%=pay.getPrice() %>원</span> </span>
+			                        <span class="content_price">판매가격 : <span class="price"><%=pay.getComprice() %>원</span> </span>
 			                    </div>
 			                </div>
 			            </div>
@@ -143,7 +151,7 @@
 	                </div>
 	                <div class="content_title">
 	                    <div class="img_box">
-	                        <img class="content_img" src="" alt="">
+	                        <img class="content_img" src="" alt="대표이미지">
 	                    </div>
 	                    <div class="title_name_box">
 	                        <span class="content_title_name">판매 제품명</span>
@@ -152,6 +160,31 @@
 	                </div>
 	            </div>
 	        </div>
+	        <%} else if(msg.equals("찜 리스트")) {%>
+	        	<%for(UsedItemsBoard like : likeProduct) {%>
+		        <div class="like_content_box">
+		            <div class="main_content_box">
+		                <div class="statuss">
+		                    <span class="status"><%=like.getSaleStatus() %></span>
+		                </div>
+		                <div class="content_title">
+		                    <div class="img_box">
+		                    	<a href="<%=request.getContextPath()%>/detailview.do?bNo=<%=like.getUsedBoardNo()%>">
+		                        	<img class="content_img" src="<%=request.getContextPath() %>/resources/usedboard_upfiles/<%= like.getTitleImg() %>" alt="대표이미지">
+		                        </a>
+		                    </div>
+		                    <div class="title_name_box">
+		                        <span class="content_title_name"><a href="<%=request.getContextPath()%>/detailview.do?bNo=<%=like.getUsedBoardNo()%>"><%=like.getUsedBoardTitle() %></a></span>
+		                        <span class="content_price">판매가격 : <span class="price"><%=like.getComprice() %>원</span> </span>
+		                    </div>
+		                    <div class="heart_img_box colorchange">
+								<input class="bNo" type="hidden" value="<%=like.getUsedBoardNo()%>">
+								<input class="uNo" type="hidden" value="<%=like.getUsedBoardWriter()%>">
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		       	<%} %>
         <%} %>
 	<%} %>
     </div>

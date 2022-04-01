@@ -7,3 +7,18 @@ $("#main_nav .nav ul div").hover(function(){
     $("#main_nav .nav ul div a").removeClass("active");
 })
 
+
+
+
+//테스트
+
+$(document).ready(function() {
+	$('#fullpage').fullpage({
+		//options here
+		autoScrolling:true,
+		scrollHorizontally: true
+	});
+
+	//methods
+	$.fn.fullpage.setAllowScrolling(false);
+});
