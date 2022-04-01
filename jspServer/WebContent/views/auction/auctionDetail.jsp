@@ -26,7 +26,6 @@
 <link rel="stylesheet" href="../../resources/library/swiper.min.css">
 <style>
 	.wholeDiv{
-		border:2px solid black;
 		width:65%;
 		margin:0 auto;
 		height:130vh;
@@ -55,7 +54,6 @@
 	    height: 350px;
 	}
 	.frontTi{
-		border:1px solid red;
 		display:flex;
 		justify-content: space-between;	
 	}
@@ -147,7 +145,6 @@
 	}
 	table {
 	    width: -webkit-fill-available;
-
 	    border-collapse: collapse;
 	    text-align: center;
 	}
@@ -220,7 +217,7 @@
 				<li><a href="#" class="threeB"><img src="../../resources/images/icons8-메뉴-2-96.png" /></a>
 					<ul class="main2">
 						<%if(user != null && user.getUserId().equals(writer)){ %> 
-						<li><a href="#"> 글 수정하기 </a></li>
+						<li><a onclick="warning()" href="#"> 글 수정하기 </a></li>
 						<li><a href="#" onclick="deleteItem()"> 글 삭제하기 </a></li>
 						<%}else if(user != null && !user.getUserId().equals(writer)){ %>
 						<li><a href="#" onclick="blockAuction()"> 게시글 신고 </a></li>
@@ -364,6 +361,18 @@
 				return;
 			}
 		}
+		
+
+    	function warning(){
+			let result =  confirm("수정하기 시 사진이 초기화되며, 카테고리를 선택할 수 없습니다. 진행하겠습니까?")
+			
+			if(result){
+				location.href="updateAuctionEnroll.do?scno="+<%= ad.getAuctionNo() %>;
+			}else{
+				alert("취소되었습니다")
+				return;
+			}
+    	}
 		//테스트완료
 		let timerId = setInterval(function(){
 					
@@ -376,9 +385,9 @@
 			var end5 = end.substr(10,2);
 			var end6 = end.substr(12,2);*/
 
-			//var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
+			var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
 			var nowTime = new Date();
-			var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 19, 03, 00);
+			//var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 19, 03, 00);
 			//성공
 			console.log(nowTime)
 			

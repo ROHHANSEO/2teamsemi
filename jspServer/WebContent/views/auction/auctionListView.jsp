@@ -23,7 +23,6 @@
 	.wtotal{
 		border:2px solid black;
 		width:70%;
-		height:100%;
 		margin:0 auto;
 	}
 	.categorylist{
@@ -132,6 +131,25 @@
       	opacity: 0.8;
       	background-color:rgb(236, 236, 236);;
       }
+      .pagingArea{
+      	margin-bottom : 70px;
+      }
+      .pagingArea>button{
+      	background-color : :rgb(236, 236, 236);
+      	width:30px;
+      	height:30px;
+      	border-radius: 5px;
+      	font-size:15px;
+      	border:1px solid lightgray;
+      }
+      .pagingArea>button:hover:enabled{
+      	border:1px solid black;
+      	background-color: #993333;
+      	color:white;
+      	cursor: pointer;
+      }
+      
+      
 </style>
 </head>
 <body>
@@ -147,14 +165,14 @@
 		 	<div  class="sfilterse">검색 필터 부분</div>
 		 	<% if(user != null) { %>
 		 	<div class= "animation">
-    		<a href="<%= request.getContextPath() %>/insertAuction.do"> 게시물 작성 </a>
+    		<a href="#" onclick="submitV()"> 게시물 작성 </a>
     		</div>
     		<% } %>
 		</div>
 		<div class= "selectpart"><!--  최신 카테고리  -->
 			<div class="selectparta"><p> 전체 상품 </p></div>
 			<div class="selectpartb"><!-- 최신,인기 -->
-				<a href="#">최신순</a> | 
+				<a href="<%=request.getContextPath()%>/auctionPage.do">최신순</a> | 
 				<a href="#">인기순</a> | 
 				<a href="#">저가순</a> | 
 				<a href="#">고가순</a>
@@ -194,11 +212,16 @@
 		
 		<%} %>
 		</div>
+		</div>
 		<!-- 페이징바 만들기 -->
 		<div class="pagingArea" align="center">
+		<%if(currentPage == 1){ %>
+		<button disabled> &lt; </button>
+		<%}else{ %>
 		<!-- 맨 처음으로 (<<) -->
 		<button onclick="location.href='<%=request.getContextPath()%>/auctionPage.do?currentPage=1'"> &lt;&lt; </button>
-	
+		<%} %>
+		
 		<!-- 이전페이지로(<) -->
 		<%if(currentPage == 1){ %>
 		<button disabled> &lt; </button>
@@ -225,10 +248,14 @@
 		<%} %>
 	
 		<!-- 맨 끝으로 (>>) -->
+		<%if(currentPage == maxPage){ %>
+		<button disabled> &gt; </button>
+		<%}else { %>
 		<button onclick="location.href='<%=request.getContextPath()%>/auctionPage.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
+		<%} %>
 	</div> 
 	
-	</div>
+	
 	
 	<%@ include file = "../common/footer.jsp" %> 
 	<script>
@@ -242,67 +269,36 @@
 		$(".itemLIst").click(function(){
 			var scno = $(this).children().children().val();
 			console.log(scno)
+			increaseCount(scno);
 			location.href="<%=request.getContextPath()%>/detailAuction.do?scno="+scno;
 		})
-		
-
-		//버튼 눌렀을 시에 카테고리별로 리스트 보이게 하기 
-		<%--$(".aaaaa").click(function(){
-			$(".pagingArea").hide();//페이징바 안보이게 
-			$(".auctionTot").empty();
-			var li = $(this).text();
+		function increaseCount(scno){
 			$.ajax({
-				url:"auctionPage.do", 
+				type:"post",
+				url:"increaseAuction.do", 
 				data:{
-					li:li
+					scno:scno
 				}, 
-				type:"get", 
-				success:function(list){
-					console.log(list)
-					console.log("카테고리 보내기 성공")
-					if(list.length == 0){
-						$(".wtotal").css("height", "800");
-						alert("게시글이 없습니다!")
-					}else if(list.legth != 0){
-						var html = '';	
-							<%--
-							<div class="itemLIst">
-								<div class="auctionList"><!-- 이미지 부분 -->
-									<input type="hidden" value="<%=al.getAuctionNo()%>" class="auctionno">
-									<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="200" height="200">
-								</div>
-								<div class="contentPart"><!-- 글부분 -->
-									<div class="statusauction"> <p><%=al.getSellStatus() %> </p></div>
-									<div class="titleauction"> <p><%=al.getAuctionTitle() %> </p></div>
-									<div class="priceContent"> <span class="a" ><%=al.getPriceFo() %>원 </span><p class="b">즉시구매가 </p></div>
-									<div class="endauction"> <p>경매 마감 : <%=al.getDateget() %></p></div>
-								</div>list[key]
-							</div>
-						$.each(list, function(index, obj){
-							html += 	'<div class="itemLIst">';
-							html +=			'<div class="auctionList">';
-							html +=				'<input type="hidden" value="'+obj.auctionNo+'"class="auctionno">';
-							html +=				'<img src="'+<%=request.getContextPath() %>/resources/auction_upfiles/obj.titleImg+'" width="200" height="200">';
-							html +=			'</div>';
-							html +=			'<div class="contentPart">';
-							html +=				'<div class="statusauction"> <p>'+obj.sellStatus +'</p></div>';
-							html +=				'<div class="titleauction"> <p>'+obj.getAuctionTitle +'</p></div>';
-							html +=				'<div class="priceContent"> <span class="a" >'+obj.priceFo+'원 </span><p class="b">즉시구매가 </p></div>';
-							html +=				'<div class="endauction"> <p>경매 마감 :'+ obj.getDateget+'</p></div>';
-							html +=			'</div>';
-							html +=		'</div>';
-						}
-						
-						$(".auctionTot").append(html);
-						
-						})
-					}
+				success: function(){
+					console.log("성공")
 				}, 
 				error:function(e){
-					console.log("카테고리 보내기 실패")
+					console.log("실패")
 				}
+				
 			})
-		})--%>
+			
+		}
+		//글작성 버튼을 눌렀을때 
+		function submitV(){
+			var ll = confirm("글작성을 하시겠습니까?");
+			if(ll){
+				location.href="<%= request.getContextPath() %>/insertAuction.do";
+			}else{
+				return;
+			}
+		}
+		
 		$(".aaaaa").click(function(){
 			var category = $(this).text();
 			console.log(category)

@@ -34,15 +34,15 @@ public class DetailAuctionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int scno = Integer.parseInt(request.getParameter("scno"));
-		System.out.println(scno +"scno 옥션 디테일");
+		//System.out.println(scno +"scno 옥션 디테일");
 		
 		Auction ac = new AuctionService().selectAuction(scno);//게시물 정보
 		ArrayList<AuctionAttachment> at = new AuctionService().selectAttachment(scno);//게시물 사진
 		ArrayList<sellRecord> sr = new AuctionService().selectSellRecord(scno);//입찰 내역
 		
-		System.out.println("디테일 옥션 + "+ ac);
+		//System.out.println("디테일 옥션 + "+ ac);
 		//System.out.println("디테일 옥션 + "+ at);
-		System.out.println("디테일 옥션 +"+sr);
+		//System.out.println("디테일 옥션 +"+sr);
 		if(ac != null & !at.isEmpty()) {
 			request.setAttribute("ac", ac);//옥션 정보 
 			request.setAttribute("fileList", at);//사진 정보들 
