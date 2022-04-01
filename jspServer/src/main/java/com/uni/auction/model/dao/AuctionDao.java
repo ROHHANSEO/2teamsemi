@@ -200,7 +200,7 @@ public class AuctionDao {
 									dc.format(rset.getInt("ITEM_DIRECT")),
 									rset.getString("SELL_STATUS"),
 									rset.getInt("COUNT"),
-									rset.getString("ORIGIN_NAME"),
+									rset.getString("CHANGE_NAME"),
 									rset.getString(9)
 									));
 			}
@@ -276,7 +276,7 @@ public class AuctionDao {
 									dc.format(rset.getInt("ITEM_DIRECT")),
 									rset.getString("SELL_STATUS"),
 									rset.getInt("COUNT"),
-									rset.getString("ORIGIN_NAME"),
+									rset.getString("CHANGE_NAME"),
 									rset.getString(9)
 									));
 			}
@@ -369,6 +369,79 @@ public class AuctionDao {
 		
 		return cList;
 	}
+	public ArrayList<Auction> searchAuctionList(Connection conn, String search, PageInfo pi) {
+	      ArrayList<Auction> list = new ArrayList<>();
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      
+	      // 시작하는 행과 끝나는 행의 수를 받아옴
+	      int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+	      int endRow = startRow + pi.getBoardLimit() -1;
+	      
+	      System.out.println("다오 서치리스트 pi =>"+ pi);
+	      
+	      String sql = prop.getProperty("searchAuctionList");
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, "%"+search+"%");
+	         pstmt.setString(2, "%"+search+"%");
+	         pstmt.setInt(3, startRow);
+	         pstmt.setInt(4, endRow);
+	         
+	         rset = pstmt.executeQuery();
+	         while(rset.next()) {
+	            DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+	            
+	            // 객체를 생성하여 list에 담는다
+	            list.add(new Auction(rset.getInt("BOARD_NO"),
+	                           rset.getString("CATEGORYCODE"),
+	                           rset.getString("AUCTION_TITLE"),
+	                           dc.format(rset.getInt("ITEM_DIRECT")),
+	                           rset.getString("SELL_STATUS"),
+	                           rset.getInt("COUNT"),
+	                           rset.getString("CHANGE_NAME"),
+	                           rset.getString(9)
+	                           ));
+	         }
+	         System.out.println("다오 => "+list);
+	            } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+
+	      return list;
+	   }
+	
+	public int getListSearchCount(Connection conn, String search) {
+	      int listCount = 0;
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      
+	      String sql = prop.getProperty("getListSearchCount");
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, "%"+search+"%");
+	         pstmt.setString(2, "%"+search+"%");
+	         
+	         rset = pstmt.executeQuery();
+	         if(rset.next()) {
+	            listCount = rset.getInt(1);
+	         }
+	         System.out.println("다오 listCount => " + listCount);
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      return listCount;
+	   }
 
 	public ArrayList<Category> selectMiddle(Connection conn, String category) {
 		ArrayList<Category> cList = new ArrayList<>();
@@ -472,7 +545,7 @@ public class AuctionDao {
 				pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
 				
 				pstmt.setString(1, at.getOriginName());
-				pstmt.setString(2, at.getFilePath());
+				pstmt.setString(2, at.getChangeName());
 				pstmt.setString(3, at.getFilePath());
 				
 				result += pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 더하며 담는다
@@ -557,7 +630,7 @@ public class AuctionDao {
 			
 			while(rset.next()) {
 				aa = new AuctionAttachment(rset.getInt("FILE_NO"), 
-									  rset.getString("ORIGIN_NAME"));
+									  rset.getString("CHANGE_NAME"));
 				at.add(aa);
 			}
 			System.out.println("다오 AT => "+at);
@@ -698,12 +771,12 @@ public class AuctionDao {
 				ac.setCount(rset.getInt("COUNT"));
 				ac.setPriceFo(dc.format(rset.getInt("ITEM_DIRECT")));
 				ac.setSellStatus(rset.getString("SELL_STATUS"));
-				ac.setTitleImg(rset.getString("ORIGIN_NAME"));
+				ac.setTitleImg(rset.getString("CHANGE_NAME"));
 				
 				list.add(ac);
 			}
 			System.out.println("다오 => "+list);
-		} catch (SQLException e) {
+      } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
@@ -711,7 +784,7 @@ public class AuctionDao {
 			close(pstmt);
 		}
 		return list;
-	}
+}
 
 	public int insertBlock(Connection conn, BlockBoard bb) {
 		int result = 0; // 성공한 수를 반환하기 위한 값
@@ -739,54 +812,6 @@ public class AuctionDao {
 			close(pstmt); // pstmt를 닫는다
 		}
 		return result; // int로 반환
-	}
-
-
-	public ArrayList<Auction> searchAuctionList(Connection conn, String search, PageInfo pi) {
-		ArrayList<Auction> list = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		// 시작하는 행과 끝나는 행의 수를 받아옴
-		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
-		int endRow = startRow + pi.getBoardLimit() -1;
-		
-		System.out.println("다오 서치리스트 pi =>"+ pi);
-		
-		String sql = prop.getProperty("searchAuctionList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%"+search+"%");
-			pstmt.setString(2, "%"+search+"%");
-			pstmt.setInt(3, startRow);
-			pstmt.setInt(4, endRow);
-			
-			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
-				
-				// 객체를 생성하여 list에 담는다
-				list.add(new Auction(rset.getInt("BOARD_NO"),
-									rset.getString("CATEGORYCODE"),
-									rset.getString("AUCTION_TITLE"),
-									dc.format(rset.getInt("ITEM_DIRECT")),
-									rset.getString("SELL_STATUS"),
-									rset.getInt("COUNT"),
-									rset.getString("ORIGIN_NAME"),
-									rset.getString(9)
-									));
-			}
-			System.out.println("다오 => "+list);
-      		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-
-		return list;
 	}
 
 	public String selectAllcategory(Connection conn, String categorycode) {
@@ -817,6 +842,7 @@ public class AuctionDao {
 			close(rset);
 			close(pstmt);
 		}
+		
 		return category;
 	}
 
@@ -903,32 +929,25 @@ public class AuctionDao {
 		return result; // int로 반환
 	}
 
-	
-
-	public int getListSearchCount(Connection conn, String search) {
-		int listCount = 0;
+	public int increaseCount(Connection conn, int scno) {
+		int result = 0;
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("getListSearchCount");
-		
+		System.out.println(scno +"dao에서 보이는 값");
+		String sql = prop.getProperty("increaseCount");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%"+search+"%");
-			pstmt.setString(2, "%"+search+"%");
-			
-			rset = pstmt.executeQuery();
-			if(rset.next()) {
-				listCount = rset.getInt(1);
-			}
-			System.out.println("다오 listCount => " + listCount);
+			pstmt.setInt(1, scno);
+		
+			result = pstmt.executeUpdate();
+			System.out.println("count 수 증가 dao ===="+result);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			close(rset);
 			close(pstmt);
 		}
-		return listCount;
+		
+		return result;
 	}
+
 }
