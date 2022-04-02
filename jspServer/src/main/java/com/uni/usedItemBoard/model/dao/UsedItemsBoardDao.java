@@ -18,6 +18,7 @@ import com.uni.admin.model.vo.BlockBoard;
 import com.uni.auction.model.vo.Auction;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.LikeProduct;
+import com.uni.usedItemBoard.model.vo.MonthlyMarketPrice;
 import com.uni.usedItemBoard.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
@@ -1528,7 +1529,7 @@ public class UsedItemsBoardDao {
 		
 		System.out.println("다오 서치리스트 pi =>"+ pi);
 		
-		String sql = prop.getProperty("filteringList3");
+		String sql = prop.getProperty("searchUsedItemsList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -1551,6 +1552,173 @@ public class UsedItemsBoardDao {
 											));
 			}
 			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> searchUsedItemsLikeDescList(Connection conn, String search, PageInfo pi) {
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		
+		System.out.println("다오 서치리스트 pi =>"+ pi);
+		
+		String sql = prop.getProperty("searchUsedItemsLikeDescList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(2, "%"+search+"%");
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+				
+				// 객체를 생성하여 list에 담는다
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											dc.format(rset.getInt("PRICE")),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("CHANGE_NAME")
+											));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> searchUsedItemsPriceDescList(Connection conn, String search, PageInfo pi) {
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		
+		System.out.println("다오 서치리스트 pi =>"+ pi);
+		
+		String sql = prop.getProperty("searchUsedItemsPriceDescList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(2, "%"+search+"%");
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+				
+				// 객체를 생성하여 list에 담는다
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											dc.format(rset.getInt("PRICE")),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("CHANGE_NAME")
+											));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<UsedItemsBoard> searchUsedItemsPriceAscList(Connection conn, String search, PageInfo pi) {
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		
+		System.out.println("다오 서치리스트 pi =>"+ pi);
+		
+		String sql = prop.getProperty("searchUsedItemsPriceAscList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(2, "%"+search+"%");
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+				
+				// 객체를 생성하여 list에 담는다
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+											rset.getString("BOARD_TITLE"),
+											dc.format(rset.getInt("PRICE")),
+											rset.getString("SALE_STATUS"),
+											rset.getInt("LIKE_COUNT"),
+											rset.getString("CHANGE_NAME")
+											));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<MonthlyMarketPrice> goingrates(Connection conn, String search) {
+		ArrayList<MonthlyMarketPrice> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("goingrates");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(2, "%"+search+"%");
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+				
+				// 객체를 생성하여 list에 담는다
+				list.add(new MonthlyMarketPrice(rset.getInt("CREATE_MONTH"),
+											rset.getInt("MIN_PRICE"),
+											rset.getInt("MAX_PRICE"),
+											rset.getInt("AVG_PRICE")
+											));
+			}
+			System.out.println("다오 시세 => "+list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

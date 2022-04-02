@@ -9,21 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.uni.usedItemBoard.model.service.UsedItemsBoardService;
-import com.uni.usedItemBoard.model.vo.PageInfo;
-import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
+import com.uni.auction.model.service.AuctionService;
+import com.uni.auction.model.vo.Auction;
+import com.uni.auction.model.vo.PageInfo;
 
 /**
- * Servlet implementation class UsedItemsSearchListServlet
+ * Servlet implementation class AuctionPriceDescSearchServlet
  */
-@WebServlet("/usedItemsSearchList.do")
-public class UsedItemsSearchListServlet extends HttpServlet {
+@WebServlet("/auctionSearchListPriceDesc.do")
+public class AuctionPriceDescSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UsedItemsSearchListServlet() {
+    public AuctionPriceDescSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,8 +45,8 @@ public class UsedItemsSearchListServlet extends HttpServlet {
 		int boardLimit; // 한 페이지당 보여질 게시글 최대 갯수
 		
 		// 총 게시글 갯수
-		listCount = new UsedItemsBoardService().getListSearchCount(search);
-		System.out.println("중고 더보기 서블릿 listCount ->" + listCount);
+		listCount = new AuctionService().getListSearchCount(search);
+		System.out.println("서블릿 listCount ->" + listCount);
 		//현재 페이지
 		currentPage = 1;
 		
@@ -80,21 +80,21 @@ public class UsedItemsSearchListServlet extends HttpServlet {
 		
 		// 페이지인포 객체를 생성 
 		PageInfo pi = new PageInfo(listCount, currentPage, startPage, endPage, maxPage, pageLimit, boardLimit);
-		System.out.println("중고 더보기 pi 객체 생성완료 =>" + pi);
+		System.out.println("pi 객체 생성완료 =>" + pi);
 		
-		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardService().searchUsedItemsList(search, pi);
-		System.out.println("중고 더보기 서블릿 aList => " + ubList);
+		ArrayList<Auction> aList = new AuctionService().searchAuctionPriceDescList(search, pi);
+		System.out.println("서치 옥션 서블릿 aList => " + aList);
 		
-		if(!ubList.isEmpty()) {
-			request.setAttribute("ubList", ubList);
+		if(!aList.isEmpty()) {
+			request.setAttribute("alist", aList);
 			request.setAttribute("pi", pi);
 			request.setAttribute("search", search);
-			request.getRequestDispatcher("views/search/searchUsedItemsBoardList.jsp").forward(request, response);
+			request.getRequestDispatcher("views/search/searchAuctionPriceDescList.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "검색 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		
+
 	}
 
 	/**

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import = "java.util.ArrayList, com.uni.usedItemBoard.model.vo.*"%>
 <%
-	ArrayList<UsedItemsBoard> list = (ArrayList<UsedItemsBoard>)request.getAttribute("list");
+	ArrayList<UsedItemsBoard> list = (ArrayList<UsedItemsBoard>)request.getAttribute("ubList");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String search = String.valueOf(request.getAttribute("search"));
 	
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
@@ -25,22 +26,16 @@
     <div id="top">
     	<%@ include file="../common/filter.jsp" %>
     </div>
-    <div class="going-rates">
-		<!-- 선차트입니다. -->
-		<canvas id="line-chart" width="700" height="350"></canvas>
-	</div>
+    <br>
     <div>
 	    <div class="container">
 	    	<div class="item" id="article1">
-	    		<% if(user != null){  %>
-	    			<input class="commonwritebutton write son" type="button" value="글 작성하기" onclick="location.href='<%= request.getContextPath() %>/insertUsedBoard.do'">
-	    		<% } %>
 	    		<div class= "selectpart"><!--  최신 카테고리  -->
-					<div class="selectpartb"><!-- 최신,인기 -->
-						<a href="<%=request.getContextPath()%>/usedBoardList.do">최신순</a> | 
-						<a href="<%= request.getContextPath() %>/usedListLike.do">인기순</a> | 
-						<a href="<%= request.getContextPath() %>/usedListPriceAsc.do">저가순</a> | 
-						<a href="<%= request.getContextPath() %>/usedListPriceDesc.do">고가순</a>
+					<div class="selectpartb selectpartline"><!-- 최신,인기 -->
+						<a href="<%=request.getContextPath()%>/usedItemsSearchList.do?search=<%= search %>">최신순</a> | 
+						<a href="<%= request.getContextPath() %>/usedItemsLikeDescSearchListLike.do?search=<%= search %>">인기순</a> | 
+						<a href="<%= request.getContextPath() %>/usedItemsPriceAscSearchList.do?search=<%= search %>">저가순</a> | 
+						<a href="<%= request.getContextPath() %>/usedItemsPriceDescSearchList.do?search=<%= search %>">고가순</a>
 					</div>
 				</div>
 	    	</div>
@@ -79,13 +74,13 @@
    		    <!-- 페이징바 -->
 			<div class="pagingArea" align="center">
 				<!-- 맨 처음으로 (<<) -->
-				<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=1'"> &lt;&lt; </button>
+				<button onclick="location.href='<%= request.getContextPath() %>/usedItemsSearchList.do?currentPage=1'"> &lt;&lt; </button>
 			
 				<!-- 이전페이지로(<) -->
 				<%if(currentPage == 1){ %>
 				<button disabled> &lt; </button>
 				<%}else{ %>
-				<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=<%= currentPage-1 %>'"> &lt; </button>
+				<button onclick="location.href='<%= request.getContextPath() %>/usedItemsSearchList.do?currentPage=<%= currentPage-1 %>'"> &lt; </button>
 				<%} %>
 				
 				<!-- 페이지 목록 -->
@@ -93,7 +88,7 @@
 					<%if(p == currentPage){ %>
 					<button disabled> <%= p %> </button>
 					<%}else{ %>
-					<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=<%= p %>'"> <%= p %> </button>
+					<button onclick="location.href='<%= request.getContextPath() %>/usedItemsSearchList.do?currentPage=<%= p %>'"> <%= p %> </button>
 					<%} %>
 					
 				<%} %>
@@ -102,19 +97,16 @@
 				<%if(currentPage == maxPage){ %>
 				<button disabled> &gt; </button>
 				<%}else { %>
-				<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=<%= currentPage+1 %>'"> &gt; </button>
+				<button onclick="location.href='<%= request.getContextPath() %>/usedItemsSearchList.do?currentPage=<%= currentPage+1 %>'"> &gt; </button>
 				<%} %>
 			
 				<!-- 맨 끝으로 (>>) -->
-				<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
+				<button onclick="location.href='<%= request.getContextPath() %>/usedItemsSearchList.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
 			</div>
 	    </div>
 	    <div>
 	    	<%@ include file = "../common/footer.jsp" %>
 	    </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <script type="text/javascript">
-    </script>
 </body>
 </html>

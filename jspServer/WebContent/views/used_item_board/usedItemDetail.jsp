@@ -636,6 +636,12 @@
 			})
     	})
     	
+		/*$(document).click(function(){ 
+			$('.writer-menu').hide();
+			$('.status-change').hide();
+		});*/
+
+		
 	    //<!-- Initialize Swiper -->
 		const swiper = new Swiper('.swiper-container', {
 			//기본 셋팅

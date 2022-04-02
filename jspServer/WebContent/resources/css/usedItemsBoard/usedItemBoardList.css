@@ -7,7 +7,6 @@
     width: 80vw;
 }
 #article1{
-    display: flex;
     justify-content: space-between;
     margin: 0 auto;
     width: 50vw;
@@ -47,7 +46,7 @@
 	width: 16px;
 }
 .write{
-	padding: 3px;
+	padding: 5px;
 }
 .status{
     color: #eec71a;
@@ -56,6 +55,57 @@
 .title, .price, .status{
 	font-size: 14px;
 }
-.seq:hover{
-	color: #993333;
+.pagingArea{
+	margin-bottom : 70px;
+	margin-top: 30px;
+}
+.pagingArea>button{
+	background-color : :rgb(236, 236, 236);
+	width:30px;
+	height:30px;
+	border-radius: 5px;
+	font-size:15px;
+	border:1px solid lightgray;
+}
+.pagingArea>button:hover:enabled{
+	border:1px solid black;
+	background-color: #993333;
+	color:white;
+	cursor: pointer;
+}
+.son{
+	transform: translate(10px, 48px);
+}
+.selectpart{
+ 	margin: 20px 30px 50px 30px;
+}
+.selectparta{
+ 	margin-left:20px;
+ 	font-size:25px;
+ 	display: inline-block;
+}
+.selectpartb{
+ 	right: 50%;
+	float: right;
+	margin-top:5px;
+	margin-right: -23px;
+}
+.selectpartb a:hover{
+  	color :  #993333;
+   font-size: large;
+   transition : all .35s;
+}
+.selectpartline{
+    position: absolute;
+    transform: translate(480px, -32px);
+}
+.going-rates{
+	width: 40vw;
+	height: 15vw;
+	margin: 0 auto;
+	display: none;
+	margin-bottom: 60px;
+}
+.on-rates{
+	display: block;
 }

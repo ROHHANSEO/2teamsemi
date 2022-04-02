@@ -950,4 +950,145 @@ public class AuctionDao {
 		return result;
 	}
 
+	public ArrayList<Auction> searchAuctionLikeDescList(Connection conn, String search, PageInfo pi) {
+	      ArrayList<Auction> list = new ArrayList<>();
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      
+	      // 시작하는 행과 끝나는 행의 수를 받아옴
+	      int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+	      int endRow = startRow + pi.getBoardLimit() -1;
+	      
+	      System.out.println("다오 서치리스트 pi =>"+ pi);
+	      
+	      String sql = prop.getProperty("searchAuctionLikeDescList");
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, "%"+search+"%");
+	         pstmt.setString(2, "%"+search+"%");
+	         pstmt.setInt(3, startRow);
+	         pstmt.setInt(4, endRow);
+	         
+	         rset = pstmt.executeQuery();
+	         while(rset.next()) {
+	            DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+	            
+	            // 객체를 생성하여 list에 담는다
+	            list.add(new Auction(rset.getInt("BOARD_NO"),
+	                           rset.getString("CATEGORYCODE"),
+	                           rset.getString("AUCTION_TITLE"),
+	                           dc.format(rset.getInt("ITEM_DIRECT")),
+	                           rset.getString("SELL_STATUS"),
+	                           rset.getInt("COUNT"),
+	                           rset.getString("CHANGE_NAME"),
+	                           rset.getString(9)
+	                           ));
+	         }
+	         System.out.println("다오 => "+list);
+	            } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+
+	      return list;
+	}
+
+	public ArrayList<Auction> searchAuctionPriceAscList(Connection conn, String search, PageInfo pi) {
+	      ArrayList<Auction> list = new ArrayList<>();
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      
+	      // 시작하는 행과 끝나는 행의 수를 받아옴
+	      int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+	      int endRow = startRow + pi.getBoardLimit() -1;
+	      
+	      System.out.println("다오 서치리스트 pi =>"+ pi);
+	      
+	      String sql = prop.getProperty("searchAuctionPriceAscList");
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, "%"+search+"%");
+	         pstmt.setString(2, "%"+search+"%");
+	         pstmt.setInt(3, startRow);
+	         pstmt.setInt(4, endRow);
+	         
+	         rset = pstmt.executeQuery();
+	         while(rset.next()) {
+	            DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+	            
+	            // 객체를 생성하여 list에 담는다
+	            list.add(new Auction(rset.getInt("BOARD_NO"),
+	                           rset.getString("CATEGORYCODE"),
+	                           rset.getString("AUCTION_TITLE"),
+	                           dc.format(rset.getInt("ITEM_DIRECT")),
+	                           rset.getString("SELL_STATUS"),
+	                           rset.getInt("COUNT"),
+	                           rset.getString("CHANGE_NAME"),
+	                           rset.getString(9)
+	                           ));
+	         }
+	         System.out.println("다오 => "+list);
+	            } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+
+	      return list;
+	}
+
+	public ArrayList<Auction> searchAuctionPriceDescList(Connection conn, String search, PageInfo pi) {
+	      ArrayList<Auction> list = new ArrayList<>();
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      
+	      // 시작하는 행과 끝나는 행의 수를 받아옴
+	      int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+	      int endRow = startRow + pi.getBoardLimit() -1;
+	      
+	      System.out.println("다오 서치리스트 pi =>"+ pi);
+	      
+	      String sql = prop.getProperty("searchAuctionPriceDescList");
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, "%"+search+"%");
+	         pstmt.setString(2, "%"+search+"%");
+	         pstmt.setInt(3, startRow);
+	         pstmt.setInt(4, endRow);
+	         
+	         rset = pstmt.executeQuery();
+	         while(rset.next()) {
+	            DecimalFormat dc = new DecimalFormat("###,###,###,###,###");
+	            
+	            // 객체를 생성하여 list에 담는다
+	            list.add(new Auction(rset.getInt("BOARD_NO"),
+	                           rset.getString("CATEGORYCODE"),
+	                           rset.getString("AUCTION_TITLE"),
+	                           dc.format(rset.getInt("ITEM_DIRECT")),
+	                           rset.getString("SELL_STATUS"),
+	                           rset.getInt("COUNT"),
+	                           rset.getString("CHANGE_NAME"),
+	                           rset.getString(9)
+	                           ));
+	         }
+	         System.out.println("다오 => "+list);
+	            } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+
+	      return list;
+	}
+
 }

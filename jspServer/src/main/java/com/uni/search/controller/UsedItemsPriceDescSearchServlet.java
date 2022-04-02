@@ -14,16 +14,16 @@ import com.uni.usedItemBoard.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 /**
- * Servlet implementation class UsedItemsSearchListServlet
+ * Servlet implementation class UsedItemsPriceDescSearchServlet
  */
-@WebServlet("/usedItemsSearchList.do")
-public class UsedItemsSearchListServlet extends HttpServlet {
+@WebServlet("/usedItemsPriceDescSearchList.do")
+public class UsedItemsPriceDescSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UsedItemsSearchListServlet() {
+    public UsedItemsPriceDescSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -82,19 +82,18 @@ public class UsedItemsSearchListServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, startPage, endPage, maxPage, pageLimit, boardLimit);
 		System.out.println("중고 더보기 pi 객체 생성완료 =>" + pi);
 		
-		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardService().searchUsedItemsList(search, pi);
+		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardService().searchUsedItemsPriceDescList(search, pi);
 		System.out.println("중고 더보기 서블릿 aList => " + ubList);
 		
 		if(!ubList.isEmpty()) {
 			request.setAttribute("ubList", ubList);
 			request.setAttribute("pi", pi);
 			request.setAttribute("search", search);
-			request.getRequestDispatcher("views/search/searchUsedItemsBoardList.jsp").forward(request, response);
+			request.getRequestDispatcher("views/search/searchUsedItemsPriceDescList.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "검색 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		
 	}
 
 	/**

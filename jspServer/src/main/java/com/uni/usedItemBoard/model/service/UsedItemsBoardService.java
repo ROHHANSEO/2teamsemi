@@ -9,11 +9,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.uni.admin.model.vo.BlockBoard;
-import com.uni.auction.model.dao.AuctionDao;
-import com.uni.auction.model.vo.Auction;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
 import com.uni.usedItemBoard.model.vo.LikeProduct;
+import com.uni.usedItemBoard.model.vo.MonthlyMarketPrice;
 import com.uni.usedItemBoard.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.UsedAttachment;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
@@ -320,6 +319,50 @@ public class UsedItemsBoardService {
 		close(conn);
 		
 		return ubList;// 리스트 반환
+	}
+
+	public ArrayList<UsedItemsBoard> searchUsedItemsLikeDescList(String search, PageInfo pi) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardDao().searchUsedItemsLikeDescList(conn, search, pi);
+		System.out.println("서비스 ubList =>" + ubList);
+		close(conn);
+		
+		return ubList;// 리스트 반환
+	}
+
+	public ArrayList<UsedItemsBoard> searchUsedItemsPriceDescList(String search, PageInfo pi) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardDao().searchUsedItemsPriceDescList(conn, search, pi);
+		System.out.println("서비스 ubList =>" + ubList);
+		close(conn);
+		
+		return ubList;// 리스트 반환
+	}
+
+	public ArrayList<UsedItemsBoard> searchUsedItemsPriceAscList(String search, PageInfo pi) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<UsedItemsBoard> ubList = new UsedItemsBoardDao().searchUsedItemsPriceAscList(conn, search, pi);
+		System.out.println("서비스 ubList =>" + ubList);
+		close(conn);
+		
+		return ubList;// 리스트 반환
+	}
+
+	public ArrayList<MonthlyMarketPrice> goingrates(String search) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<MonthlyMarketPrice> list = new UsedItemsBoardDao().goingrates(conn, search);
+		System.out.println("서비스 시세 list =>" + list);
+		close(conn);
+		
+		return list;// 리스트 반환
 	}
 
 
