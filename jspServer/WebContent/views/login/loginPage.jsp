@@ -38,7 +38,7 @@ if(cookies != null){
                             <td colspan="2"><input type="password" name="password" placeholder="비밀번호" maxlength="12"></td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" name="loginCip"><span>자동로그인</span></td>
+                            <td><input type="checkbox" name="loginCip" value="on"><span>자동로그인</span></td>
                             <td></td>
                         </tr>
                         <tr>

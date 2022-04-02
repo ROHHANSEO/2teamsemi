@@ -18,7 +18,4 @@ $(document).ready(function() {
 		autoScrolling:true,
 		scrollHorizontally: true
 	});
-
-	//methods
-	$.fn.fullpage.setAllowScrolling(false);
 });

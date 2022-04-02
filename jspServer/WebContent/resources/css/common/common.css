@@ -15,8 +15,9 @@ body { overflow-x:hidden}
 #main_header {
     position: relative;
     border-bottom: 1px solid gray;
-    height: 250px;
     width: 100vw;
+    background-color: #fff;
+    z-index: 99;
 }
 
 #header {
@@ -73,7 +74,8 @@ body { overflow-x:hidden}
 
 /* header > nav */
 #main_nav {
-    margin-top: 40px;
+    margin-top: 1%;
+    margin-bottom: 10px;
 }
 
 #main_nav ul {

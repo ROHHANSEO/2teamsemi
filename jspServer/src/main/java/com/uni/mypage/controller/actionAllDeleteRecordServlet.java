@@ -1,7 +1,7 @@
 package com.uni.mypage.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.uni.auction.model.vo.Auction;
 import com.uni.mypage.model.service.MyPageService;
 import com.uni.user.model.vo.User;
 
 /**
- * Servlet implementation class auctionRecordPageServlet
+ * Servlet implementation class actionAllDeleteRecordServlet
  */
-@WebServlet("/auctionRecordPage")
-public class auctionRecordPageServlet extends HttpServlet {
+@WebServlet("/actionAlldelete")
+public class actionAllDeleteRecordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public auctionRecordPageServlet() {
+    public actionAllDeleteRecordServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,19 +33,17 @@ public class auctionRecordPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
 		
-		ArrayList<Auction> list1 = new MyPageService().myBidActionList(userNo);
-		ArrayList<Auction> list2 = new MyPageService().mypostActionList(userNo);
+		int result = new MyPageService().actionAlldelete(userNo);
 		
-		request.setAttribute("msg", "경매정산");
-		
-		if(!list1.isEmpty() || !list2.isEmpty()) {
-			request.setAttribute("msg2", "true");
-			request.setAttribute("mybid", list1);
-			request.setAttribute("mypost", list2);
+		PrintWriter out = response.getWriter();
+		if (result <= 0) {
+			out.print("success");
 		} else {
-			request.setAttribute("msg2", "void");
+			out.print("fail");
 		}
-		request.getRequestDispatcher("views/mypage/salesRecordPage.jsp").forward(request, response);
+
+		out.flush();
+		out.close();
 	}
 
 	/**
