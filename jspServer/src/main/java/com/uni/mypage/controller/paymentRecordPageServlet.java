@@ -34,8 +34,10 @@ public class paymentRecordPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		System.out.println(userNo);
 		
 		ArrayList<UsedItemsBoard> list = new MyPageService().patmentList(userNo);
+		System.out.println("patment==========================="+list);
 		
 		request.setAttribute("msg", "결제기록");
 		
