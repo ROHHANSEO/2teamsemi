@@ -19,6 +19,7 @@
 }
 .article {
     margin-top: 20px;
+    display: flex;
 }	
 .firstLine, .secondLine{
 	display: flex;
@@ -39,7 +40,7 @@
 .thumbnail{
     margin: 10px;
     margin-left: 0px;
-    margin-right: 17.1px;
+    margin-right: 45.5px;
     border: 1px solid #d3d3d3;
    	width: 10vw;
     height: 14vw;
@@ -123,7 +124,8 @@
 			<div class="article">
 			 <%for(Auction ab : acList){ %>
 				<div class="thumbnail" align="center">
-					<a href="<%=request.getContextPath()%>/detailAuction.do?scno=<%=ab.getAuctionNo()%>">
+					<input type="hidden" value="<%=ab.getAuctionNo()%>" class="auctionno">
+					<a class="itemLIst">
 						<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%= ab.getTitleImg() %>" class="image"> <br>
 						<div class="bottom">
 							<div class="firstLine">
@@ -152,7 +154,7 @@
 		<div class="item3">
 			<div class="usedItems">
 				<span>중고판매 게시판</span>
-				<% if(!acList.isEmpty()){%>
+				<% if(!ubList.isEmpty()){%>
 					<a href="<%=request.getContextPath() %>/usedItemsSearchList.do?search=<%= search %>"><span>더보기</span></a>
 				<% }else{ %>
 					<span style="display: none;">더보기</span>
@@ -188,7 +190,7 @@
 							</div>
 						</a>
 					</div>
-				<%}if(acList.isEmpty()){ %>
+				<%}if(ubList.isEmpty()){ %>
 					<div class="dontResult">
 						<span style="color: #993333; font-weight: 600;"><%= search %> </span>(이)가 포함된 게시글이 없습니다
 					</div>
@@ -197,5 +199,32 @@
 		</div>
 	</div>
 	<%@ include file="../common/footer.jsp"%>
+	<script>
+		$(".itemLIst").click(function(){
+			var scno = $(".auctionno").val();
+			console.log(scno)
+			increaseCount(scno)
+			location.href="<%=request.getContextPath()%>/detailAuction.do?scno="+scno;
+		})
+		function increaseCount(scno){
+			$.ajax({
+				type:"post",
+				url:"increaseAuction.do", 
+				data:{
+					scno:scno
+				}, 
+				success: function(){
+					console.log("성공")
+				}, 
+				error:function(e){
+					console.log("실패")
+				}
+				
+			})
+			
+		}
+			
+		
+	</script>
 </body>
 </html>

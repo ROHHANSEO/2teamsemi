@@ -50,7 +50,7 @@
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script>
-	
+		
 		$('#filter-Apply').click(function(){
 			$("#selectCategory").empty() // 비워주기
 			let cate; // 대중소 분류
@@ -191,8 +191,8 @@
 							let aTag = $("<a>").attr('href', '<%=request.getContextPath()%>/detailview.do?bNo='+bNo).append(image, '<br>', bottom);
 							let thumnail = $("<div>").addClass("thumbnail").html(aTag);
 							
+
 							article.append(thumnail);
-							
 						})
 					}else{
 						let msg = "필터와 일치한 게시물이 존재하지 않습니다.";
@@ -203,6 +203,88 @@
 			
 			
 		})
+
+		function marketrates(search){
+			console.log("시세 조회함")
+			$.ajax({
+				url:"thegoingrates.do",
+				data:{
+					search:search
+				},
+				type:"get",
+				success:function(list){
+					console.log("시세조회 성공")
+					console.log(list)
+					let months = [1, 2, 3];
+					let avgarr = [7000, 9500, 4000];
+					let minarr = [1000, 5000, 3400];
+					let maxarr = [21000, 11000, 9800];
+
+					$.each(list, function(index, obj){
+						months.push(obj.month)
+						minarr.push(obj.minPrice)
+						maxarr.push(obj.maxPrice)
+						avgarr.push(obj.avgPrice)
+					})
+					console.log(months)
+					console.log(avgarr)
+					console.log(minarr)
+					console.log(maxarr)
+
+					new Chart(document.getElementById("line-chart"), {
+						type: 'line',
+						data: {
+							labels: months,
+							datasets: [
+									{ 
+										data: avgarr,
+										label: "평균값",
+										borderColor: "#ffaaaa",
+										fill: false
+									},
+									{ 
+										data: minarr,
+										label: "최소값",
+										borderColor: "#000000",
+										fill: false
+									},
+									{ 
+										data: maxarr,
+										label: "최대값",
+										borderColor: "#ffd700",
+										fill: false
+									}
+								/*
+								{ 
+									data: [값, 값, 값],
+									label: "평균값",
+									borderColor: "#993333",
+									fill: false
+								},{ 
+									data: [값, 값, 값],
+									label: "최소값",
+									borderColor: "#993333",
+									fill: false
+								},{ 
+									data: [값, 값, 값],
+									label: "최대값",
+									borderColor: "#993333",
+									fill: false
+								},
+								*/
+								
+							]
+						},
+						options: {
+							title: {
+							display: true,
+							text: search+'의 현재 시세는'
+							}
+						}
+					})
+				}
+			})
+		}
 
 		// 대분류, 중분류, 소분류, 최소 금액과 최대 금액, 검색내 검색을 적용하기, 거래완료 게시글 제외하기 버튼 눌렀을 때 가져와 해당 되는 게시글 도출하기
 		$('#filter-Apply2').click(function() {
@@ -351,6 +433,16 @@
 							
 							article.append(thumnail);
 						})
+						
+						if(search != ""){ // 검색내 검색이 존재 할 경우 시세 뽑기
+							let goingrates = $(".going-rates")
+							if(goingrates.hasClass("on-rates")){
+								goingrates.removeClass("on-rates")
+							}else{
+								goingrates.addClass('on-rates')
+							}
+							marketrates(search);
+						}
 					}else{
 						article.append("찾으시는 게시물이 없습니다.");
 					}

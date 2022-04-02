@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- <link rel="stylesheet" href="../../resources/css/usedItemsBoard/usedItemBoardList.css"> -->
+ <link rel="stylesheet" href="../../resources/css/usedItemsBoard/usedItemBoardList.css"> 
 </head>
 <body>
 	<div>
@@ -30,12 +30,17 @@
 	    <div class="container">
 	    	<div class="item" id="article1">
 	    		<% if(user != null){  %>
-	    			<input class="commonwritebutton write" type="button" value="글 작성하기" onclick="location.href='<%= request.getContextPath() %>/insertUsedBoard.do'">
+	    			<input class="commonwritebutton write son" type="button" value="글 작성하기" onclick="location.href='<%= request.getContextPath() %>/insertUsedBoard.do'">
 	    		<% } %>
 	    		<div></div>
-	    		<div>
-	    			<a href="<%= request.getContextPath() %>/usedBoardList.do">최신순</a> | <a href="<%= request.getContextPath() %>/usedListLike.do">인기순</a> | <a href="<%= request.getContextPath() %>/usedListPriceDesc.do">고가순</a> | <a href="<%= request.getContextPath() %>/usedListPriceAsc.do">저가순</a>
-	    		</div>
+	    		<div class= "selectpart"><!--  최신 카테고리  -->
+					<div class="selectpartb"><!-- 최신,인기 -->
+						<a href="<%=request.getContextPath()%>/usedBoardList.do">최신순</a> | 
+						<a href="<%= request.getContextPath() %>/usedListLike.do">인기순</a> | 
+						<a href="<%= request.getContextPath() %>/usedListPriceAsc.do">저가순</a> | 
+						<a href="<%= request.getContextPath() %>/usedListPriceDesc.do">고가순</a>
+					</div>
+				</div>
 	    	</div>
 	    	<div class="item" id="article2">
 			    <%for(UsedItemsBoard ub : list){ %>
@@ -72,13 +77,13 @@
    		    <!-- 페이징바 -->
 			<div class="pagingArea" align="center">
 				<!-- 맨 처음으로 (<<) -->
-				<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=1'"> &lt;&lt; </button>
+				<button onclick="location.href='<%= request.getContextPath() %>/usedListLike.do?currentPage=1'"> &lt;&lt; </button>
 			
 				<!-- 이전페이지로(<) -->
 				<%if(currentPage == 1){ %>
 				<button disabled> &lt; </button>
 				<%}else{ %>
-				<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=<%= currentPage-1 %>'"> &lt; </button>
+				<button onclick="location.href='<%= request.getContextPath() %>/usedListLike.do?currentPage=<%= currentPage-1 %>'"> &lt; </button>
 				<%} %>
 				
 				<!-- 페이지 목록 -->
@@ -86,7 +91,7 @@
 					<%if(p == currentPage){ %>
 					<button disabled> <%= p %> </button>
 					<%}else{ %>
-					<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=<%= p %>'"> <%= p %> </button>
+					<button onclick="location.href='<%= request.getContextPath() %>/usedListLike.do?currentPage=<%= p %>'"> <%= p %> </button>
 					<%} %>
 					
 				<%} %>
@@ -95,11 +100,11 @@
 				<%if(currentPage == maxPage){ %>
 				<button disabled> &gt; </button>
 				<%}else { %>
-				<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=<%= currentPage+1 %>'"> &gt; </button>
+				<button onclick="location.href='<%= request.getContextPath() %>/usedListLike.do?currentPage=<%= currentPage+1 %>'"> &gt; </button>
 				<%} %>
 			
 				<!-- 맨 끝으로 (>>) -->
-				<button onclick="location.href='<%= request.getContextPath() %>/usedBoardList.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
+				<button onclick="location.href='<%= request.getContextPath() %>/usedListLike.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
 			</div>
 	    </div>
 	    <div>

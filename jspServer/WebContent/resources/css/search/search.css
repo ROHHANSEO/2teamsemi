@@ -1,0 +1,95 @@
+.wtotal{
+    width:70%;
+    height:100%;
+    margin:0 auto;
+}
+.categorydiv:hover{
+    background-color: #993333;
+    color: white;
+}
+.categorydiv p{
+    line-height:6;
+}
+.selectpart{
+    margin: 20px 30px 50px 30px;
+}
+.selectparta{
+    margin-left:20px;
+    font-size:25px;
+    display: inline-block;
+}
+.selectpartb{
+    right: 50%;
+float: right;
+margin-top:5px;
+margin-right:10px;
+}
+.selectpartb a:hover{
+    color :  #993333;
+font-size: large;
+transition : all .35s;
+}
+.auctionTot{
+    margin-top:20px;
+    
+}
+.itemLIst{
+    display:flex;
+    width:90%;
+    margin:0 5% 30px 5%;
+}
+.contentPart{
+    margin-left:15px;
+    width: 60%;
+    margin-top:30px;
+}
+.priceContent{
+    display:flex;
+    margin-bottom:10px;
+}
+.statusauction{
+    margin-bottom:10px;
+    font-size:16px;
+    color:#993333;
+}
+.titleauction{
+    margin-bottom:10px;
+    font-size:19px;
+}
+.endauction{
+    margin-top:15px;
+    font-size:14px;
+}
+.b{
+    margin-left:10px;
+    margin-top:10px;
+    font-size:12px;
+}
+.a{
+    font-size:22px;
+}
+.itemLIst:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    background-color:rgb(236, 236, 236);;
+}
+    .pagingArea{
+    margin-bottom : 70px;
+}
+.pagingArea>button{
+    background-color : rgb(236, 236, 236);
+    width:30px;
+    height:30px;
+    border-radius: 5px;
+    font-size:15px;
+    border:1px solid lightgray;
+}
+.pagingArea>button:hover:enabled{
+    border:1px solid black;
+    background-color: #993333;
+    color:white;
+    cursor: pointer;
+}
+.searchword{
+color: red;
+}

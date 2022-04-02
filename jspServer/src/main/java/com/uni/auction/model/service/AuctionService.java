@@ -309,6 +309,41 @@ public class AuctionService {
 		return result;
 	}
 
+	public ArrayList<Auction> searchAuctionLikeDescList(String search, PageInfo pi) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<Auction> acList = new AuctionDao().searchAuctionLikeDescList(conn, search, pi);
+		System.out.println("서비스 acList =>" + acList);
+		close(conn);
+		
+		return acList;// 리스트 반환
+	}
+
+	public ArrayList<Auction> searchAuctionPriceAscList(String search, PageInfo pi) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<Auction> acList = new AuctionDao().searchAuctionPriceAscList(conn, search, pi);
+		System.out.println("서비스 acList =>" + acList);
+		close(conn);
+		
+		return acList;// 리스트 반환
+	}
+
+	public ArrayList<Auction> searchAuctionPriceDescList(String search, PageInfo pi) {
+		Connection conn = getConnection();
+		
+		// 성공한 행 리스트담음
+		ArrayList<Auction> acList = new AuctionDao().searchAuctionPriceDescList(conn, search, pi);
+		System.out.println("서비스 acList =>" + acList);
+		close(conn);
+		
+		return acList;// 리스트 반환
+	}
+
+	
+
 	//조회수가 많은 리스트대로
 	public ArrayList<Auction> selectPopList(PageInfo pi) {
 		Connection conn = getConnection();
