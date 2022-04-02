@@ -157,6 +157,32 @@ public class AuctionDao {
 		return listCount;
 	}
 
+	public int getFdListCount(Connection conn, String input) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		System.out.println("다오에서 리스트"+input);
+		String sql = prop.getProperty("getFdListCount");
+		
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, input);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			System.out.println("다오 listCount => " + listCount);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
 	
 
 	//맞는 페이지의 리스트를 받아오는 것
@@ -949,5 +975,189 @@ public class AuctionDao {
 		
 		return result;
 	}
+
+	//카운트 많은 수
+	public ArrayList<Auction> selectPopList(Connection conn, PageInfo pi) {
+		ArrayList<Auction> list = new ArrayList<>();
+			
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectPopList");
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		
+		
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				
+				// 객체를 생성하여 list에 담는다
+				
+				list.add(new Auction(rset.getInt("BOARD_NO"),
+									rset.getString("CATEGORYCODE"),
+									rset.getString("AUCTION_TITLE"),
+									dc.format(rset.getInt("ITEM_DIRECT")),
+									rset.getString("SELL_STATUS"),
+									rset.getInt("COUNT"),
+									rset.getString("CHANGE_NAME"),
+									rset.getString(9)
+									));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public ArrayList<Auction> selectlowList(Connection conn, PageInfo pi) {
+		ArrayList<Auction> list = new ArrayList<>();
+		
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectlowList");
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		
+		
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				
+				// 객체를 생성하여 list에 담는다
+				
+				list.add(new Auction(rset.getInt("BOARD_NO"),
+									rset.getString("CATEGORYCODE"),
+									rset.getString("AUCTION_TITLE"),
+									dc.format(rset.getInt("ITEM_DIRECT")),
+									rset.getString("SELL_STATUS"),
+									rset.getInt("COUNT"),
+									rset.getString("CHANGE_NAME"),
+									rset.getString(9)
+									));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public ArrayList<Auction> selectHighList(Connection conn, PageInfo pi) {
+		ArrayList<Auction> list = new ArrayList<>();
+		
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectHighList");
+		
+		// 시작하는 행과 끝나는 행의 수를 받아옴
+		int startRow = (pi.getCurrentPage()-1) * pi.getBoardLimit() +1;
+		int endRow = startRow + pi.getBoardLimit() -1;
+		
+		
+		try {
+			// sql문 담기
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql 구문에 ?인덱스에 맞는 값 넣기
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			// sql문 실행
+			rset = pstmt.executeQuery();
+			
+			// 여러행을 받아오기 때문에 while문
+			while(rset.next()) {
+				
+				// 객체를 생성하여 list에 담는다
+				
+				list.add(new Auction(rset.getInt("BOARD_NO"),
+									rset.getString("CATEGORYCODE"),
+									rset.getString("AUCTION_TITLE"),
+									dc.format(rset.getInt("ITEM_DIRECT")),
+									rset.getString("SELL_STATUS"),
+									rset.getInt("COUNT"),
+									rset.getString("CHANGE_NAME"),
+									rset.getString(9)
+									));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public int statusUpdate(Connection conn, int boardNo) {
+		int result = 0;
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("statusUpdate"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		String status = "경매완료";
+		System.out.println("다오왔다감");
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+			
+			pstmt.setString(1, status);
+			pstmt.setInt(2, boardNo);
+			
+			System.out.println("다오왔다감");
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
+	}
+
+	
 
 }

@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.usedItemBoard.model.vo.Category, com.uni.auction.model.vo.*" %>
 <%
-	   	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");//대분류
-		ArrayList<Auction> aulist = (ArrayList<Auction>)request.getAttribute("aulist");//일반 리스트
-		ArrayList<Auction> kklist = (ArrayList<Auction>)request.getAttribute("kklist");//카테고리 클릭시 리스트
-		ArrayList<Auction> fdlist = (ArrayList<Auction>)request.getAttribute("fdlist");//검색시 리스트
-		String cate = (String)request.getAttribute("cate");//카테고리
-		String input = (String)request.getAttribute("input");//검색내용
+	   	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");
+		ArrayList<Auction> aulist = (ArrayList<Auction>)request.getAttribute("aulist");
+		
 		PageInfo pi = (PageInfo)request.getAttribute("pi");
 		
 		int listCount = pi.getListCount();
@@ -19,10 +16,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> 경매 페이지 </title>
+<title> 인기순 경매 리스트 </title>
 <link rel="stylesheet" href="../../resources/css/common/common.css">
 <style>
 	.wtotal{
+			border:2px solid black;
 			width:70%;
 			margin:0 auto;
 	}
@@ -156,21 +154,20 @@
 	       	transform:translateX(-50%);
 	       	line-height:50px;
 	       	height:35px;
-
+			width:550px;
+       }
+     	.optionserachCList{
+		  	height:33px;
+		   	width:60px;
+       	
        }
         .seacrchinput{
         	height:30px;
-			width:500px;
+			width:400px;
         }
         .form-controlsearchbutton{
         	height:33px;
         	width:60px;
-        }
-        .emptyllll{
-        	line-height: 500px;
-		    height: 600px;
-		    font-size: 40px;
-		    text-align: center;
         }
 </style>
 </head>
@@ -185,6 +182,11 @@
 		</div>
 		<div class= "searchfilter">
    			<div class="seacrchidichinput">
+   		<!-- 분류 종류 : 제목, 내용 -->
+   				<select class="optionserachCList" name="searchClist">
+   					<option value="title" selected>제목</option>
+   					<option value="content">내용</option>
+   				</select>
    				<input class="seacrchinput" placeholder="검색어를 입력하세요." type="text" >
    		<!-- onkeyup:은 텍스트가 입력된 후 이벤트 실행 -->
 
@@ -197,13 +199,7 @@
     		<% } %>
 		</div>
 		<div class= "selectpart"><!--  최신 카테고리  -->
-		<% if (aulist != null ){%>
-			<div class="selectparta"><p class="kdh"> 전체 상품 </p></div>
-		<%}else if(kklist != null){ %>	
-			<div class="selectparta"><p class="kdh"><%=cate %> 검색결과</p></div>
-		<%}else{ %>
-			<div class="selectparta"><p class="kdh"><%=input %> 검색결과</p></div>
-		<%} %>
+			<div class="selectparta"><p> 인기순 상품 </p></div>
 			<div class="selectpartb"><!-- 최신,인기 -->
 				<a href="<%=request.getContextPath()%>/auctionPage.do">최신순</a> | 
 				<a href="<%=request.getContextPath()%>/popAutcion.do">인기순</a> | 
@@ -213,61 +209,19 @@
 		</div>
 		<div class="auctionTot"><!-- 게시글  -->
 		<% if (aulist != null){%>
-			<%if(aulist.size() == 0){ %>
-				<div  class="emptyllll"> 게시물이 존재하지 않습니다. </div>
-			<%}else{ %>
-				<%for(Auction al : aulist){ %>
-					<div class="itemLIst">
-						<div class="auctionList"><!-- 이미지 부분 -->
-							<input type="hidden" value="<%=al.getAuctionNo()%>" class="auctionno">
-							<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="200" height="200">
-						</div>
-						<div class="contentPart"><!-- 글부분 -->
-							<div class="statusauction"> <p><%=al.getSellStatus() %> </p></div>
-							<div class="titleauction"> <p><%=al.getAuctionTitle() %> </p></div>
-							<div class="priceContent"> <span class="a" ><%=al.getPriceFo() %>원 </span><p class="b">즉시구매가 </p></div>
-							<div class="endauction"> <p>경매 마감 : <%=al.getDateget() %></p></div>
-						</div>
-					</div>
-				<%} %>
-			<%} %>
-		<%}else if(kklist != null){ %>	
-			<%if(kklist.size() == 0){ %>
-				<div  class="emptyllll"> 게시물이 존재하지 않습니다. </div>
-			<%}else{ %>
-				<%for(Auction al : kklist){ %>
-					<div class="itemLIst">
-						<div class="auctionList"><!-- 이미지 부분 -->
-							<input type="hidden" value="<%=al.getAuctionNo()%>" class="auctionno">
-							<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="200" height="200">
-						</div>
-						<div class="contentPart"><!-- 글부분 -->
-							<div class="statusauction"> <p><%=al.getSellStatus() %> </p></div>
-							<div class="titleauction"> <p><%=al.getAuctionTitle() %> </p></div>
-							<div class="priceContent"> <span class="a" ><%=al.getPriceFo() %>원 </span><p class="b">즉시구매가 </p></div>
-							<div class="endauction"> <p>경매 마감 : <%=al.getDateget() %></p></div>
-						</div>
-					</div>
-				<%} %>
-			<%} %>
-		<%}else{ %>
-			<%if(fdlist.size() == 0){ %>
-				<div  class="emptyllll"> 게시물이 존재하지 않습니다. </div>
-			<%}else{ %>
-				<%for(Auction al : fdlist){ %>
-					<div class="itemLIst">
-						<div class="auctionList"><!-- 이미지 부분 -->
-							<input type="hidden" value="<%=al.getAuctionNo()%>" class="auctionno">
-							<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="200" height="200">
-						</div>
-						<div class="contentPart"><!-- 글부분 -->
-							<div class="statusauction"> <p><%=al.getSellStatus() %> </p></div>
-							<div class="titleauction"> <p><%=al.getAuctionTitle() %> </p></div>
-							<div class="priceContent"> <span class="a" ><%=al.getPriceFo() %>원 </span><p class="b">즉시구매가 </p></div>
-							<div class="endauction"> <p>경매 마감 : <%=al.getDateget() %></p></div>
-						</div>
-					</div>
-				<%} %>
+			<%for(Auction al : aulist){ %>
+			<div class="itemLIst">
+				<div class="auctionList"><!-- 이미지 부분 -->
+					<input type="hidden" value="<%=al.getAuctionNo()%>" class="auctionno">
+					<img src="<%=request.getContextPath() %>/resources/auction_upfiles/<%=al.getTitleImg() %>" width="200" height="200">
+				</div>
+				<div class="contentPart"><!-- 글부분 -->
+					<div class="statusauction"> <p><%=al.getSellStatus() %> </p></div>
+					<div class="titleauction"> <p><%=al.getAuctionTitle() %> </p></div>
+					<div class="priceContent"> <span class="a" ><%=al.getPriceFo() %>원 </span><p class="b">즉시구매가 </p></div>
+					<div class="endauction"> <p>경매 마감 : <%=al.getDateget() %></p></div>
+				</div>
+			</div>
 			<%} %>
 		<%} %>
 		</div>
@@ -313,7 +267,9 @@
 		<button onclick="location.href='<%=request.getContextPath()%>/auctionPage.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
 		<%} %>
 	</div> 
-
+	
+	
+	
 	<%@ include file = "../common/footer.jsp" %> 
 	<script>
 
@@ -355,14 +311,7 @@
 			console.log(category)
 			location.href="<%=request.getContextPath()%>/auctionPage.do?category="+category;
 		})
-		
-		//위에 검색 부분
-    	function searchFunction(){
-
-    		var input = $(".seacrchinput").val();//검색 내용
-    		console.log(input)
-    		location.href="<%=request.getContextPath()%>/auctionPage.do?input="+input;
-		}
+			
 		
 	</script>
 </body>
