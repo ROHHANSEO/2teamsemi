@@ -408,7 +408,7 @@
 						$.each(list, function(index, obj){
 							
 							
-							let listprice = obj.price;
+							let listprice = obj.comprice;
 							let listcondition = obj.itemCondition;
 							let listtitle = obj.usedBoardTitle;
 							let listlike = obj.likeCount;

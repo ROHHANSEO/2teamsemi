@@ -36,7 +36,7 @@
 	    			<input class="commonwritebutton write son" type="button" value="글 작성하기" onclick="location.href='<%= request.getContextPath() %>/insertUsedBoard.do'">
 	    		<% } %>
 	    		<div class= "selectpart"><!--  최신 카테고리  -->
-					<div class="selectpartb"><!-- 최신,인기 -->
+					<div class="selectpartb selectpartline"><!-- 최신,인기 -->
 						<a href="<%=request.getContextPath()%>/usedBoardList.do">최신순</a> | 
 						<a href="<%= request.getContextPath() %>/usedListLike.do">인기순</a> | 
 						<a href="<%= request.getContextPath() %>/usedListPriceAsc.do">저가순</a> | 

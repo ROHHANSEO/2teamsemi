@@ -56,7 +56,7 @@ public class UsedItemsListPriceAscServlet extends HttpServlet {
 		}
 		
 		// 페이지 최대 갯수 재 정의
-		pageLimit = 5;
+		pageLimit = 10;
 		
 		// 게시글 최대 갯수 재 정의
 		boardLimit = 16;
