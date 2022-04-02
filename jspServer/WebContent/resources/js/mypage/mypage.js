@@ -329,7 +329,7 @@ $(function(){
     //찜리스트 찜해제, 재설정기능
     $(".heart_img_box").click(function() {
 			
-        let like = $('.heart_img_box')
+        let like = $(this)
         let bNo = $(this).children(".bNo").val();
         let uNo = $(this).children(".uNo").val();
         
