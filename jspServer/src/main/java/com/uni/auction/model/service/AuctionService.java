@@ -14,13 +14,7 @@ import com.uni.auction.model.vo.Auction;
 import com.uni.auction.model.vo.AuctionAttachment;
 import com.uni.auction.model.vo.PageInfo;
 import com.uni.auction.model.vo.sellRecord;
-import com.uni.event.model.dao.EventDao;
-import com.uni.event.model.vo.Event;
-import com.uni.serviceCenter.model.dao.ServiceCenterDao;
-import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.Category;
-import com.uni.usedItemBoard.model.vo.UsedAttachment;
-import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
 public class AuctionService {
 
@@ -50,6 +44,18 @@ public class AuctionService {
 		
 		//int로 리스트 갯수 받아오기 
 		int listCount = new AuctionDao().getCaListCount(conn, li);
+		System.out.println("service listCount ===" + listCount);
+		close(conn);
+		
+		return listCount;//리스트 카운트 다시 서블렛으로 보내주기
+	}
+
+	//검색을 눌렀을 시에 가져오는 리스트 갯수
+ 	public int getFdListCount(String input) {
+ 		Connection conn = getConnection();
+		
+		//int로 리스트 갯수 받아오기 
+		int listCount = new AuctionDao().getFdListCount(conn, input);
 		System.out.println("service listCount ===" + listCount);
 		close(conn);
 		
@@ -227,7 +233,7 @@ public class AuctionService {
 		
 		return result;
 	}
-
+	//더보기 해서 들어갈때 보이는 리스트들
 	public ArrayList<Auction> searchAuctionList(String search, PageInfo pi) {
 		Connection conn = getConnection();
 		
@@ -238,7 +244,7 @@ public class AuctionService {
 		
 		return acList;// 리스트 반환
 	}
-
+	
 	public int getListSearchCount(String search) {
 		Connection conn = getConnection();
 		
@@ -258,6 +264,7 @@ public class AuctionService {
 		close(conn);
 		return category;
 	}
+
 
 	public int deleteAttachment(int scno) {
 		Connection conn = getConnection();
@@ -336,6 +343,57 @@ public class AuctionService {
 	}
 
 	
+
+	//조회수가 많은 리스트대로
+	public ArrayList<Auction> selectPopList(PageInfo pi) {
+		Connection conn = getConnection();
+		//pi는 페이지 정보
+		
+		//리스트 받아오기 
+		ArrayList<Auction> list = new AuctionDao().selectPopList(conn, pi);
+		
+		//System.out.println("service selectList ==="+list);
+		close(conn);
+		return list;
+	}
+	//저가순으로 리스트 가져오기
+	public ArrayList<Auction> selectlowList(PageInfo pi) {
+		Connection conn = getConnection();
+		//pi는 페이지 정보
+		
+		//리스트 받아오기 
+		ArrayList<Auction> list = new AuctionDao().selectlowList(conn, pi);
+		
+		//System.out.println("service selectList ==="+list);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<Auction> selectHighList(PageInfo pi) {
+		Connection conn = getConnection();
+		//pi는 페이지 정보
+		
+		//리스트 받아오기 selectHighList
+		ArrayList<Auction> list = new AuctionDao().selectHighList(conn, pi);
+		
+		//System.out.println("service selectList ==="+list);
+		close(conn);
+		return list;
+	}
+
+	public int statusUpdate(int boardNo) {
+		Connection conn = getConnection();
+		
+		int result = new AuctionDao().statusUpdate(conn, boardNo);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
 
 
 }

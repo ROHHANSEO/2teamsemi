@@ -1,7 +1,7 @@
 package com.uni.mypage.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.uni.auction.model.vo.Auction;
 import com.uni.mypage.model.service.MyPageService;
-import com.uni.user.model.vo.User;
 
 /**
- * Servlet implementation class auctionRecordPageServlet
+ * Servlet implementation class actionSelectRecordDeleteServlet
  */
-@WebServlet("/auctionRecordPage")
-public class auctionRecordPageServlet extends HttpServlet {
+@WebServlet("/actionSelectDelete")
+public class actionSelectRecordDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public auctionRecordPageServlet() {
+    public actionSelectRecordDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,21 +30,23 @@ public class auctionRecordPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		String[] bnoArr = request.getParameterValues("bnoArr");
 		
-		ArrayList<Auction> list1 = new MyPageService().myBidActionList(userNo);
-		ArrayList<Auction> list2 = new MyPageService().mypostActionList(userNo);
-		
-		request.setAttribute("msg", "경매정산");
-		
-		if(!list1.isEmpty() || !list2.isEmpty()) {
-			request.setAttribute("msg2", "true");
-			request.setAttribute("mybid", list1);
-			request.setAttribute("mypost", list2);
-		} else {
-			request.setAttribute("msg2", "void");
+		for(int i = 0; i < bnoArr.length; i++) {
+			System.out.println(bnoArr[i]);
 		}
-		request.getRequestDispatcher("views/mypage/salesRecordPage.jsp").forward(request, response);
+		
+		int result = new MyPageService().actionSelectDelete(bnoArr);
+		
+		PrintWriter out = response.getWriter();
+		if (result <= 0) {
+			out.print("success");
+		} else {
+			out.print("fail");
+		}
+
+		out.flush();
+		out.close();
 	}
 
 	/**

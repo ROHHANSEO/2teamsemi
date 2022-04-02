@@ -37,7 +37,7 @@
 <body>
     <header id="main_header">
         <div id="header">
-            <div id="logo"><a href="/"><img src="../../resources/images/logo.gif" alt="메인로고이미지"></a></div>
+            <a href="/"><div id="logo"><img src="../../resources/images/logo.gif" alt="메인로고이미지"></div></a>
             <form id="searchform" method="post" action="<%=request.getContextPath()%>/searchList.do">
                 <input type="search" name="search" id="search">
                 <button onclick="cleansearch();" id="cancelbutton"><img id="cancel" src="../../resources/images/cancelbutton.png"></button>

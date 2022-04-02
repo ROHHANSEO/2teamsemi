@@ -35,6 +35,9 @@ function requestPay() {
                 $(".buyme").attr("disabled", true);
                 $(".buyme").css("background","lightgray");
                 $(".buyme").css("color","black");
+                if(boardNo > 1999999 || boardNo <3000000){
+                youdonthavethisfun(boardNo);
+                }
 	          },
 
 
@@ -49,3 +52,23 @@ function requestPay() {
     });
   }
 
+	function youdonthavethisfun(boardNo){
+		clearTimeout(timerId);
+		//경매 종료로 내용 변경
+		$("p.time-title").html("경매 종료");
+		//옆에 시간 부분 사라지게 하기
+		$(".time").fadeOut();
+		
+		$.ajax({
+			url:"updateAuctionStatus.do", 
+			data:{boardNo:boardNo}, 
+			type:"get", 
+			success: function(change){
+			var changeSS = $(".fronta")
+			changeSS.empty();
+			changeSS.append(change)
+			}
+			
+		})
+		
+	}

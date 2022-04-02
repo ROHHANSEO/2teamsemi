@@ -4,6 +4,8 @@
 	UsedItemsBoard ub = (UsedItemsBoard)request.getAttribute("ub");
 	ArrayList<UsedAttachment> fileList = (ArrayList<UsedAttachment>)request.getAttribute("fileList");
 	ArrayList<LikeProduct> like = (ArrayList<LikeProduct>)request.getAttribute("like"); 
+	int writerNo= Integer.parseInt(ub.getUsedBoardWriter());//글 작성자 
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -89,6 +91,7 @@
 	.chatting {
 	    background: #f8e86d;
 	}
+
 	.likebutton, .chatting, .buyme {
 		width: 140px;
 	    height: 35px;
@@ -240,6 +243,11 @@
 	}
 	.buy {
 	    color: #ffd700;
+	}
+	.chatting:hover:enabled{
+		background-color:#993333;
+		color:white;
+		cursor: pointer;
 	}
 </style>
 </head>
@@ -400,7 +408,7 @@
 								<span style="margin: auto 0;">찜하기</span>
 							</button>
 						<% } %>
-						<button class="chatting">채팅 거래</button>
+						<button class="chatting" onclick="startchat()">채팅 거래</button>
 						<button class="buyme" onclick="requestPay()">구매하기</button>
 					</div>
 				</div>
@@ -440,14 +448,59 @@
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	<script src="../../resources/js/common/payment.js"></script>
     <script>
+    <%if(user != null && user.getUserNo()!=writerNo){%>
+	function startchat(){//게시글 작성자가 아니고 로그인 한 사람일 때 
+		var sendperson = <%=user.getUserNo()%>;//보낸 사람
+		var answerperson = <%=ub.getUsedBoardWriter()%>;//받는 사람
+		var boardNo = <%=ub.getUsedBoardNo()%>; //게시글 넘버 
 		
-    
-	    function reportBoard(){// 게시글 신고하기
-	    	
-			window.name = "reportBoardsub";
-			 window.open("<%= request.getContextPath()%>/reportUsedBoard.do?bNo=<%=ub.getUsedBoardNo()%>&bTitle=<%=ub.getUsedBoardTitle()%>","_blank", "width=500, height=330, top=350, left=600");
-		}
-    
+		//아이작스로 보낸사람 받는사람 채팅이 있는지 체크 
+		$.ajax({
+			url : "chattingCheck.do", 
+			data :{
+				sendperson:sendperson, 
+				answerperson:answerperson, 
+				boardNo:boardNo
+			}, 
+			type : "get", 
+			success: function(status){
+				if(status == "already"){//이미 채팅창이 있는 것
+					alert("기존에 있는 채팅창으로 넘어가겠습니다.")
+					window.name = "datachatt";
+					window.open("<%=request.getContextPath()%>/alreaychat.do?bno=<%=ub.getUsedBoardNo()%>&sendp=<%=user.getUserNo()%>&ansp=<%=ub.getUsedBoardWriter()%>","_blank","width=500, height=500, top=200, left=600");
+				}else if(status == "new"){//새로운 사람
+					var alertt = confirm("새로운 채팅을 시작하시겠습니까?");
+					if(alertt){
+						
+						//페이지에 들어가는거
+						window.name = "datachatt";
+						window.open("<%=request.getContextPath()%>/chattingPro.do?bno=<%=ub.getUsedBoardNo()%>&sendp=<%=user.getUserNo()%>&ansp=<%=ub.getUsedBoardWriter()%>","_blank","width=500, height=500, top=200, left=600");
+						
+					}else{
+						alert("취소되었습니다.")
+						return;
+					}
+				}
+			}, 
+			error:function(e){
+				console.log("fail chatting")
+			}
+		})
+		
+
+	}
+	<%}else if(user == null){%>
+		$(".chatting").attr("disabled",true);
+	<%}else{%>
+		$(".chatting").attr("disabled",true);
+	<%}%>
+	
+    function reportBoard(){// 게시글 신고하기
+    	
+		window.name = "reportBoardsub";
+		 window.open("<%= request.getContextPath()%>/reportUsedBoard.do?bNo=<%=ub.getUsedBoardNo()%>&bTitle=<%=ub.getUsedBoardTitle()%>","_blank", "width=500, height=330, top=350, left=600");
+	}
+
     	function warning(){
 			let result =  confirm("수정하기 시 사진이 초기화되며, 카테고리를 선택할 수 없습니다. 진행하겠습니까?")
 			

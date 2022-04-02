@@ -180,28 +180,33 @@ public class MyPageDao {
 	}
 
 
-	public ArrayList<Auction> actionList(Connection conn, int userNo) {
+	public ArrayList<Auction> myBidActionList(Connection conn, int userNo) {
 		ArrayList<Auction> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("actionList");
+		String sql = prop.getProperty("myBidActionList");
 		
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, userNo);
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				Auction board = null;
+				Auction board = new Auction();
 				
 				board.setAuctionNo(rset.getInt("BOARD_NO"));
 				board.setAuctionTitle(rset.getString("AUCTION_TITLE"));
 				board.setStatus(rset.getString("SELL_STATUS"));
-				board.setTitleImg(rset.getString("ORIGIN_NAME"));
+				board.setTitleImg(rset.getString("CHANGE_NAME"));
 				board.setCreateDate(rset.getDate("CREATE_DATE"));
+				board.setDatenext(rset.getString("NEW_DATE"));
+				board.setItemDirect(rset.getInt("ITEM_DIRECT"));
+				board.setMybid(rset.getInt("AA"));
+				
 				
 
 				list.add(board);
@@ -254,6 +259,125 @@ public class MyPageDao {
 		}
 		
 		return list;
+	}
+
+
+	public ArrayList<Auction> mypostActionList(Connection conn, int userNo) {
+		ArrayList<Auction> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("mypostActionList");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Auction board = new Auction();
+				
+				board.setAuctionNo(rset.getInt("BOARD_NO"));
+				board.setAuctionTitle(rset.getString("AUCTION_TITLE"));
+				board.setStatus(rset.getString("SELL_STATUS"));
+				board.setTitleImg(rset.getString("CHANGE_NAME"));
+				board.setCreateDate(rset.getDate("CREATE_DATE"));
+				board.setDatenext(rset.getString("NEW_DATE"));
+				board.setItemDirect(rset.getInt("ITEM_DIRECT"));
+				board.setMybid(rset.getInt("AA"));
+				
+				
+
+				list.add(board);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+
+	public int actionRecordDelete(Connection conn, String bno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("actionRecordDelete");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, Integer.parseInt(bno));
+			
+			result = pstmt.executeUpdate();
+			
+
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+
+	public int actionSelectDelete(Connection conn, String[] bnoArr) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("actionRecordDelete");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			for(int i = 0; i < bnoArr.length; i++) {
+			
+				pstmt.setInt(1, Integer.parseInt(bnoArr[i]));
+				
+				result += pstmt.executeUpdate();
+			}
+
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+
+	public int actionAlldelete(Connection conn, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("actionAlldelete");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+			
+
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
 	
 	
