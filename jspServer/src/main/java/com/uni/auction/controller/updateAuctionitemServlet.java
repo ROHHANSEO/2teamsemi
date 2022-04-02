@@ -107,7 +107,7 @@ public class updateAuctionitemServlet extends HttpServlet {
 			System.out.println("fileName rename ==> "+ rename); // 확인용
 			
             // uploadUtil의 saveFiles 메소드 사용하여 파일을 저장
-            uploadUtil.saveFiles(part, fileName, uploadUtil.createFilePathAuction());
+            uploadUtil.saveFiles(part, rename, uploadUtil.createFilePathAuction());
 			
 			
 			// AuctionAttachment객체 생성
@@ -134,7 +134,7 @@ public class updateAuctionitemServlet extends HttpServlet {
 		
 		// 상품상태
 		String productStatus = request.getParameter("productStatus");
-		
+		System.out.println("dhodsjaosdhofhaoe" +productStatus);
 		//경매 시작 가격
 		int fprice = Integer.parseInt(request.getParameter("fprice"));
 		

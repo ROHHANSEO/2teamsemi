@@ -324,7 +324,7 @@
 			</tbody>
 		</table>
 	</div>
-	<%if(user != null){%> 
+	<%if(user != null && !user.getUserId().equals(tot2)){%> 
 		<div class="bNo" style="display: none;"><%= ad.getAuctionNo() %></div><!-- 게시물 넘버 -->
 		<div class="uNo" style="display: none;"><%= user.getUserNo() %></div><!-- 사는 사람 넘버 -->
 		<input type="hidden" class="product_price" value="<%=ad.getItemDirect()%>"><!-- 즉시구매가격 -->
@@ -332,7 +332,7 @@
 	<%if(user != null && user.getUserId().equals(tot2)){ %>
 		<div class="bNo" style="display: none;"><%= ad.getAuctionNo() %></div><!-- 게시물 넘버 -->
 		<div class="uNo" style="display: none;"><%= user.getUserNo() %></div><!-- 사는 사람 넘버 -->
-		<input type="hidden" class="product_price" value="100"><!-- 즉시구매가격 -->
+		<input type="hidden" class="product_price" value="<%=aaaa%>"><!-- 즉시구매가격 -->
 	<%} %>
 	<div><!-- 같은 카테고리 상품 -->
 		동일 카테고리 경매 상품 
@@ -424,9 +424,9 @@
 			var end5 = end.substr(10,2);
 			var end6 = end.substr(12,2);*/
 
-			var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
+			//var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
 			var nowTime = new Date();
-			//var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 02, 30, 00);
+			var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 19, 55, 00);
 			//성공
 			console.log(nowTime)
 			
