@@ -60,7 +60,7 @@ public class UsedItemsSearchListServlet extends HttpServlet {
 		pageLimit = 10;
 		
 		//게시글 최대갯수 
-		boardLimit = 5;
+		boardLimit = 16;
 		
 		// listCount 와 boardLimit를 나누어 double타입으로 형변환 하여 Math.ceil을 이용해 올림 후 int로 형변환 하기
 		maxPage = (int)Math.ceil((double)listCount/boardLimit);

@@ -53,13 +53,13 @@
 	<!-- 페이징바 만들기 -->
 	<div class="pagingArea" align="center">
 		<!-- 맨 처음으로 (<<) -->
-		<button onclick="location.href='<%=request.getContextPath()%>/auctionSearchListLikeDesc.do?currentPage=1'"> &lt;&lt; </button>
+		<button onclick="location.href='<%=request.getContextPath()%>/auctionSearchListLikeDesc.do?search=<%= search %>&currentPage=1'"> &lt;&lt; </button>
 	
 		<!-- 이전페이지로(<) -->
 		<%if(currentPage == 1){ %>
 		<button disabled> &lt; </button>
 		<%}else{ %>
-		<button onclick="location.href='<%= request.getContextPath() %>/auctionSearchListLikeDesc.do?currentPage=<%= currentPage-1 %>'"> &lt; </button>
+		<button onclick="location.href='<%= request.getContextPath() %>/auctionSearchListLikeDesc.do?search=<%= search %>&currentPage=<%= currentPage-1 %>'"> &lt; </button>
 		<%} %>
 		
 		<!-- 페이지 목록 -->
@@ -68,7 +68,7 @@
 			<%if(p == currentPage){ %>
 			<button disabled> <%= p %> </button>
 			<%}else{ %>
-			<button onclick="location.href='<%=request.getContextPath() %>/auctionSearchListLikeDesc.do?currentPage=<%= p %>'"> <%= p %> </button>
+			<button onclick="location.href='<%=request.getContextPath() %>/auctionSearchListLikeDesc.do?search=<%= search %>&currentPage=<%= p %>'"> <%= p %> </button>
 			<%} %>
 			
 		<%} %>
@@ -77,11 +77,11 @@
 		<%if(currentPage == maxPage){ %>
 		<button disabled> &gt; </button>
 		<%}else { %>
-		<button onclick="location.href='<%= request.getContextPath() %>/auctionSearchListLikeDesc.do?currentPage=<%= currentPage+1 %>'"> &gt; </button>
+		<button onclick="location.href='<%= request.getContextPath() %>/auctionSearchListLikeDesc.do?search=<%= search %>&currentPage=<%= currentPage+1 %>'"> &gt; </button>
 		<%} %>
 	
 		<!-- 맨 끝으로 (>>) -->
-		<button onclick="location.href='<%=request.getContextPath()%>/auctionSearchListLikeDesc.do?currentPage=<%=maxPage%>'"> &gt;&gt; </button>
+		<button onclick="location.href='<%=request.getContextPath()%>/auctionSearchListLikeDesc.do?search=<%= search %>&currentPage=<%=maxPage%>'"> &gt;&gt; </button>
 	</div>
 	<%@ include file = "../common/footer.jsp" %> 
 	<script>
