@@ -15,16 +15,16 @@ import com.uni.auction.model.vo.PageInfo;
 import com.uni.usedItemBoard.model.vo.Category;
 
 /**
- * Servlet implementation class AuctionListServlet
+ * Servlet implementation class highPAuctionServlet
  */
-@WebServlet("/auctionPage.do")
-public class AuctionListServlet extends HttpServlet {
+@WebServlet("/highAuction.do")
+public class highPAuctionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AuctionListServlet() {
+    public highPAuctionServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +33,7 @@ public class AuctionListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String category = request.getParameter("category");//카테고리명을 받아온다. \
-		
-		//검색
-	
-		String input = request.getParameter("input");//검색 내용
-		System.out.println("input" + input);
 
-		//System.out.println(category +"카테고리ㅣㅣ");
-		//페이징 처리 
-		
 		int listCount; 		// 총게시글 갯수 
 		int currentPage; 	// 현재페이지 (요청한 페이지)
 		int startPage; 		// 현재 페이지 하단에 보여지는 페이징바의 시작수 
@@ -51,15 +42,9 @@ public class AuctionListServlet extends HttpServlet {
 		
 		int pageLimit; 		// 한페이지 하단에 보여질 페이지 최대갯수
 		int boardLimit; 	// 한페이지에 보여질 게시글 최대갯수 
-		if(category == null && input == null) {
-		//기본총개시글 갯수 
-			listCount = new AuctionService().getListCount();
-		}else if(category != null && input == null) {
-		//카테고리 선택 시 총개시글 갯수 
-			listCount = new AuctionService().getCaListCount(category);
-		}else {
-			listCount = new AuctionService().getListSearchCount(input);
-		}
+	
+		//총개시글 갯수 
+		listCount = new AuctionService().getListCount();
 		
 		//현재페이지
 		currentPage = 1;
@@ -71,7 +56,7 @@ public class AuctionListServlet extends HttpServlet {
 		
 		//페이지 최대갯수
 		pageLimit = 10;
-		
+
 		//게시글 최대갯수 
 		boardLimit = 5;
 		
@@ -90,38 +75,16 @@ public class AuctionListServlet extends HttpServlet {
 		// 페이지인포 객체를 생성 
 		PageInfo pi = new PageInfo(listCount, currentPage, startPage, endPage, maxPage, pageLimit, boardLimit);
 		
+		ArrayList<Auction> aulist = new AuctionService().selectHighList(pi);
+		//System.out.println("Alist 옥션 리스트 =="+aulist);
+		ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
+		// 담은 ArrayList 객체인 list를 속성에 담고
+		request.setAttribute("aulist", aulist);
+		// pi 객체 또한 속성에 담는다
+		request.setAttribute("pi", pi);
+		request.setAttribute("list", list);
 		
-	
-		if(category == null && input == null) {
-			ArrayList<Auction> aulist = new AuctionService().selectList(pi);
-			//System.out.println("Alist 옥션 리스트 =="+aulist);
-			ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
-			// 담은 ArrayList 객체인 list를 속성에 담고
-			request.setAttribute("aulist", aulist);
-			// pi 객체 또한 속성에 담는다
-			request.setAttribute("pi", pi);
-			request.setAttribute("list", list);
-		}else if(category != null && input == null) {
-			ArrayList<Auction> kklist = new AuctionService().selectCList(pi, category);
-			System.out.println("kkkkkkkk ====>"+kklist);
-			request.setAttribute("cate", category);
-			ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
-			request.setAttribute("list", list);
-			request.setAttribute("pi", pi);
-			System.out.println("이건 pipipi" +pi);
-			request.setAttribute("kklist", kklist);
-		}else {
-			ArrayList<Auction> fdlist = new AuctionService().searchAuctionList(input,pi);
-			System.out.println("fdlist ====>"+fdlist);
-			request.setAttribute("input", input);
-			ArrayList<Category> list = new AuctionService().categoryList();//카테고리 리스트 값 받아오기 
-			request.setAttribute("list", list);
-			request.setAttribute("pi", pi);
-			System.out.println("이건 fdfdfdfd" +pi);
-			request.setAttribute("fdlist", fdlist);
-			
-		}
-		request.getRequestDispatcher("views/auction/auctionListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/auction/highAuctionListView.jsp").forward(request, response);
 		
 	}
 

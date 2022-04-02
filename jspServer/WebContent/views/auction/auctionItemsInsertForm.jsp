@@ -81,6 +81,7 @@
 	}
   	.article{
 		display: flex;
+		transform: translateX(61px);
 	}
 	#camera{
 	    position: relative;
@@ -88,15 +89,15 @@
 	    justify-content: center;
 	    align-items: center;
 	    background-color: #efefef;
-	    width: 57vw;
+	    width: 58vw;
 	    height: 200px;
 	    text-align: center;
 	    flex-wrap: wrap;
 	    margin: 10px;
 	}
 	input[type = "file"]{
-		width: 30%;
-	    height: 200px;
+		width: 100%;
+	    height: 100%;
 	    opacity: 0;
 	    position: absolute;
 	}
@@ -120,7 +121,7 @@
 	    margin-top: 5px;
 	    position: relative;
 	    background: #000000;
-	    height: 200px;
+	    height: 180px;
 	}
 	
 	.del{
@@ -151,9 +152,6 @@
 	}
 	.a{
 		margin-left:15px;
-	}
-	.divdiv{
-		transform: translateX(25px);
 	}
 	.auctionprice{
 		display:flex;
@@ -323,35 +321,35 @@
             return true;
         }
 
-        
-        function preview(arr){
-            arr.forEach(function(f){
+    
+    function preview(arr){
+        arr.forEach(function(f){
 
-                //li에 이미지 추가
-                var str = '<li class="previewImg">';
-                //str += '<span>'+fileName+'</span><br>';
+        //li에 이미지 추가
+        var str = '<li class="previewImg">';
+        //str += '<span>'+fileName+'</span><br>';
+        
+        //이미지 파일 미리보기
+        if(f.type.match('image.*')){
+            
+            //파일을 읽기 위한 FileReader객체 생성
+            var reader = new FileReader(); 
+            reader.onload = function (e) { 
                 
-                //이미지 파일 미리보기
-                if(f.type.match('image.*')){
-                    
-                    //파일을 읽기 위한 FileReader객체 생성
-                    var reader = new FileReader(); 
-                    reader.onload = function (e) { 
-                        
-                        //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
-                        str += '<a id="image'+ index +'" class="image" onclick="deletebye(`'+index+'`);">'+"<span class='del'>x</span>"+'<img name="img'+index+'" src="'+e.target.result+'" title="'+f.name+'" width=200 height=200></a>';
-                        str += '</li>';
-                        $(str).appendTo('#sortimg');
-                        ++index;
-                    } 
-                    reader.readAsDataURL(f);
-	                }
-	            })
+                //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+                str += '<a id="image'+ index +'" class="image" onclick="deletebye(`'+index+'`);">'+"<span class='del'>x</span>"+'<img name="img'+index+'" src="'+e.target.result+'" title="'+f.name+'" width=190 height=190></a>';
+                str += '</li>';
+                $(str).appendTo('#sortimg');
+                ++index;
+            } 
+            reader.readAsDataURL(f);
+             }
+            })
 	        }
 	    })
     })
 	// 게시글 체크
-	function checkform() {
+	$(".gotoSubmitbutton").click(function(){
 	    
 	    // 제목 미설정시 알림
 	    if(confirm("글을 등록하시겠습니까?") == true){
@@ -364,26 +362,42 @@
 	            alert("제목을 작성해 주세요.")
 	            return $("#title").focus();
 	            // 설명을 적지 않을 시
+	        }else if($("#large").val() == '대분류'){
+	            alert("카테고리를 선택해 주세요");
+	            $("#large").focus();
+	            return false;
+	            // 이미지 미선택시 알림
+	        }else if(!$("#file1").val()){
+	            alert("이미지는 최소 1장이 필요합니다.")
+	            $("#imagin").focus();
+	            return false;
+	            // 가격 작성 하지 않을 시 알림
+	        }else if(theForm.fprice.value == ''){
+	            alert("경매 시작 가격을 작성해 주세요")
+	            $("#fprice").focus();
+	            return false;
+	        }else if(theForm.sprice.value == ''){
+	            alert("올릴 가격을 작성해 주세요")
+	             $("#sprice").focus();
+	            return false;
+	        }else if(theForm.tprice.value == ''){
+	            alert("즉시 판매 가격을 작성해 주세요")
+	            return $("#tprice").focus();
 	        }else if(theForm.content.value == ""){
 	            alert("상품 설명을 작성해 주세요")
 	            return $("#content").focus();
 	            // 카테고리 설정 하지 않았을시 알림
-	        }else if($("#large").val() == '대분류'){
-	            alert("카테고리를 선택해 주세요");
-	            return $("#large").focus();
-	            // 이미지 미선택시 알림
-	        }else if(!$("#file1").val()){
-	            alert("이미지는 최소 1장이 필요합니다.")
-	            return $("#imagin").focus();
-	            // 가격 작성 하지 않을 시 알림
-	        }else if(theForm.price.value == ''){
-	            alert("가격을 작성해 주세요")
-	            return $("#price").focus();
-	        }
-
-	        theForm.submit();
-	    }
-	}
+	        }else{
+				
+				alert("등록이 완료 되었습니다.")
+				
+			}
+	        
+	        
+	    }else{
+				return;
+			}
+		})
 	// 중분류 도출
 	$("#large").change(function() {
 	    let category = $("#large").val()
@@ -453,36 +467,6 @@
 	    })
 	})
 	
-		//게시글 체크 
-		<%--$(".gotoSubmitbutton").click(function(){
-			console.log($("#title").text())
-			console.log($("#content").text())
-			theForm = document.auctionForm;
-			if(confirm("글을 등록하시겠습니까?")== true){
-				if(theForm.title.value == "" && theForm.content.value == ""){
-					
-					alert("제목과 내용을 입력해주셔야 등록이 됩니다.")
-					
-				}else if(theForm.title.value == ""){
-					alert("제목을 입력해주셔야 합니다.")
-				}else if(theForm.content.value == ""){
-					alert("내용을 입력해주셔야 합니다.")
-				}
-				if(theForm.title.value != "" && theForm.content.value != ""){
-					
-					alert("등록이 완료 되었습니다.")
-					
-				}
-				
-				//https://runtoyourdream.tistory.com/203
-				
-			}else{
-				return;
-			}
-		})
-		
---%>
-
 	function askcancel(){
 		var cancel = confirm("글 작성을 취소하시겠습니까?");
 		if(cancel){

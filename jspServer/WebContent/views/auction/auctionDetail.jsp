@@ -9,12 +9,16 @@
 	String directPrice = dc.format(ad.getItemDirect());//경매 즉시 판매가 
 	String upPrice = dc.format(ad.getItemUp());//올리는 값
 	String writer = ad.getAuctionId();
+	String statusN = ad.getSellStatus();
 
 	int firstI = 0;//맨첫번째 값
 	String tot = null;
 	String tot2 = null;
 	tot = sr.get(firstI).getChangeP();
 	tot2 = sr.get(firstI).getUserNo();//낙찰자 아이디
+	
+	String aaaa = null;
+	aaaa = tot.replace(",", "");
 	
 %>
 <!DOCTYPE html>
@@ -70,7 +74,7 @@
 		color:white;
 		border-radius: 5px;
 	}
-	.buttondee:hover{
+	.buttondee:hover:enabled{
 		color:white;
 		background-color:#993333;
 		cursor: pointer;
@@ -183,14 +187,14 @@
 		transform: translate(-152px, -29px);
 		padding-top:6px;
 	}
-	.main2>li:hover, .main3>li:hover{
+	.main2>li:hover:enabled, .main3>li:hover:enabled{
 		background-color:#993333;
 		cursor: pointer;
 	}
-	.main2>li a:hover, .main3>li a:hover{
+	.main2>li a:hover:enabled, .main3>li a:hover:enabled{
 		color:white;
 	}
-	.kk{
+	.kk:enabled{
 		background-color:#993333;
 		cursor: pointer;
 		color:white;
@@ -202,6 +206,7 @@
 	.topdeall{
 		margin-top:25px;
 	}
+	
 	
 </style>
 
@@ -252,7 +257,7 @@
 		</div>
 		<%} %>
 		<div class="detailInfo"><!-- 상세 내용 부분 -->
-			 <div class="detaila"> <%=ad.getAuctionTitle() %> </div>
+			 <div class="detaila product_name"> <%=ad.getAuctionTitle() %> </div>
 			 <div class="deti">
 			 <div class="detailstatusdiv">
 				<span class="detailstatus">상품 상태 : <%=ad.getItemCondition() %> </span>
@@ -274,9 +279,9 @@
 			 	</div>
 			 </div>
 			 <div class="buttonS"> 
-			 	<button type="button" class="buttonde buttondee a" >즉시 구매 <%=directPrice%>원</button>
-			 	<button type="button" class="buttonde buttondee b" onclick="upPrice()" >경매가 <%=upPrice%>원 올리기</button>
-			 	<button type="button" class="buttondefi c" onclick="paydeal()" disabled>낙찰자 결제하기</button>
+			 	<button type="button" class="buttonde buttondee a buyme" onclick="requestPay()">즉시 구매 <%=directPrice%>원</button>
+			 	<button type="button" class="buttonde buttondee b buyme" onclick="upPrice()" >경매가 <%=upPrice%>원 올리기</button>
+			 	<button type="button" class="buttondefi c buyme" onclick="requestPay()" disabled>낙찰자 결제하기</button>
 			 </div>
 		</div>
 	</div>
@@ -319,12 +324,24 @@
 			</tbody>
 		</table>
 	</div>
+	<%if(user != null){%> 
+		<div class="bNo" style="display: none;"><%= ad.getAuctionNo() %></div><!-- 게시물 넘버 -->
+		<div class="uNo" style="display: none;"><%= user.getUserNo() %></div><!-- 사는 사람 넘버 -->
+		<input type="hidden" class="product_price" value="<%=ad.getItemDirect()%>"><!-- 즉시구매가격 -->
+	<%} %>
+	<%if(user != null && user.getUserId().equals(tot2)){ %>
+		<div class="bNo" style="display: none;"><%= ad.getAuctionNo() %></div><!-- 게시물 넘버 -->
+		<div class="uNo" style="display: none;"><%= user.getUserNo() %></div><!-- 사는 사람 넘버 -->
+		<input type="hidden" class="product_price" value="100"><!-- 즉시구매가격 -->
+	<%} %>
 	<div><!-- 같은 카테고리 상품 -->
 		동일 카테고리 경매 상품 
 	</div>
 	</div>
 	<%@ include file = "../common/footer.jsp" %> 
 	<script src="../../resources/library/swiper.min.js"></script>
+	<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+	<script src="../../resources/js/common/payment.js"></script>
 	<script>
 		/*로그인 안한 사람이 버튼을 눌렀을 시에 알람*/
 		<%if(user == null){%>
@@ -337,17 +354,39 @@
 			$(".a").attr("disabled", true);
 			$(".b").attr("disabled", true);
 			$(".buttonde").removeClass("buttondee");
-			
+		
 		<%}%>
-		/*글삭제 알림 먼저 뜨고 삭제0*/
-		function deleteItem(){
-			var alertt = confirm("글을 삭제하시겠습니까?");
-			if(alertt){
-				location.href="deleteAuctionDetail.do?scno="+<%=ad.getAuctionNo()%>;
-			}else{
-				return;
-			}
+		<%if(user != null && user.getUserId().equals(writer)){ %> 
+			$(".a").attr("disabled", true);
+			$(".b").attr("disabled", true);
+			$(".buttonde").removeClass("buttondee");
+		<%}%>
+		/*결제 완료일시*/
+		$(function(){
+			<%if(statusN.equals("경매완료")){%>
+				clearTimeout(timerId);
+				//경매 종료로 내용 변경
+				$("p.time-title").html("경매 종료");
+				//옆에 시간 부분 사라지게 하기
+				$(".time").fadeOut();
+				$(".buyme").attr("disabled", true);
+	            $(".buyme").css("background","lightgray");
+	            $(".buyme").css("color","black");
+				
+			<%}%>
 			
+   		
+   		})
+    		
+    		/*글삭제 알림 먼저 뜨고 삭제0*/
+    		function deleteItem(){
+    			var alertt = confirm("글을 삭제하시겠습니까?");
+    			if(alertt){
+    				location.href="deleteAuctionDetail.do?scno="+<%=ad.getAuctionNo()%>;
+    			}else{
+    				return;
+    		}
+    			
 		}
 		/*글신고 버튼*/
 		function blockAuction(){
@@ -387,7 +426,7 @@
 
 			var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
 			var nowTime = new Date();
-			//var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 19, 03, 00);
+			//var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 02, 30, 00);
 			//성공
 			console.log(nowTime)
 			
@@ -474,6 +513,7 @@
 			<%}%>
 		}
 		
+		
 		/*경매가 올리기 버튼을 눌렀을 시에*/
 		
 		function upPrice(){
@@ -527,13 +567,7 @@
 					alert("실패")
 				}
 			})
-			<%}else if(ad.getAuctionId().equals(user.getUserId())){%>
-				alert("게시물 작성자는 가격을 올릴 수 없습니다.")
 			<%}%>
-		}
-		
-		function paydeal(){
-			alert("낙찰자 결제 성공~!")
 		}
 
 		/* 게시글 수정, 삭제 등 버튼들 나오는 부분*/
@@ -599,5 +633,6 @@
     });
 
     </script>
+
 </body>
 </html>
