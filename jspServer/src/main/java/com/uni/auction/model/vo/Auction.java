@@ -23,6 +23,7 @@ public class Auction {
 	private Date createDate; //게시글 작성일
 	private String status; //게시글 상태값(Y, N) -> 삭제 할시 N으로 
 	private String titleImg; //게시글 타이틀 이미지 (서버에 입력되어있는 이름)
+	private int mybid;
 	
 	public Auction() {
 		// TODO Auto-generated constructor stub
@@ -113,6 +114,18 @@ public class Auction {
 	
 	
 	
+	public int getMybid() {
+		return mybid;
+	}
+
+
+
+	public void setMybid(int mybid) {
+		this.mybid = mybid;
+	}
+
+
+
 	public String getAuctionId() {
 		return auctionId;
 	}

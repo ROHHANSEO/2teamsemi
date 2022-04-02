@@ -72,13 +72,11 @@ public class MyPageService {
 		return list;
 	}
 
-	public ArrayList<Auction> actionList(int userNo) {
+	public ArrayList<Auction> myBidActionList(int userNo) {
 		Connection conn = getConnection();
 
 		//내가 올린 경매 리스트
-		ArrayList<Auction> list = new MyPageDao().actionList(conn,userNo);
-		
-		//내가 입찰한 경매 리스트
+		ArrayList<Auction> list = new MyPageDao().myBidActionList(conn,userNo);
 		
 		
 		
@@ -92,6 +90,53 @@ public class MyPageService {
 		ArrayList<UsedItemsBoard> list = new MyPageDao().likeProductList(conn,userNo);
 		close(conn);
 		return list;
+	}
+
+	public ArrayList<Auction> mypostActionList(int userNo) {
+		Connection conn = getConnection();
+
+		ArrayList<Auction> list = new MyPageDao().mypostActionList(conn,userNo);
+		close(conn);
+		return list;
+	}
+
+	public int actionRecordDelete(String bno) {
+		Connection conn = getConnection();
+		
+		int result = new MyPageDao().actionRecordDelete(conn,bno);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	public int actionSelectDelete(String[] bnoArr) {
+		Connection conn = getConnection();
+		
+		int result = new MyPageDao().actionSelectDelete(conn,bnoArr);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	public int actionAlldelete(int userNo) {
+		Connection conn = getConnection();
+		
+		int result = new MyPageDao().actionAlldelete(conn,userNo);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 
 }

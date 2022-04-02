@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.usedItemBoard.model.vo.UsedItemsBoard"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.usedItemBoard.model.vo.UsedItemsBoard, com.uni.auction.model.vo.Auction"%>
 <%
     String msg = (String)request.getAttribute("msg");
 	String msg2 = (String)request.getAttribute("msg2");
 	ArrayList<UsedItemsBoard> content = (ArrayList<UsedItemsBoard>)request.getAttribute("content");
 	ArrayList<UsedItemsBoard> payment = (ArrayList<UsedItemsBoard>)request.getAttribute("payment");
 	ArrayList<UsedItemsBoard> likeProduct = (ArrayList<UsedItemsBoard>)request.getAttribute("likeProduct");
+	ArrayList<Auction> mybid = (ArrayList<Auction>)request.getAttribute("mybid");
+	ArrayList<Auction> mypost = (ArrayList<Auction>)request.getAttribute("mypost");
 %>
 <!DOCTYPE html>
 <html>
@@ -40,6 +42,12 @@
                 <button id="delete_cancel" class="commonsubmit" type="button">취소</button>
                 <button id="record_select_delete" class="commonsubmit" type="button">선택 삭제</button>
                 <button id="record_All_delete" class="commonsubmit" type="button">전체 삭제</button>
+				<%if(msg.equals("결제기록")&&msg.equals("판매기록")){%>
+				<input type="hidden" value="1">
+				<%}%>
+				<%if(msg.equals("경매정산")){%>
+				<input type="hidden" value="2">
+				<%}%>
             </div>
         </div>
          <% if(msg2.equals("void")) {%>
@@ -139,27 +147,65 @@
 			        </div>
 	        	<%} %>
 	        <%} else if(msg.equals("경매정산")) {%>
-	        <div class="content_box">
-	            <div>
-	                <div class="date_box">
-	                    <span class="date">날짜</span>
-	                </div>
-	            </div>
-	            <div class="main_content_box">
-	                <div class="statuss">
-	                    <span class="status">거래중</span>
-	                </div>
-	                <div class="content_title">
-	                    <div class="img_box">
-	                        <img class="content_img" src="" alt="대표이미지">
-	                    </div>
-	                    <div class="title_name_box">
-	                        <span class="content_title_name">판매 제품명</span>
-	                        <span class="content_price">판매가격 : <span class="price">50,000원</span> </span>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
+	        	<span class="my_bid_record">입찰 참여한 게시물 목록</span>
+					<%for(Auction bid : mybid) {%>
+						<div class="content_box bid_content_box">
+							<input class="select_delete_checkbox" type="checkbox" value="<%=bid.getAuctionNo()%>">
+							<div class="main_box">
+								<div class="date_box">
+									<span class="date"><%=bid.getCreateDate() %></span>
+								</div>
+							</div>
+							<div class="main_content_box">
+								<div class="statuss">
+									<span class="status"><%=bid.getStatus() %></span>
+								</div>
+								<div class="content_title">
+									<div class="img_box">
+										<img class="content_img" src="<%=request.getContextPath() %>/resources/auction_upfiles/<%= bid.getTitleImg() %>" alt="대표이미지">
+									</div>
+									<div class="title_name_box">
+										<span class="content_title_name"><%=bid.getAuctionTitle() %></span>
+										<span class="content_price">즉시판매가격 : <span class="price"><%=bid.getItemDirect() %></span> </span>
+										<span class="content_price bid_content_price">내가 입찰한 최고가격 : <span class="price"><%=bid.getMybid() %></span></span>
+										<span class="action_deadline">경매 마감 시간 : <span><%=bid.getDatenext() %></span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					<%} %>
+	        	<span class="my_action_post">내가 게시한 게시물 목록</span>
+					<%for(Auction bid : mypost) {%>
+						<div class="content_box bid_content_box">
+							<input class="select_delete_checkbox" type="checkbox" value="<%=bid.getAuctionNo()%>">
+							<div class="main_box">
+								<div class="date_box">
+									<span class="date"><%=bid.getCreateDate() %></span>
+								</div>
+								<div class="del_up_box">
+									<span class="content_update">수정</span>
+									<span>/</span>
+									<span class="content_delete">삭제</span>
+								</div>
+							</div>
+							<div class="main_content_box">
+								<div class="statuss">
+									<span class="status"><%=bid.getStatus() %></span>
+								</div>
+								<div class="content_title">
+									<div class="img_box">
+										<img class="content_img" src="<%=request.getContextPath() %>/resources/auction_upfiles/<%= bid.getTitleImg() %>" alt="대표이미지">
+									</div>
+									<div class="title_name_box">
+										<span class="content_title_name"><%=bid.getAuctionTitle() %></span>
+										<span class="content_price">즉시판매가격 : <span class="price"><%=bid.getItemDirect() %></span> </span>
+										<span class="content_price bid_content_price">내가 입찰한 최고가격 : <span class="price"><%=bid.getMybid() %></span></span>
+										<span class="action_deadline">경매 마감 시간 : <span><%=bid.getDatenext() %></span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					<%} %>
 	        <%} else if(msg.equals("찜 리스트")) {%>
 	        	<%for(UsedItemsBoard like : likeProduct) {%>
 		        <div class="like_content_box">

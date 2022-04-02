@@ -36,17 +36,32 @@ $(function(){
     $(".content_delete").click(function(){
         var bno = $(this).parents(".content_box").children("input").val();
         if(confirm("정말 삭제하시겠습니까?")){
-            $.ajax({
-                url : "recordDelete",
-                type : "get",
-                data :{bno : bno},
-                success : function(result){
-                    location.reload();
-                    if(result == "fail"){
-                        alert("변경에 실패 하였습니다.");
+
+            if(bno >= 1000000 && bno <= 1999999){
+                $.ajax({
+                    url : "recordDelete",
+                    type : "get",
+                    data :{bno : bno},
+                    success : function(result){
+                        location.reload();
+                        if(result == "fail"){
+                            alert("변경에 실패 하였습니다.");
+                        }
                     }
-                }
-            })
+                })
+            } else if(bno >= 2000000 && bno <= 2999999){
+                $.ajax({
+                    url : "actionRecordDelete",
+                    type : "get",
+                    data :{bno : bno},
+                    success : function(result){
+                        location.reload();
+                        if(result == "fail"){
+                            alert("변경에 실패 하였습니다.");
+                        }
+                    }
+                })
+            }
         }
     })
 
@@ -67,37 +82,68 @@ $(function(){
     //선택삭제
     $("#record_select_delete").click(function(){
         var bnoArr = [];
+        var check;
         $(".select_delete_checkbox:checked").each(function(){
+            check = $(this).val();
             bnoArr.push($(this).val());
         })
 
-        $.ajax({
-            url : "selectDelete",
-            type : "post",
-            traditional : true,
-            data : {bnoArr : bnoArr},
-            success : function(){
-                location.reload();
-                if(result == "fail"){
-                    alert("기록 삭제에 실패하였습니다.");
+        if(check >= 1000000 && check <= 1999999){
+            $.ajax({
+                url : "selectDelete",
+                type : "post",
+                traditional : true,
+                data : {bnoArr : bnoArr},
+                success : function(){
+                    location.reload();
+                    if(result == "fail"){
+                        alert("기록 삭제에 실패하였습니다.");
+                    }
                 }
-            }
-        })
+            })
+        } else if(check >= 2000000 && check <= 2999999){
+            $.ajax({
+                url : "actionSelectDelete",
+                type : "post",
+                traditional : true,
+                data : {bnoArr : bnoArr},
+                success : function(){
+                    location.reload();
+                    if(result == "fail"){
+                        alert("기록 삭제에 실패하였습니다.");
+                    }
+                }
+            })
+        }
     })
 
     //전체삭제
     $("#record_All_delete").click(function(){
-        $.ajax({
-            url : "Alldelete",
-            type : "get",
-            data : {a : "a"},
-            success : function(){
-                location.reload();
-                if(result == "fail"){
-                    alert("기록 삭제에 실패하였습니다.");
+        if($(this).next().val() == "1"){
+            $.ajax({
+                url : "Alldelete",
+                type : "get",
+                data : {a : "a"},
+                success : function(){
+                    location.reload();
+                    if(result == "fail"){
+                        alert("기록 삭제에 실패하였습니다.");
+                    }
                 }
-            }
-        })
+            })
+        } else if($(this).next().val() == "2"){
+            $.ajax({
+                url : "actionAlldelete",
+                type : "get",
+                data : {a : "a"},
+                success : function(){
+                    location.reload();
+                    if(result == "fail"){
+                        alert("기록 삭제에 실패하였습니다.");
+                    }
+                }
+            })
+        }
     })
 
     //높이조절
