@@ -41,15 +41,14 @@ public class pwdChangeServlet extends HttpServlet {
 		
 		int result = new UserService().pwdChange(user);
 		
+		request.setAttribute("msg", "비밀번호 변경");
 		if(result > 0) {
-			request.setAttribute("msg", "비밀번호 변경");
-			request.setAttribute("result", "true");
-			request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
+			request.setAttribute("msg2", "비밀번호변경");
 		} else {
-			request.setAttribute("msg", "비밀번호 변경 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-
+			request.setAttribute("msg2", "false");
+			request.setAttribute("result", "등록된 정보가 일치하지 않습니다.");
 		}
+		request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
 		
 	}
 

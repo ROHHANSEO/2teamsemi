@@ -158,6 +158,10 @@ $(function(){
         $("#mypage_list_form").css("height","600px");
     }
 
+
+
+
+
 })
     //모달 숨김
     $(".modal_view").hide();
@@ -250,7 +254,6 @@ $(function(){
             })
         } else {
             alert("입력해주세요")
-            $("#edit_modal_container2 input").val("");
         }
     })
 

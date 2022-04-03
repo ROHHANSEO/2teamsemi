@@ -51,7 +51,7 @@
                     <input id="consent" type="checkbox" name="consent"><label for="consent">개인정보제공 동의</label>
                     <textarea cols="36" rows="10" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi consequatur exercitationem quis, ratione ad dolor tempore corrupti omnis atque nisi necessitatibus animi, ex molestias laudantium voluptas praesentium! Officiis, blanditiis praesentium. Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis, facilis officia quidem dolorum minus in molestiae odit quis eaque, molestias eius modi dicta earum quos voluptas tenetur illum itaque. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea corrupti necessitatibus id veniam quas eos, corporis sit repudiandae, esse animi aspernatur modi asperiores laudantium impedit, tenetur laborum cumque quisquam at. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, obcaecati? Nobis, consectetur? Dolores officiis, similique rerum nisi voluptas odit reiciendis architecto veritatis neque rem tempora harum voluptatem molestiae, facere quo!</textarea>
                 </div>
-                <button type="button" class="button" disabled>다음</button>
+                <button type="submit" class="button" disabled>다음</button>
             </div>
         </form>
     </div>

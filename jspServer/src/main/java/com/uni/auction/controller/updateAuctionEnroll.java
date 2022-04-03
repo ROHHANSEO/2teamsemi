@@ -41,7 +41,7 @@ public class updateAuctionEnroll extends HttpServlet {
 		System.out.println(ac + "수정 정보 ");
 		System.out.println("수정 할 사진 !!"+ at);
 		System.out.println("카테고리 수정" + category);
-	
+		
 		
 		if(ac != null) {
 			request.setAttribute("ac", ac);

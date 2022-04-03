@@ -37,12 +37,16 @@
     </div>
     <div class="salescontent">
         <div class="button_box">
+			<%if(!msg.equals("결제기록")){%>
             <button id="record_delete" class="commonsubmit" type="button">기록 삭제</button>
+			<%}%>
             <div id="delete_btn_box">
+				<%if(!msg.equals("결제기록")){%>
                 <button id="delete_cancel" class="commonsubmit" type="button">취소</button>
                 <button id="record_select_delete" class="commonsubmit" type="button">선택 삭제</button>
                 <button id="record_All_delete" class="commonsubmit" type="button">전체 삭제</button>
-				<%if(msg.equals("결제기록")&&msg.equals("판매기록")){%>
+				<%}%>
+				<%if(msg.equals("판매기록")){%>
 				<input type="hidden" value="1">
 				<%}%>
 				<%if(msg.equals("경매정산")){%>
@@ -86,7 +90,7 @@
 			                    <span class="date"><%=board.getCreateDate() %></span>
 			                </div>
 			                <div class="del_up_box">
-			                    <span class="content_update">수정</span>
+			                    <span class="content_update"><a href="<%= request.getContextPath() %>/updateUsedEnroll.do?bNo=<%= board.getUsedBoardNo() %>">수정</a></span>
 			                    <span>/</span>
 			                    <span class="content_delete">삭제</span>
 			                </div>
@@ -117,15 +121,12 @@
 	        	<%} %>
 	        <%} else if(msg.equals("결제기록")) {%>
 	        <%for(UsedItemsBoard pay : payment) {%>
-			       		        <div class="content_box">
+			    	<div class="content_box">
 	                    <input class="bno" type="hidden" value="<%=pay.getUsedBoardNo()%>">
 			            <div class="main_box">
 	                        <input class="select_delete_checkbox" type="checkbox" value="<%=pay.getUsedBoardNo()%>">
 			                <div class="date_box">
 			                    <span class="date"><%=pay.getCreateDate() %></span>
-			                </div>
-			                <div class="del_up_box">
-			                    <span class="content_delete">삭제</span>
 			                </div>
 			            </div>
 			            <div class="main_content_box">
@@ -148,9 +149,13 @@
 	        	<%} %>
 	        <%} else if(msg.equals("경매정산")) {%>
 	        	<span class="my_bid_record">입찰 참여한 게시물 목록</span>
+				<%if(mybid.isEmpty()){%>
+					<div class="action_void_list">
+						<span>불러올 목록이 없습니다.</span>
+					</div>
+				<%} else {%>
 					<%for(Auction bid : mybid) {%>
 						<div class="content_box bid_content_box">
-							<input class="select_delete_checkbox" type="checkbox" value="<%=bid.getAuctionNo()%>">
 							<div class="main_box">
 								<div class="date_box">
 									<span class="date"><%=bid.getCreateDate() %></span>
@@ -162,10 +167,12 @@
 								</div>
 								<div class="content_title">
 									<div class="img_box">
-										<img class="content_img" src="<%=request.getContextPath() %>/resources/auction_upfiles/<%= bid.getTitleImg() %>" alt="대표이미지">
+										<a href="<%=request.getContextPath()%>/detailAuction.do?scno=<%=bid.getAuctionNo()%>">
+											<img class="content_img" src="<%=request.getContextPath() %>/resources/auction_upfiles/<%= bid.getTitleImg() %>" alt="대표이미지">
+										</a>
 									</div>
 									<div class="title_name_box">
-										<span class="content_title_name"><%=bid.getAuctionTitle() %></span>
+										<span class="content_title_name"><a href="<%=request.getContextPath()%>/detailAuction.do?scno=<%=bid.getAuctionNo()%>"><%=bid.getAuctionTitle() %></a></span>
 										<span class="content_price">즉시판매가격 : <span class="price"><%=bid.getItemDirect() %></span> </span>
 										<span class="content_price bid_content_price">내가 입찰한 최고가격 : <span class="price"><%=bid.getMybid() %></span></span>
 										<span class="action_deadline">경매 마감 시간 : <span><%=bid.getDatenext() %></span></span>
@@ -174,7 +181,13 @@
 							</div>
 						</div>
 					<%} %>
+				<%}%>
 	        	<span class="my_action_post">내가 게시한 게시물 목록</span>
+				<%if(mypost.isEmpty()){%>
+					<div class="action_void_list">
+						<span>불러올 목록이 없습니다.</span>
+					</div>
+				<%} else {%>
 					<%for(Auction bid : mypost) {%>
 						<div class="content_box bid_content_box">
 							<input class="select_delete_checkbox" type="checkbox" value="<%=bid.getAuctionNo()%>">
@@ -183,7 +196,7 @@
 									<span class="date"><%=bid.getCreateDate() %></span>
 								</div>
 								<div class="del_up_box">
-									<span class="content_update">수정</span>
+									<span class="content_update"><a href="<%= request.getContextPath() %>/updateAuctionEnroll.do?scno=<%= bid.getAuctionNo() %>">수정</a></span>
 									<span>/</span>
 									<span class="content_delete">삭제</span>
 								</div>
@@ -194,10 +207,12 @@
 								</div>
 								<div class="content_title">
 									<div class="img_box">
-										<img class="content_img" src="<%=request.getContextPath() %>/resources/auction_upfiles/<%= bid.getTitleImg() %>" alt="대표이미지">
+										<a href="<%=request.getContextPath()%>/detailAuction.do?scno=<%=bid.getAuctionNo()%>">
+											<img class="content_img" src="<%=request.getContextPath() %>/resources/auction_upfiles/<%= bid.getTitleImg() %>" alt="대표이미지">
+										</a>
 									</div>
 									<div class="title_name_box">
-										<span class="content_title_name"><%=bid.getAuctionTitle() %></span>
+										<span class="content_title_name"><a href="<%=request.getContextPath()%>/detailAuction.do?scno=<%=bid.getAuctionNo()%>"><%=bid.getAuctionTitle() %></a></span>
 										<span class="content_price">즉시판매가격 : <span class="price"><%=bid.getItemDirect() %></span> </span>
 										<span class="content_price bid_content_price">내가 입찰한 최고가격 : <span class="price"><%=bid.getMybid() %></span></span>
 										<span class="action_deadline">경매 마감 시간 : <span><%=bid.getDatenext() %></span></span>
@@ -206,6 +221,7 @@
 							</div>
 						</div>
 					<%} %>
+				<%}%>
 	        <%} else if(msg.equals("찜 리스트")) {%>
 	        	<%for(UsedItemsBoard like : likeProduct) {%>
 		        <div class="like_content_box">
@@ -225,7 +241,7 @@
 		                    </div>
 		                    <div class="heart_img_box colorchange">
 								<input class="bNo" type="hidden" value="<%=like.getUsedBoardNo()%>">
-								<input class="uNo" type="hidden" value="<%=like.getUsedBoardWriter()%>">
+								<input class="uNo" type="hidden" value="<%=user.getUserNo()%>">
 		                    </div>
 		                </div>
 		            </div>

@@ -39,12 +39,13 @@ public class idSearchServlet extends HttpServlet {
 		if(user != null) {
 			request.setAttribute("userId", user);
 			request.setAttribute("msg", "아이디 찾기");
-			request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
+			request.setAttribute("msg2", "아이디");
 		} else {
 			request.setAttribute("msg", "아이디 찾기");
-			request.setAttribute("msg2", "등록된 정보가 일치하지 않습니다.");
-			request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
+			request.setAttribute("msg2", "false");
+			request.setAttribute("result", "등록된 정보가 일치하지 않습니다.");
 		}
+		request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
 	}
 
 	/**
