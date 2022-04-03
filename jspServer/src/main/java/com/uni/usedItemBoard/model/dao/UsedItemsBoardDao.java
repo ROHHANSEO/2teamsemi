@@ -304,7 +304,7 @@ public class UsedItemsBoardDao {
 						  rset.getString("CATEGORYCODE"), 
 						  rset.getString("BOARD_TITLE"), 
 						  rset.getString("WRITER_NO"),
-						  rset.getString("NICK_NAME"), 
+						  rset.getString("USER_ID"), 
 						  rset.getString("BOARD_CONTENT"), 
 						  dc.format(rset.getInt("PRICE")), 
 						  rset.getString("SALE_STATUS"),
@@ -1727,6 +1727,30 @@ public class UsedItemsBoardDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+	public int saleStatuspaymentStatusUpdate(Connection conn, int bNo, String payment) {
+		int result = 0; // 성공한 수를 반환하기 위한 값
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
+		String sql = prop.getProperty("saleStatuspaymentStatusUpdate"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
+
+			pstmt.setString(1, payment);
+			pstmt.setInt(2, bNo);
+			
+			
+			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다
+			System.out.println("Dao payment Status, salestatus Y result => " + result); // 임의 확인
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt); // pstmt를 닫는다
+		}
+		
+		return result; // int로 반환
 	}
 
 }

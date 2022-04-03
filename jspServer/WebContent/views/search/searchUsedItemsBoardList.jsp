@@ -24,7 +24,7 @@
     </div>
     <br>
     <div id="top">
-    	<h3>'<span class="red"><%= search %></span>'<span> 검색 결과</span></h3>
+    	<div class="searesult">'<span class="red"><%= search %></span>'<span> 검색 결과</span></div>
     </div>
     <br>
     <div>

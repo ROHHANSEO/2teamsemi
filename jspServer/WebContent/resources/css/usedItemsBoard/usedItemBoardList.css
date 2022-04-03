@@ -1,6 +1,17 @@
-#top{
+#top {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    margin-left: 500px;
+    margin-top: 30px;
+}
+#searesult {
+    font-size: 25px;
+}
+.searesult {
+    font-size: 25px;
+}
+.red {
+    color: #993333;
 }
 .container{
     margin: 0 auto;
@@ -74,7 +85,8 @@
 	cursor: pointer;
 }
 .son{
-	transform: translate(10px, 48px);
+    position: absolute;
+    transform: translate(11px, -35px);
 }
 .selectpart{
  	margin: 20px 30px 50px 30px;
@@ -101,7 +113,7 @@
 }
 .going-rates{
 	width: 40vw;
-	height: 15vw;
+    height: 19vw;
 	margin: 0 auto;
 	display: none;
 	margin-bottom: 60px;

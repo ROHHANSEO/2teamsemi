@@ -239,6 +239,9 @@ body { overflow-x:hidden}
 img#cancel {
     width: 25px;
     height: 25px;
+    position: absolute;	
+    transform: translate(640px, 77px);
+    background: white;
 }
 /*돋보기 아이콘*/
 a#searchbutton {
