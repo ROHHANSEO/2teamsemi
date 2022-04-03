@@ -214,6 +214,7 @@
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	<script src="../../resources/js/common/payment.js"></script>
     <script>
+  
     
     <%if(user != null && user.getUserNo()!=writerNo){%>
 	function startchat(){//게시글 작성자가 아니고 로그인 한 사람일 때 
@@ -277,15 +278,22 @@
     
 		// 도트를 클릿 했을 때
 		$(".menu-click").click(function showdiv() {
+			event.stopPropagation();
 			//	ul을 감싸주는 div가 보여졌다 말았다 한다
 			$(".hidden").toggle();
 		})
 
 		// 거래상태 바꾸기를 클릭시 사용되는 function
     	function clickStatus() {
+			event.stopPropagation();
 			// 거래중,판매중,거래완료가 들어간 ul태그를 가렸다가 보여준다
 			$(".status-change").toggle();
 		}
+		
+		  $(document).click(function(){
+		    	$(".hidden").hide();
+		    	$(".status-change").hide();
+		    })
     	
 		// 찜하기 했을때 찜카운트 증가 또는 감소
 		$(".likebutton").on('click', function() {
