@@ -393,6 +393,16 @@ public class AuctionService {
 		close(conn);
 		return result;
 	}
+	
+	public ArrayList<Auction> actionLikeList() {
+		Connection conn = getConnection();
+
+		ArrayList<Auction> list = new AuctionDao().actionLikeList(conn);
+		
+		//System.out.println("service selectList ==="+list);
+		close(conn);
+		return list;
+	}
 
 
 

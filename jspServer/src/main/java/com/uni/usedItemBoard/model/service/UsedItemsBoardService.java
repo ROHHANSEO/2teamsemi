@@ -377,6 +377,17 @@ public class UsedItemsBoardService {
 		close(conn);
 		return result;
 	}
+	
+	public ArrayList<UsedItemsBoard> usedLikeList(){
+		Connection conn = getConnection();
+
+		ArrayList<UsedItemsBoard> list = new UsedItemsBoardDao().usedLikeList(conn);
+		
+		System.out.println("서비스 시세 list =>" + list);
+		close(conn);
+		
+		return list;// 리스트 반환
+	}
 
 	
 }

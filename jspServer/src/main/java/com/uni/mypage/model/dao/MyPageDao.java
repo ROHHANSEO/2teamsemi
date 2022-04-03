@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.uni.auction.model.vo.Auction;
+import com.uni.serviceCenter.model.vo.QtoA;
 import com.uni.usedItemBoard.model.dao.UsedItemsBoardDao;
 import com.uni.usedItemBoard.model.vo.LikeProduct;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
@@ -162,7 +163,7 @@ public class MyPageDao {
 											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("ORIGIN_NAME")
+											rset.getString("CHANGE_NAME")
 											));
 			board.setCreateDate(rset.getDate("CREATE_DATE"));
 			list.add(board);
@@ -189,7 +190,8 @@ public class MyPageDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			
+			System.out.println(sql);
+			System.out.println(userNo);
 			pstmt.setInt(1, userNo);
 			pstmt.setInt(2, userNo);
 			
@@ -207,10 +209,11 @@ public class MyPageDao {
 				board.setItemDirect(rset.getInt("ITEM_DIRECT"));
 				board.setMybid(rset.getInt("AA"));
 				
-				
+				System.out.println(board);
 
 				list.add(board);
 			}
+			System.out.println(list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -378,6 +381,38 @@ public class MyPageDao {
 		}
 
 		return result;
+	}
+
+
+	public ArrayList<QtoA> myQtoAList(Connection conn, int userNo) {
+ArrayList<QtoA> list = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("myQtoAList");
+		//SELECT QUESTION_NO, M.USER_ID, QUESTION_TITLE, QUESTION_CONTENT, WRITE_DATE, CATEGORY_NO 
+		//FROM SERVICE_Q SQ JOIN MEMBER M ON (SQ.USER_NO=M.USER_NO) ORDER BY SQ.QUESTION_NO DESC
+		
+		list = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new QtoA(rset.getInt("QUESTION_NO"),
+									rset.getString("QUESTION_TITLE"),
+									rset.getDate("WRITE_DATE")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 	
 	

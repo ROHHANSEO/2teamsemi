@@ -227,22 +227,25 @@ body { overflow-x:hidden}
     display: flex;
     position: relative;
 }
+
 /*header 검색 부분의 x버튼 부분*/
 #cancelbutton {
     position: absolute;
-    transform: translate(550px, 19.15px);
+    transform: translate(550px, 24px);
     background: white;
     padding: 5.7px;
     padding-right: 14px;
     border: 0px;
 }
+
 img#cancel {
     width: 25px;
     height: 25px;
     position: absolute;	
-    transform: translate(640px, 77px);
+    transform: translate(550px, 24px);
     background: white;
 }
+
 /*돋보기 아이콘*/
 a#searchbutton {
     display: block;
@@ -272,4 +275,186 @@ input::-webkit-search-results-decoration{
 /*서치 바탕색 제거*/
 input[type = search]:focus{
     outline: none;
+}
+
+
+
+/* 메인페이지 UI */
+
+.event_img_box{
+    display: block;
+    width: 100%;
+    top: 0;
+    height: 500px;
+    background-color: red;
+    position: absolute;
+    text-align: center;
+}
+
+
+.main01_content .notice_box{
+    display: block;
+    width: 800px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+.notice_box .notice_text{
+    font-size: 20px;
+}
+
+.notice_box table{
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+.notice_box .create_date {
+    width: 150px;
+}
+
+.notice_box table td{
+    border-bottom: 1px solid black;
+}
+
+.notice_box .notice_title{
+    width: 650px;
+    overflow-x: hidden;
+}
+
+.notice_box tr {
+    height: 40px;
+}
+
+
+/* main2페이지 중고 인기 12개 */
+
+
+.usedboard_content_box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    /* top: -80px; */
+}
+
+.userdboard_content{
+    width: 10%;
+    height: 30vh;
+    margin: 30px 50px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+
+/* main3페이지 경매 인기 12개 */
+.action_content_box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    /* top: -80px; */
+}
+
+.action_content{
+    width: 10%;
+    height: 30vh;
+    margin: 30px 50px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.section01 .section_title {
+    font-size: 20px;
+    position: relative;
+}
+
+.section02 .section_title {
+    font-size: 20px;
+    position: relative;
+}
+
+#footer{
+    width: 100%;
+    height: 300px;
+    position: relative;
+}
+
+.main_img_box{
+    background: url(../../images/logo.gif) no-repeat center;
+    background-size: cover;
+    position: absolute;
+    bottom: -120px;
+    right: -20px;
+    width: 500px;
+    height: 500px;
+    opacity: 0.2;
+    transform: rotate(-20deg);
+    z-index: -9;
+}
+
+
+
+.userdboard_content {
+    overflow: hidden;
+}
+.used_title_img{
+    background-color: red;
+    width: 100%;
+    height: 140px;
+}
+
+.used_title_img img{
+    width: 100%;
+    height: 140px;
+}
+
+.used_title_img p {
+    margin: 5px 0 5px 3px;
+}
+
+.title_box{
+    padding-top: 30px;
+    margin: 0 0 50px 40px;
+}
+
+
+/* 메인페이지 슬라이드 */
+
+.slide_index .slide1 {
+    background-image: url(../../images/이벤트1.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.slide_index .slide2 {
+    background-image: url(../../images/이벤트2.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.slide_index .slide3 {
+    background-image: url(../../images/이벤트3.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.slide_index .slide4 {
+    background-image: url(../../images/이벤트4.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.slide_index .slide5 {
+    background-image: url(../../images/이벤트5.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.slide_index .slide6 {
+    background-image: url(../../images/이벤트6.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.fp-viewing-main04 .main_img_box {
+    display: none;
+    transition: all ease-in-out 0.3s;
 }

@@ -41,7 +41,7 @@
             <button id="record_delete" class="commonsubmit" type="button">기록 삭제</button>
 			<%}%>
             <div id="delete_btn_box">
-				<%if(!msg.equals("결제기록")){%>
+				<%if(!msg.equals("결제기록") || !msg.equals("찜 리스트")){%>
                 <button id="delete_cancel" class="commonsubmit" type="button">취소</button>
                 <button id="record_select_delete" class="commonsubmit" type="button">선택 삭제</button>
                 <button id="record_All_delete" class="commonsubmit" type="button">전체 삭제</button>

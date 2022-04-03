@@ -71,6 +71,16 @@ public class QtoA {
 		this.category = category;
 	}
 
+	
+
+
+	public QtoA(int questionNo, String questionTitle, Date createDate) {
+		super();
+		this.questionNo = questionNo;
+		this.questionTitle = questionTitle;
+		this.createDate = createDate;
+	}
+
 
 
 	public String getUserId() {

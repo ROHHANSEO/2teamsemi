@@ -309,9 +309,6 @@ public class QtoADao {
 			case 2:
 				sql = prop.getProperty("actionBoardUserNo");
 				break;
-			case 3:
-				sql = prop.getProperty("communityBoardUserNo");
-				break;
 		}
 		
 		
@@ -711,6 +708,90 @@ public class QtoADao {
 		
 		return result;
 		
+	}
+
+	public int banCount(Connection conn, int userNo) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("banCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("BAN_COUNT");
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+	}
+
+	public int userBlock(Connection conn, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("userBlock");
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate(); 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public void UserBanCount(Connection conn, int[] userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("banCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			for(int i = 0; i > userNo.length; i++) {
+				int count = 0;
+				
+				pstmt.setInt(1, userNo[i]);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					count = rset.getInt("BAN_COUNT");
+				}
+				
+				if(count >= 5) {
+					userBlock(conn,userNo[i]);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
 	}
 
 

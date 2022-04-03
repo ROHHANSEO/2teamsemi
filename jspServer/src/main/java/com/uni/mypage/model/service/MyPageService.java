@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.uni.auction.model.vo.Auction;
 import com.uni.mypage.model.dao.MyPageDao;
+import com.uni.serviceCenter.model.vo.QtoA;
 import com.uni.usedItemBoard.model.vo.LikeProduct;
 import com.uni.usedItemBoard.model.vo.UsedItemsBoard;
 
@@ -137,6 +138,14 @@ public class MyPageService {
 		}
 		close(conn);
 		return result;
+	}
+
+	public ArrayList<QtoA> myQtoAList(int userNo) {
+		Connection conn = getConnection();
+
+		ArrayList<QtoA> list = new MyPageDao().myQtoAList(conn,userNo);
+		close(conn);
+		return list;
 	}
 
 }
