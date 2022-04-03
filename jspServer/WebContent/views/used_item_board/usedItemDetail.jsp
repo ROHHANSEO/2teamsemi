@@ -176,9 +176,13 @@
 								<img class="heart" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABVklEQVRIie3Wu0oDQRiG4e83SBRBwRQiiq0XoIWHG9FGsLTyFmy0VWMniOCpFAuvQRELQWJhnVh5aKwMmNfCBGY32c1udqcQ88EWM/zMMwd2GKmffxtgCbgAasAXUAVOgbkOtfPAWaj2HFhMAxaAMtH5BrYBa347QCOitgHsAYUkcBzqpgwcJKzd7YYuxMw+a5ZdayBkb0qyxOeSLhtuI4AANUlTnuCqmc1EwXVJg57gupkVW43wVn96QtvGDsNPHuFKHHzlEQ6MHT7jkqQXSUXlm7qkaTN7bXUEVmxm75JOckYl6dhFpQ7/bHPVz5JKOaEfkmbN7K1rJbCe4421lmqawFEO6GHq/QGGgdsM6A0wlBpu4mPAQw/oIzDeE+rgk0AlJTqRCXXwEnCfAL3LvNIO+AhwGYNeA6O5og5uwBbtj4V9IHz9epnAKr8Puxqw4h3s50/mB7ZjI/jDXzG+AAAAAElFTkSuQmCC">
 								<span style="margin: auto 0;">찜하기</span>
 							</button>
-						<% } %>
+						<% }
+						if(user == null || 	ub.getNickName().equals(user.getUserId())){%>
+						<button class="chatting" onclick="startchat()" disabled>채팅 거래</button>
+						<%} else{%>
 						<button class="chatting" onclick="startchat()">채팅 거래</button>
-						<% if(user == null || ub.getNickName().equals(user.getUserId()) || ub.getPaymentStatus().equals("Y")){ %>
+						<%}
+						if(user == null || ub.getNickName().equals(user.getUserId()) || ub.getPaymentStatus().equals("Y") || ub.getUsedBoardContent().contains("나눔") || ub.getUsedBoardTitle().contains("나눔")){ %>
 						<button class="buyme colorchangego" disabled>구매하기</button>
 						<% }else if(user != null && ub.getPaymentStatus().equals("N")){ %>
 						<button class="buyme" onclick="requestPay()">구매하기</button>

@@ -16,9 +16,9 @@ public class UploadUtil {
 	/* 생성 메서드 */
 	public static UploadUtil create(ServletContext app) {
 		
-		UploadUtil uploadUtil = new UploadUtil();
-		uploadUtil.setApp(app);
-		uploadUtil.setUploadPath(app.getRealPath("/resources"));
+		UploadUtil uploadUtil = new UploadUtil(); // 객체 생성
+		uploadUtil.setApp(app); // 절대 경로를 담음
+		uploadUtil.setUploadPath(app.getRealPath("/resources")); // 지정한 경로 생성
 		
 		return uploadUtil;
 	}
@@ -34,7 +34,7 @@ public class UploadUtil {
 	public void saveFiles(Part filePart, String fileName, String folderPath) {
 		
 		String realPath = folderPath; // 절대 경로
-		String filePath = realPath + fileName; // 파일을 포함한 절대 경로
+		String filePath = realPath + fileName; // 파일명을 포함한 경로
 		
 		try(
 			// InputStream, OutputStream 객체생성

@@ -390,9 +390,10 @@
 		            
 		            let article = $("#article2")
 		            article.empty();	
-		            if(list.length != 0){
+		            if(list.length != 0){	
 		                $.each(list, function(index, obj){
-		                    
+				            let chartarea = $(".going-rates")
+				            chartarea.empty();
 		                    
 		                    let listprice = obj.comprice;
 		                    let listcondition = obj.saleStatus	;
@@ -420,7 +421,7 @@
 		                    article.append(thumnail);
 		                })
 		                
-		                if(search != "" & search != null){ // 검색내 검색이 존재 할 경우 시세 뽑기
+		                if(search != "" & search != "null"){ // 검색내 검색이 존재 할 경우 시세 뽑기
 		                    let goingrates = $(".going-rates")
 		                    if(goingrates.hasClass("on-rates")){
 		                        goingrates.removeClass("on-rates")

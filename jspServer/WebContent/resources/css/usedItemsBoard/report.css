@@ -1,0 +1,75 @@
+html{
+    background-color:#EFEFEF;
+}
+.reportdiv{
+    margin-top:14px;
+    width:95vw;
+    height:93vh;
+}
+
+.reportIndiv{
+    height:10%;
+}
+
+.reportcategorydiv{
+    height:10%;
+    margin-top:8px;
+}
+.reportContentdiv{
+    height:40%;
+    margin-top:8px;
+}
+.reportTitle{
+    height:30px;
+    width:80%;
+    line-height:30px;
+    position: relative;
+    left:50%;
+    transform:translateX(-50%);
+    font-family: sans-serif;
+    border: 1.2px solid black;
+    border-radius: 5px;
+}
+.reportcategory{
+    height:33px;
+    width:81.5% ;
+    line-height:30px;
+    position: relative;
+    left:50%;
+    transform:translateX(-50%);
+    font-family: sans-serif;
+    border: 1.2px solid black;
+    border-radius: 5px;
+}
+.reportContent{
+    height:150px;
+    width:80%;
+    position: relative;
+    left:50%;
+    transform:translateX(-50%);
+    font-family: sans-serif;
+    border: 1.2px solid black;
+    border-radius: 5px;
+}
+/*버튼 구역 나누기*/
+.reportButtonArea{
+    height:10%;
+    margin-top:8px;
+}
+.reportToButton1, .reportToButton2{
+    height:30px;
+    width:40%;
+    position: relative;
+    left:9.5%;
+    font-family: sans-serif;
+    transition: 0.25s;
+    border: 1.5px solid #993333;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    
+}
+.reportToButton1:hover, .reportToButton2:hover{
+    background-color: #993333;
+    color: white;
+    cursor:pointer;
+}
