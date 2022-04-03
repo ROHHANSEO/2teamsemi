@@ -64,6 +64,8 @@
      	height:35%;
      	width:100%;
      	margin-top:10px;
+     	overflow: auto;
+   		overflow-wrap: anywhere;
      }
      .innerConent{
      	padding-left:10px;

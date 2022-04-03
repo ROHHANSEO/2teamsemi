@@ -85,6 +85,9 @@
     		})
     	})
     	
+    	$(document).click(function(){
+    		$("#cancel").hide();	
+    	})
     	
     </script>
 </body>

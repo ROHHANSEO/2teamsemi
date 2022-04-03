@@ -16,7 +16,7 @@ import com.uni.user.model.vo.User;
 /**
  * Servlet implementation class BanUserListServlet
  */
-@WebServlet("/banuserList")
+@WebServlet("/banUserList")
 public class BanUserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
