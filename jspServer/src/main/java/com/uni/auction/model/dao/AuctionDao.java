@@ -1281,12 +1281,14 @@ public class AuctionDao {
 		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할로 Statement 클래스의 기능 향상된 클래스다
 		String sql = prop.getProperty("statusUpdate"); // getProperty 메소드를 사용하여 sql 구문을 String형 변수에 담는다
 		String status = "경매완료";
+		String payS = "Y";
 		System.out.println("다오왔다감");
 		try {
 			pstmt = conn.prepareStatement(sql); // prepareStatement 메소드에 sql 문을 전달하여 prepareStatement 객체를 생성한다
 			
 			pstmt.setString(1, status);
-			pstmt.setInt(2, boardNo);
+			pstmt.setString(2, payS);
+			pstmt.setInt(3, boardNo);
 			
 			System.out.println("다오왔다감");
 			result = pstmt.executeUpdate(); // update sql 실행 -> 성공한 행 만큼의 수를 result에 담는다

@@ -452,29 +452,27 @@
 	function startchat(){//게시글 작성자가 아니고 로그인 한 사람일 때 
 		var sendperson = <%=user.getUserNo()%>;//보낸 사람
 		var answerperson = <%=ub.getUsedBoardWriter()%>;//받는 사람
-		var boardNo = <%=ub.getUsedBoardNo()%>; //게시글 넘버 
 		
 		//아이작스로 보낸사람 받는사람 채팅이 있는지 체크 
 		$.ajax({
 			url : "chattingCheck.do", 
 			data :{
 				sendperson:sendperson, 
-				answerperson:answerperson, 
-				boardNo:boardNo
+				answerperson:answerperson
 			}, 
 			type : "get", 
 			success: function(status){
 				if(status == "already"){//이미 채팅창이 있는 것
 					alert("기존에 있는 채팅창으로 넘어가겠습니다.")
 					window.name = "datachatt";
-					window.open("<%=request.getContextPath()%>/alreaychat.do?bno=<%=ub.getUsedBoardNo()%>&sendp=<%=user.getUserNo()%>&ansp=<%=ub.getUsedBoardWriter()%>","_blank","width=500, height=500, top=200, left=600");
+					window.open("<%=request.getContextPath()%>/alreaychat.do?nick=<%=ub.getNickName()%>&nick2=<%=user.getUserId()%>&sendp=<%=user.getUserNo()%>&ansp=<%=ub.getUsedBoardWriter()%>","_blank","width=500, height=500, top=200, left=600");
 				}else if(status == "new"){//새로운 사람
 					var alertt = confirm("새로운 채팅을 시작하시겠습니까?");
 					if(alertt){
-						
+
 						//페이지에 들어가는거
 						window.name = "datachatt";
-						window.open("<%=request.getContextPath()%>/chattingPro.do?bno=<%=ub.getUsedBoardNo()%>&sendp=<%=user.getUserNo()%>&ansp=<%=ub.getUsedBoardWriter()%>","_blank","width=500, height=500, top=200, left=600");
+						window.open("<%=request.getContextPath()%>/chattingPro.do?nick=<%=ub.getNickName()%>&nick2=<%=user.getUserId()%>&sendp=<%=user.getUserNo()%>&ansp=<%=ub.getUsedBoardWriter()%>","_blank","width=500, height=500, top=200, left=600");
 						
 					}else{
 						alert("취소되었습니다.")

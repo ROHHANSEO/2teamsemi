@@ -9,9 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
+import com.uni.admin.model.service.Reply;
 import com.uni.chatting.model.vo.Chatting;
+import com.uni.chatting.model.vo.ChattingLog;
 
 public class ChattingDao {
 	private Properties prop = new Properties();
@@ -37,14 +40,14 @@ public class ChattingDao {
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("checkChatting");
 		
-		//SELECT * FROM CHAT_ATTEND WHERE BOARD_NO = 1000008 AND SENDPERSON_NO = 1
+		//SELECT * FROM CHAT_ATTEND WHERE (SENDPERSON_NO=1 OR ANSPERSON_NO = 1) AND (SENDPERSON_NO=2 OR ANSPERSON_NO = 2)
 		try {
 			
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, ct.getBoardNo());//보드 넘버
+			pstmt.setInt(1, ct.getSendP());//보낸사람
 			pstmt.setInt(2, ct.getSendP());//보낸사람
-			
+			pstmt.setInt(3, ct.getAnswP());//받는사람
+			pstmt.setInt(4, ct.getAnswP());//받는사람
 			result = pstmt.executeUpdate(); 
 			
 		} catch (SQLException e) {
@@ -67,9 +70,10 @@ public class ChattingDao {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, ct.getBoardNo());//보드 넘버
-			pstmt.setInt(2, ct.getSendP());//보낸사람
-			pstmt.setInt(3, ct.getAnswP());//받는 사람
+			pstmt.setInt(1, ct.getSendP());//보낸사람
+			pstmt.setInt(2, ct.getAnswP());//받는 사람
+			pstmt.setString(3, ct.getSendNick());//보낸사람
+			pstmt.setString(4, ct.getAnswNick());//받는 사람
 			
 			result = pstmt.executeUpdate(); 
 			
@@ -84,24 +88,27 @@ public class ChattingDao {
 		return result;
 	}
 
-	public String findChatting(Connection conn, int sendp) {
-		String Nickno = null; 
+	
+	public int findChattingNo(Connection conn, int sendp, int ansp) {
+		int chatNo = 0; 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("findChatting");
+		String sql = prop.getProperty("findChattingNo");
 		
-		//SELECT USER_ID FROM MEMBER WHERE USER_NO = ?
+		//SELECT CHAT_NO FROM CHAT_ATTEND WHERE BOARD_NO = ?
 		try {
 			
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setInt(1, sendp);//보낸사람
+			pstmt.setInt(2, sendp);//보낸사람
+			pstmt.setInt(3, ansp);//받는사람
+			pstmt.setInt(4, ansp);//받는사람
 			
 			rset = pstmt.executeQuery(); 
 			if(rset.next()) {
-				Nickno = rset.getString("USER_ID");
+				chatNo = rset.getInt("CHAT_NO");
 			}
-			System.out.println("Nickno"+Nickno);
+			System.out.println("chatNo"+chatNo);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -110,7 +117,67 @@ public class ChattingDao {
 			close(pstmt);
 		}
 		
-		return Nickno;
+		return chatNo;
 	}
+	//채팅 내용 추가 
+	public int insertChat(Connection conn, ChattingLog cl) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		System.out.println(cl + "댓글 값 들어왓는지 확인");
+		String sql = prop.getProperty("insertChat");
+		//INSERT INTO CHAR_LOG VALUES(SEQ_CL.NEXTVAL, ?, SYSDATE, ?, DEFAULT, DEFAULT, ?)
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cl.getCahtNo());//채팅방 넘버 
+			pstmt.setString(2, cl.getChatCont());//채팅 내용
+			pstmt.setInt(3, Integer.parseInt(cl.getUserNo()));
+
+			result = pstmt.executeUpdate(); 
+			System.out.println("댓글 추가해주고 성공?"+result);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<ChattingLog> selectCList(Connection conn, int chatNo) {
+		ArrayList<ChattingLog> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectCList");
+		//SELECT CHAT_NO, TIME, CHAT_CONTENT, USER_NO FROM CHAR_LOG WHERE CHAT_NO =189
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, chatNo);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<>();
+			while(rset.next()) {//list는 한개가 아닌 여러개이기 때문에 while문을 돌려줘야 한다.
+				
+				list.add(new ChattingLog(rset.getInt("CHAT_NO"),
+											rset.getString(2), 
+											rset.getString("CHAT_CONTENT"), 
+											rset.getString("USER_NO")));
+				System.out.println("댓글 dao list" + list);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+
 
 }

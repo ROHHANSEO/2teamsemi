@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" import="java.util.ArrayList, com.uni.serviceCenter.model.vo.*"%>
 <%
 	ArrayList<QtoA> list = (ArrayList<QtoA>)request.getAttribute("list");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -9,8 +10,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../../resources/css/common/common.css">
-<link rel="stylesheet" href="../../resources/css/serviceCenter/serviceCenter.css">
 <link rel="stylesheet" href="../../resources/library/animate.css">
+<link rel="stylesheet" href="../../resources/css/serviceCenter/serviceCenter.css">
 </head>
 <body>
 	
@@ -33,9 +34,11 @@
     		</div>
     		<div class = "questionenroll">
     			<div class = "questioneach"> 
-    				<% if(user != null) { %>
+    				<% if(user != null && !user.getUserId().equals("admin")) { %>
     					<a href="#" onclick="serviceCenterQtoA();" class= "animation"> 1:1 문의하기 </a>
-    				<% } %>
+    				<% } else if(user != null && user.getUserId().equals("admin")){%>
+    					 <a id="QtoAListPage" href="<%=request.getContextPath()%>/QtoAListPage">1:1 문의답변</a>
+    				<%} %>
     			</div>
     			<div class="gotoenrollFormServiceCenter">
     				<% if(user != null && user.getUserId().equals("admin")) { %>

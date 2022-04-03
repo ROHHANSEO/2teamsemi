@@ -149,7 +149,7 @@
 	<div class="headerenrollForm"><!-- 고객센터 글 작성 위에 부분 -->
 		<p> 1:1문의 답변 </p>
 	</div>
-	<a href="<%=request.getContextPath()%>/serviceCenter.do" class="gotoback commonsubmit"> 목록으로 </a>
+	<a href="<%=request.getContextPath()%>/QtoAListPage" class="gotoback commonsubmit"> 목록으로 </a>
 	
 	<div class="underheaderenrollF"></div><!-- 라인 부분 -->
 	
