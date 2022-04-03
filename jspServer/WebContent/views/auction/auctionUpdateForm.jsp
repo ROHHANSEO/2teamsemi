@@ -264,7 +264,7 @@
 		<div class="enrollcontentsection"><!-- 내용 작성 div -->
 			<span class="titleNamepart"> 글 내용<span class="dotpoint">*</span></span>
 			<div class="contentpart">
-				<textarea name ="content" class="contentWritePart" cols="70" rows="15" style="resize:none;" required><%=ac.getAuctionContent() %></textarea>
+				<textarea name ="content" class="contentWritePart" cols="70" rows="15" style="resize:none;" required><%=ac.getAuctionContent().replaceAll("<br>", "") %></textarea>
 			</div>
 			<span class="countContentlength">0 / 2000</span>
 		</div>

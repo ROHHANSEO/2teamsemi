@@ -39,9 +39,11 @@ public class pwdSearchServlet extends HttpServlet {
 		if(user != null) {
 			request.setAttribute("userPwd", user);
 			request.setAttribute("msg", "비밀번호 수정");
+			request.setAttribute("msg2", "비밀번호");
 		} else {
 			request.setAttribute("msg", "비밀번호 찾기");
-			request.setAttribute("msg2", "등록된 정보가 일치하지 않습니다.");
+			request.setAttribute("msg2", "false");
+			request.setAttribute("result", "등록된 정보가 일치하지 않습니다.");
 		}
 		request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
 	}

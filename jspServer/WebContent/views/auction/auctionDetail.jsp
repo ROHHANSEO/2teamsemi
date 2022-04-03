@@ -33,7 +33,6 @@
 		width:65%;
 		margin:0 auto;
 		height:130vh;
-		
 	}
 	.swiper-button-prev, .swiper-button-next{
 		color:#993333;
@@ -187,11 +186,11 @@
 		transform: translate(-152px, -29px);
 		padding-top:6px;
 	}
-	.main2>li:hover:enabled, .main3>li:hover:enabled{
+	.main2>li:hover{
 		background-color:#993333;
 		cursor: pointer;
 	}
-	.main2>li a:hover:enabled, .main3>li a:hover:enabled{
+	.main2>li a:hover{
 		color:white;
 	}
 	.kk:enabled{
@@ -222,7 +221,7 @@
 				<li><a href="#" class="threeB"><img src="../../resources/images/icons8-메뉴-2-96.png" /></a>
 					<ul class="main2">
 						<%if(user != null && user.getUserId().equals(writer)){ %> 
-						<li><a onclick="warning()" href="#"> 글 수정하기 </a></li>
+						<li><a onclick="warning()"  href="#"> 글 수정하기 </a></li>
 						<li><a href="#" onclick="deleteItem()"> 글 삭제하기 </a></li>
 						<%}else if(user != null && !user.getUserId().equals(writer)){ %>
 						<li><a href="#" onclick="blockAuction()"> 게시글 신고 </a></li>
@@ -324,19 +323,15 @@
 			</tbody>
 		</table>
 	</div>
-	<%if(user != null && !user.getUserId().equals(tot2)){%> 
+
+	
+	<%if(user != null){%> 
+		
 		<div class="bNo" style="display: none;"><%= ad.getAuctionNo() %></div><!-- 게시물 넘버 -->
 		<div class="uNo" style="display: none;"><%= user.getUserNo() %></div><!-- 사는 사람 넘버 -->
 		<input type="hidden" class="product_price" value="<%=ad.getItemDirect()%>"><!-- 즉시구매가격 -->
 	<%} %>
-	<%if(user != null && user.getUserId().equals(tot2)){ %>
-		<div class="bNo" style="display: none;"><%= ad.getAuctionNo() %></div><!-- 게시물 넘버 -->
-		<div class="uNo" style="display: none;"><%= user.getUserNo() %></div><!-- 사는 사람 넘버 -->
-		<input type="hidden" class="product_price" value="<%=aaaa%>"><!-- 즉시구매가격 -->
-	<%} %>
-	<div><!-- 같은 카테고리 상품 -->
-		동일 카테고리 경매 상품 
-	</div>
+
 	</div>
 	<%@ include file = "../common/footer.jsp" %> 
 	<script src="../../resources/library/swiper.min.js"></script>
@@ -372,11 +367,24 @@
 				$(".buyme").attr("disabled", true);
 	            $(".buyme").css("background","lightgray");
 	            $(".buyme").css("color","black");
+	            $(".fronta").text("경매완료")
+	            setTimeout("closeeee()",1000);
+	            
 				
 			<%}%>
 			
    		
    		})
+   		function closeeee(){
+			var alertv = confirm("경매가 마감되었습니다. 메인으로 나가시겠습니까?");
+			if(alertv){
+			 	location.href="<%=request.getContextPath()%>/auctionPage.do";
+			}else{
+				return;
+			}
+			
+		}
+		
     		
     		/*글삭제 알림 먼저 뜨고 삭제0*/
     		function deleteItem(){
@@ -426,7 +434,7 @@
 
 			//var nextTime = new Date(end.substr(0,4), end.substr(4,2)-1, end.substr(6,2), end.substr(8,2), end.substr(10,2), end.substr(12,2));
 			var nowTime = new Date();
-			var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 19, 55, 00);
+			var nextTime = new Date(nowTime.getFullYear(),nowTime.getMonth(),nowTime.getDate(), 12, 32, 00);
 			//성공
 			console.log(nowTime)
 			
@@ -456,7 +464,7 @@
 				$("p.time-title").html("경매 종료");
 				//옆에 시간 부분 사라지게 하기
 				$(".time").fadeOut();
-				
+				$(".fronta").text("경매마감")
 				setTimeout("changeevery();",2000);
 				
 				//모든 사람들 다 버튼 만지지 못하도록 버튼 이벤트 적용
@@ -483,6 +491,7 @@
 		function changeevery(){
 			
 			<%if(user == null){%>
+				$(".fronta").text("경매 마감")
 				var alertv = confirm("경매가 마감되었습니다. 메인으로 나가시겠습니까?");
 				if(alertv){
 				 	location.href="<%=request.getContextPath()%>/auctionPage.do";
@@ -494,11 +503,13 @@
 				$(".b").attr("disabled", true);
 				$(".buttonde").removeClass("buttondee");
 				$(".buttondefi").attr("disabled",false);
+				$(".product_price").val(<%=aaaa%>);
 				$(".buttondefi").hover(function(){
 					$(this).addClass("kk");
 				}, function(){
 					$(this).removeClass("kk");
 				})
+			
 				
 			<%}else if(user != null && !user.getUserId().equals(tot2)){%>
 				$(".a").attr("disabled", true);

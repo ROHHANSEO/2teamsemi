@@ -244,7 +244,7 @@ public class MyPageDao {
 											dc.format(rset.getInt("PRICE")),
 											rset.getString("SALE_STATUS"),
 											rset.getInt("LIKE_COUNT"),
-											rset.getString("ORIGIN_NAME")
+											rset.getString("CHANGE_NAME")
 											));
 			board.setCreateDate(rset.getDate("CREATE_DATE"));
 			board.setUsedBoardWriter(rset.getString("WRITER_NO"));

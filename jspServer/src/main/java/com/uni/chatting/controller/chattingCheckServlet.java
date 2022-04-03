@@ -31,11 +31,10 @@ public class chattingCheckServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int boardNo =  Integer.parseInt(request.getParameter("boardNo"));//게시글 넘버
 		int sendperson = Integer.parseInt(request.getParameter("sendperson"));//보낸 사람
 		int answerperson = Integer.parseInt(request.getParameter("answerperson"));// 받는 사람
 		//오리지날
-		Chatting ct = new Chatting(boardNo, sendperson, answerperson);
+		Chatting ct = new Chatting(sendperson, answerperson);
 		
 		System.out.println("채팅 확인니이이니ㅣ"+ct);
 		

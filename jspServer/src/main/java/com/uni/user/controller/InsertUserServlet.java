@@ -46,11 +46,13 @@ public class InsertUserServlet extends HttpServlet {
 		if(result > 0) {
 			request.setAttribute("name", name);
 			request.setAttribute("msg", " 간편 회원가입");
-			request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
+			request.setAttribute("msg2", "회원가입");//msg2는 success페이지에서 구분하기위해 만든것
 		} else {
 			request.setAttribute("mag", "회원가입 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			request.setAttribute("msg2", "false");
+			request.setAttribute("result", "등록된 정보가 일치하지 않습니다.");
 		}
+		request.getRequestDispatcher("views/login/UserSuccsse.jsp").forward(request, response);
 	}
 
 	/**

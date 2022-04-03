@@ -29,7 +29,7 @@
 #salescontent_box .content_box{
     border: 1px solid black;
     height: 100%;
-    margin-top: 30px;
+    margin: 30px;
 }
 
 #salescontent_box .like_content_box{
@@ -130,6 +130,11 @@
     cursor: pointer;
 }
 
+.content_update:hover a{
+    color: #993333;
+    cursor: pointer;
+}
+
 .content_delete:hover{
     color: #993333;
     cursor: pointer;
@@ -222,5 +227,21 @@
 
 .bid_content_box{
     position: relative;
+}
+
+.my_bid_record,.my_action_post{
+    font-size: 30px;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.action_void_list {
+    text-align: center;
+    height: 300px;
+    line-height: 300px;
+}
+
+.action_void_list span{
+    font-size: 20px;
 }
 
