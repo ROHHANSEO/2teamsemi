@@ -5,9 +5,13 @@ import static com.uni.common.JDBCTemplate.getConnection;
 import static com.uni.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
+import com.uni.admin.model.dao.QtoADao;
+import com.uni.admin.model.service.Reply;
 import com.uni.chatting.model.dao.ChattingDao;
 import com.uni.chatting.model.vo.Chatting;
+import com.uni.chatting.model.vo.ChattingLog;
 public class ChattingService {
 
 	public int checkChatting(Chatting ct) {//채팅 체크 
@@ -31,15 +35,33 @@ public class ChattingService {
 		return result;
 	}
 
-	public Chatting findChatting(int sendp, int ansp) {//채팅 닉네임
+
+	public int findChattingNo(int sendp, int ansp) {
+		Connection conn = getConnection();
+		int result = new ChattingDao().findChattingNo(conn,sendp, ansp);
+		close(conn);
+		return result;
+	}
+
+	public int insertChat(ChattingLog cl) {
 		Connection conn = getConnection();
 		
-		String sendNick = new ChattingDao().findChatting(conn,sendp);
-		String ansNick = new ChattingDao().findChatting(conn,ansp);
-		
-		Chatting ctt = new Chatting(sendNick, ansNick);
+		int result = new ChattingDao().insertChat(conn,cl);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
 		close(conn);
-		return ctt;
+		return result;
+	}
+
+	public ArrayList<ChattingLog> selectCList(int chatNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<ChattingLog> list = new ChattingDao().selectCList(conn, chatNo);
+		close(conn);
+		return list;
 	}
 
 

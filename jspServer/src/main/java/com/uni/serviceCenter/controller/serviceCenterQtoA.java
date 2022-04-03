@@ -28,7 +28,7 @@ public class serviceCenterQtoA extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//서비스 센터의 메인페이지로 들어가게 된다 list값과 함께
+		
 		RequestDispatcher view = request.getRequestDispatcher("views/service/serviceCenterQtoA.jsp");
 		view.forward(request, response);
 	}

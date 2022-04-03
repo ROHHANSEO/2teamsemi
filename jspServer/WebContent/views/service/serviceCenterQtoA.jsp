@@ -136,11 +136,13 @@
 				if(theForm.title.value == "" && theForm.content.value == ""){
 					
 					alert("제목과 내용을 입력해주셔야 등록이 됩니다.")
-					
+					$(".QtoAtitle").focus();
 				}else if(theForm.title.value == ""){
 					alert("제목을 입력해주셔야 합니다.")
+					$(".QtoAtitle").focus();
 				}else if(theForm.content.value == ""){
 					alert("내용을 입력해주셔야 합니다.")
+					$(".QtoAcontent").focus();
 				}
 				if(theForm.title.value != "" && theForm.content.value != ""){
 					var formData = $("#QtoAform").serialize();
