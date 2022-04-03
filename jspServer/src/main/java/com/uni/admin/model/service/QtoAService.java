@@ -91,6 +91,11 @@ public class QtoAService {
 		int result1 = new QtoADao().boardBlock(conn,categoryNo);
 		int result2 = new QtoADao().reportSanctions(conn,userNo);
 		int result3 = new QtoADao().reportDelete(conn,categoryNo[1]);
+		int banCount = new QtoADao().banCount(conn,userNo);
+
+		if(banCount >= 5) {
+			new QtoADao().userBlock(conn,userNo);
+		}
 		
 		if(result1 > 0 && result2 > 0 && result3 > 0) {
 			commit(conn);
@@ -109,6 +114,7 @@ public class QtoAService {
 		int userNo[] = new QtoADao().SanctionsUser(conn,boardNo);
 		
 		int result1 = new QtoADao().selectreportSanctions(conn,userNo);
+		new QtoADao().UserBanCount(conn,userNo);
 		int result2 = new QtoADao().selectreportDelete(conn,boardNo);
 		
 		

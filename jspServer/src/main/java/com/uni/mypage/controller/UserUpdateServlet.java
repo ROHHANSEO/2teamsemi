@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,6 +60,9 @@ public class UserUpdateServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				if(!userPwd.equals((String)session.getAttribute("userPwd"))) {
 					request.getSession().invalidate();
+					Cookie cookie = new Cookie("loginCookie",null);
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);
 					out.print("password");
 				} else {
 					session.setAttribute("user", user);

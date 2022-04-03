@@ -1753,4 +1753,39 @@ public class UsedItemsBoardDao {
 		return result; // int로 반환
 	}
 
+	public ArrayList<UsedItemsBoard> usedLikeList(Connection conn) {
+		ArrayList<UsedItemsBoard> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("usedLikeList");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new UsedItemsBoard(rset.getInt("BOARD_NO"),
+						rset.getString("BOARD_TITLE"),
+						dc.format(rset.getInt("PRICE")),
+						rset.getString("SALE_STATUS"),
+						rset.getInt("LIKE_COUNT"),
+						rset.getString("CHANGE_NAME")
+						));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
 }

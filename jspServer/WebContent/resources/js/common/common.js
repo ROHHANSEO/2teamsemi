@@ -12,12 +12,11 @@ $("#main_nav .nav ul div").hover(function(){
 
 //테스트
 
+
 $(document).ready(function() {
-	$('#cancel').hide();
 	$('#fullpage').fullpage({
-		//options here
-		autoScrolling:true,
-		scrollHorizontally: true
+		verticalCentered: false,
+        animateAnchor:false
 	});
 });
 
@@ -32,3 +31,4 @@ $("#searchform").click(function changeli(){
 	event.stopPropagation();
 	$("#cancel").show();
 })
+

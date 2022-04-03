@@ -1303,5 +1303,49 @@ public class AuctionDao {
 		return result; // int로 반환
 	}
 
+	public ArrayList<Auction> actionLikeList(Connection conn) {
+ArrayList<Auction> list = new ArrayList<>();
+		
+		// PreparedStatement 객체와 ResultSet 객체 생성
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("actionLikeList");
+		
+		
+		try {
+
+			pstmt = conn.prepareStatement(sql);
+
+			rset = pstmt.executeQuery();
+			
+
+			while(rset.next()) {
+				
+
+				
+				list.add(new Auction(rset.getInt("BOARD_NO"),
+									rset.getString("CATEGORYCODE"),
+									rset.getString("AUCTION_TITLE"),
+									dc.format(rset.getInt("ITEM_DIRECT")),
+									rset.getString("SELL_STATUS"),
+									rset.getInt("COUNT"),
+									rset.getString("CHANGE_NAME"),
+									rset.getString(9)
+									));
+			}
+			System.out.println("다오 => "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
 
 }

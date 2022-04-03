@@ -26,6 +26,7 @@
                     <span>내 활동</span>
                     <li class="likeProduct"><a href="<%=request.getContextPath()%>/likeProductPage">찜 리스트</a></li>
                     <li><span>채팅 목록</span></li>
+                    <li><a href="<%=request.getContextPath()%>/myQtoAList">내 1:1 문의 목록</a></li>
                 </ul>
                 <ul role="list">
                     <span>관리자</span>
