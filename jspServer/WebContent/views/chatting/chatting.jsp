@@ -162,7 +162,7 @@
 			<ul class= "part1">
 				<li><a class="plusI"><img src= "../../resources/images/icons8-plus-48.png"></a>
 					<ul class= "part2">
-						<li class="fileSend"><input type="file" name="file1" id="file1" />첨부파일</li>
+						<!-- <li class="fileSend"><input type="file" name="file1" id="file1" />첨부파일</li> -->
 						<li class= "makeAppo">약속</li>
 					</ul>
 				</li>
@@ -180,7 +180,14 @@
 		$(".goOut").click(function(){
 			var aler = confirm("다른 사용자에게도 대화 내용이 삭제됩니다. 삭제하시겠습니까?");
 			if(aler){
-				$(".contentP").empty();		
+				var chatNo = null;
+				<%if(ct!= null){%>
+				chatNo = <%=ct.getChatNo()%>;
+				console.log(chatNo)
+				<%}else{%>
+				chatNo = <%=act.getChatNo()%>;
+				console.log(chatNo)
+				<%}%>
 			}else{
 				return;
 			}
@@ -356,6 +363,10 @@
 				return;
 			}
 		})
+		<!-- 채팅 스크롤 하단으로 보내기 -->
+		$('#chatContent').scrollTop($('#chatContent')[0].scrollHeight);
+	
+
 	</script>
 </body>
 </html>

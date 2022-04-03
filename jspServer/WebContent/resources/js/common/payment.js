@@ -37,7 +37,8 @@ function requestPay() {
                 $(".buyme").css("color","black");
                 if(boardNo > 999999 || boardNo <2000000){
                 donttouch(boardNo);
-                }else if(boardNo > 1999999 || boardNo <3000000){
+                }
+                if(boardNo > 1999999 || boardNo <3000000){
                 youdonthavethisfun(boardNo);
                 }
 	          },
