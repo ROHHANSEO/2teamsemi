@@ -225,18 +225,12 @@ body { overflow-x:hidden}
     display: flex;
     position: relative;
 }
-/*header 검색 부분의 x버튼 부분*/
-#cancelbutton {
-    position: absolute;
-    transform: translate(630px, 68.5px);
-    background: white;
-    padding: 5.7px;
-    padding-right: 14px;
-    border: 0px;
-}
 img#cancel {
     width: 25px;
     height: 25px;
+    position: absolute;	
+    transform: translate(640px, 77px);
+    background: white;
 }
 /*돋보기 아이콘*/
 a#searchbutton {

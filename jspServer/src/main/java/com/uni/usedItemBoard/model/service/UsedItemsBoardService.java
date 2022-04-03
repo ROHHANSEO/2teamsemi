@@ -365,6 +365,18 @@ public class UsedItemsBoardService {
 		return list;// 리스트 반환
 	}
 
+	public int saleStatuspaymentStatusUpdate(int bNo, String payment) {
+		Connection conn = getConnection();
+		
+		int result = new UsedItemsBoardDao().saleStatuspaymentStatusUpdate(conn, bNo, payment);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 	
 }

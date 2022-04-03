@@ -13,243 +13,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../../resources/library/swiper.min.css">
-<style>
-	.main{
-		width: 70vw;
-	    border: 1px solid;
-	    margin: 0 auto;
-	}
-	#top{
-		display: flex;
-    	justify-content: center;
-    	margin-top: 5%;
-	}
-	.swiper-pagination-bullet-active {
-		background: #d30505;
-	}
-	.swiper-pagination-bullet {
-		margin: 3px;
-	}
-	.swiper-pagination {
-    	position: relative;
-    }
-	.arrow{
-		color: #d30505;
-	}
-	#image, .imageArea{
-	    width: 400px;
-	    height: 400px;
-	}
-	.one{
-		font-size: 14px;
-    	color: #808080;
-	}
-	#titleandsell{
-		display: flex;
-	}
-	#product{
-	    width: 600px;
-	    height: 300px;
-	    margin: auto 0;
-	    margin-left: 100px;
-	}
-	.flexin {
-	    display: flex;
-	    justify-content: space-between;
-	}	
-	#titleandsell{
-	    display: flex;
-	    font-size: 30px;
-	    margin-bottom: 5px;
-	    margin-left: 7px;
-	}
-	#title{
-		margin-right: 10px;
-	}
-	.sell, .buy{
-		font-weight: bold;
-	}
-	.sell{
-		color: #2881dd
-	}
-	.information{
-		border-top: 1px solid;
-    	padding-top: 12px;
-    	padding-left: 7px;
-	}
-	.dot{
-	    margin-top: 6px;
-	}
-	.status, .payment, .seller {
-		display: flex;
-		margin-top: 3px;
-	}
-	.payment-in, .status-in, .sellerid {
-		margin-left: 16px;
-		color: black;
-	}
-	.chatting {
-	    background: #f8e86d;
-	}
-
-	.likebutton, .chatting, .buyme {
-		width: 140px;
-	    height: 35px;
-	    vertical-align: middle;
-	    border-radius: 5px;
-	    border: 0px;
-	}
-	.likebutton{
-		display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    background: #e5e5e5;
-	}
-	.heart {
-	    width: 24px;
-	    height: 22px;
-	    margin-right: 5px;
-	}
-	#transaction {
-	    color: #deb666;
-	    font-weight: 600;
-	    font-size: 16px;
-        margin-top: 12px;
-	}
-	.buyme {
-	    background: #993333;
-	    color: white;
-	}
-	.chatting {
-        background: #f8e65d;
-	    color: white;
-	}
-	.two {
-	    font-size: 25px;
-	    font-weight: 600;
-	    margin-bottom: 30px;
-	}
-	.payment-in {
-    	margin-left: 44px;
-	}
-	.sellerid {
-    	margin-left: 29px;
-	}
-	.compare, .explain, .itemLine{
-	    width: 60vw;
-	    margin: 0 auto;
-	    margin-top: 70px;
-	}
-	.explain, .itemLine {
-	    margin-top: 20px;
-	}
-	.explainIn{
-		border: 1px solid black;
-		word-break:break-all;
-		margin-top: 7px;
-	}
-	#relation {
-		margin-bottom: 20px;
-	}
-	#popular {
-		margin-bottom: 20px;
-	}
-	
-	
-	.hidden a {
-	    display: block;
-	    color: #000;
-	}
-	.productmenu {
-	    margin-left: 20px;
-	    width: 100px;
-	}
-	.writer-menu>li, .status-change>li {
-	    position: relative;
-   	    width: 150px;
-	    height: 35px;
-	    border: 1px solid;
-	    text-align: center;
-	    line-height: 37px;
-	    background: white;
-	}
-	.writer-menu li a:hover {
-	    background-color: #993333;
-	    color: white;
-	}
-	.status-change {
-	    position: absolute;
-	    width: 150px;
-	    height: 30px;
-        transform: translate(-169px, -44.4px);
-	    padding-top: 6px;
-	}
-	.status-change>li a:hover {
-	    display: block;
-	    background: #993333;
-	    color: white;	
-	}
-	.writer-menu {
-	    position: absolute;
-    	transform: translate(-107px, 4px);
-	}
-	.colorchange{
-		background: #ff9f31;
-	}
-
-
-
-	.relation-in, .popular-in, .three {
-		display: flex;
-		justify-content: center;
-	}
-	.three{
-		justify-content: space-around;
-	}
-	.firstLine, .secondLine{
-		display: flex;
-   		justify-content: space-between;
-	}
-	.firstLine{
-		margin-bottom: 19px;
-	}
-	.relation-like{
-		width: 35px;
-		display: flex;
-		justify-content: space-around;
-	}
-	.relation-image{
-		width: 10vw;
-		height: 10.5vw;
-	}
-	.thumbnail{
-		margin: 10px;
-		margin-left: 17.1px;
-		margin-right: 17.1px;
-		border: 1px solid #d3d3d3;
-		width: 10vw;
-		height: 14vw;
-	}
-	.relation-heart{
-		width: 16px;
-	}
-	
-	.relation-status{
-		color: #eec71a;
-		font-weight: bolder;
-	}
-	.relation-title, .relation-price, .relation-status{
-		font-size: 14px;
-	}
-	.buy {
-	    color: #ffd700;
-	}
-	.chatting:hover:enabled{
-		background-color:#993333;
-		color:white;
-		cursor: pointer;
-	}
-</style>
+<link rel="stylesheet" href="../../resources/css/usedItemsBoard/Detail.css">
 </head>
 <body>
 	<div>
@@ -368,8 +132,13 @@
 					<div class="three">
 						<% if(!like.isEmpty()){ // like 수가 존재 할 때
 							for(int i = 0 ; i < like.size() ; i++){ // for문 이용
-								// 로그인을 했고 like i번째의 유저번호가 user 유저번호와 같으면 색있는 버튼을
-								if(user != null && like.get(i).getUserNo() == user.getUserNo()){ %>
+								if(ub.getPaymentStatus() == "y"){%>
+									<button class="likebutton" disabled>
+										<img class="heart" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABVklEQVRIie3Wu0oDQRiG4e83SBRBwRQiiq0XoIWHG9FGsLTyFmy0VWMniOCpFAuvQRELQWJhnVh5aKwMmNfCBGY32c1udqcQ88EWM/zMMwd2GKmffxtgCbgAasAXUAVOgbkOtfPAWaj2HFhMAxaAMtH5BrYBa347QCOitgHsAYUkcBzqpgwcJKzd7YYuxMw+a5ZdayBkb0qyxOeSLhtuI4AANUlTnuCqmc1EwXVJg57gupkVW43wVn96QtvGDsNPHuFKHHzlEQ6MHT7jkqQXSUXlm7qkaTN7bXUEVmxm75JOckYl6dhFpQ7/bHPVz5JKOaEfkmbN7K1rJbCe4421lmqawFEO6GHq/QGGgdsM6A0wlBpu4mPAQw/oIzDeE+rgk0AlJTqRCXXwEnCfAL3LvNIO+AhwGYNeA6O5og5uwBbtj4V9IHz9epnAKr8Puxqw4h3s50/mB7ZjI/jDXzG+AAAAAElFTkSuQmCC">
+										<span style="margin: auto 0;">찜하기</span>
+									</button>
+								<%// 로그인을 했고 like i번째의 유저번호가 user 유저번호와 같으면 색있는 버튼을
+								}else if(user != null && like.get(i).getUserNo() == user.getUserNo()){ %>
 									<button class="likebutton colorchange">
 										<img class="heart" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABVklEQVRIie3Wu0oDQRiG4e83SBRBwRQiiq0XoIWHG9FGsLTyFmy0VWMniOCpFAuvQRELQWJhnVh5aKwMmNfCBGY32c1udqcQ88EWM/zMMwd2GKmffxtgCbgAasAXUAVOgbkOtfPAWaj2HFhMAxaAMtH5BrYBa347QCOitgHsAYUkcBzqpgwcJKzd7YYuxMw+a5ZdayBkb0qyxOeSLhtuI4AANUlTnuCqmc1EwXVJg57gupkVW43wVn96QtvGDsNPHuFKHHzlEQ6MHT7jkqQXSUXlm7qkaTN7bXUEVmxm75JOckYl6dhFpQ7/bHPVz5JKOaEfkmbN7K1rJbCe4421lmqawFEO6GHq/QGGgdsM6A0wlBpu4mPAQw/oIzDeE+rgk0AlJTqRCXXwEnCfAL3LvNIO+AhwGYNeA6O5og5uwBbtj4V9IHz9epnAKr8Puxqw4h3s50/mB7ZjI/jDXzG+AAAAAElFTkSuQmCC">
 										<span style="margin: auto 0;">찜하기</span>
@@ -409,17 +178,14 @@
 							</button>
 						<% } %>
 						<button class="chatting" onclick="startchat()">채팅 거래</button>
+						<% if(user == null || ub.getNickName().equals(user.getUserId()) || ub.getPaymentStatus().equals("Y")){ %>
+						<button class="buyme colorchangego" disabled>구매하기</button>
+						<% }else if(user != null && ub.getPaymentStatus().equals("N")){ %>
 						<button class="buyme" onclick="requestPay()">구매하기</button>
+						<% } %>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="compare">
-			새상품 비교사이트
-			<br><br>
-			네이버쇼핑 사이트
-			<br>
-			다나와 사이트
 		</div>
 		<div class="explain">
 			상품 설명
@@ -448,6 +214,7 @@
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	<script src="../../resources/js/common/payment.js"></script>
     <script>
+    
     <%if(user != null && user.getUserNo()!=writerNo){%>
 	function startchat(){//게시글 작성자가 아니고 로그인 한 사람일 때 
 		var sendperson = <%=user.getUserNo()%>;//보낸 사람
@@ -582,7 +349,7 @@
 						$.each(list, function(index, obj){
 							
 							let listprice = obj.comprice;
-							let listcondition = obj.itemCondition;
+							let listcondition = obj.saleStatus;
 							let listtitle = obj.usedBoardTitle;
 							let listlike = obj.likeCount;
 							let titleimage = obj.titleImg;
@@ -633,7 +400,7 @@
 						$.each(list, function(index, obj){
 							
 							let listprice = obj.comprice;
-							let listcondition = obj.itemCondition;
+							let listcondition = obj.saleStatus;
 							let listtitle = obj.usedBoardTitle;
 							let listlike = obj.likeCount;
 							let titleimage = obj.titleImg;
@@ -693,7 +460,7 @@
 			$('.writer-menu').hide();
 			$('.status-change').hide();
 		});*/
-
+		
 		
 	    //<!-- Initialize Swiper -->
 		const swiper = new Swiper('.swiper-container', {

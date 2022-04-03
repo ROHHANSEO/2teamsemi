@@ -35,7 +35,9 @@ function requestPay() {
                 $(".buyme").attr("disabled", true);
                 $(".buyme").css("background","lightgray");
                 $(".buyme").css("color","black");
-                if(boardNo > 1999999 || boardNo <3000000){
+                if(boardNo > 999999 || boardNo <2000000){
+                donttouch(boardNo);
+                }else if(boardNo > 1999999 || boardNo <3000000){
                 youdonthavethisfun(boardNo);
                 }
 	          },
@@ -67,6 +69,23 @@ function requestPay() {
 			var changeSS = $(".fronta")
 			changeSS.empty();
 			changeSS.append(change)
+			}
+			
+		})
+		
+	}
+	
+	function donttouch(boardNo){
+		console.log("바꾸러 가자")
+		$.ajax({
+			url:"updateUsedBoardStatus.do", 
+			data:{boardNo:boardNo, payments:"거래완료"}, 
+			type:"get", 
+			success: function(payment){
+			let changestatus = $("#transaction")
+			changestatus.empty();
+			changestatus.append(payment)
+			changestatus.addclass("colorchangego")
 			}
 			
 		})
