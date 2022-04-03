@@ -136,7 +136,7 @@
 						</div>
 						<div class="itempline">
 							<textarea name="content" id="content" cols="30" rows="10"
-								placeholder="내용을 입력하세요." maxlength="2000" required><%= ub.getUsedBoardContent() %></textarea>
+								placeholder="내용을 입력하세요." maxlength="2000" required><%= ub.getUsedBoardContent().replace("<br>", "\n") %></textarea>
 						</div>
 						<div class="count">
 							<div>

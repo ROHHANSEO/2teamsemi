@@ -1,0 +1,71 @@
+#container{
+    margin: 0 auto;
+    width: 80vw;	
+    margin-bottom: 20px;
+}
+.article {
+    margin-top: 20px;
+    display: flex;
+}	
+.firstLine, .secondLine{
+	display: flex;
+	justify-content: space-between;
+}
+.firstLine{
+    margin-bottom: 19px;
+}
+.like{
+	width: 35px;
+    display: flex;
+    justify-content: space-around;
+}
+.image{
+    width: 10vw;
+    height: 10.5vw;
+}
+.thumbnail{
+    margin: 10px;
+    margin-left: 0px;
+    margin-right: 45.5px;
+    border: 1px solid #d3d3d3;
+   	width: 10vw;
+    height: 14vw;
+}
+.heart{
+	width: 16px;
+}
+.write{
+	padding: 3px;
+}
+.status{
+    color: #eec71a;
+    font-weight: bolder;
+}
+.title, .price, .status{
+	font-size: 14px;
+}
+.notice-event, .auction, .usedItems	{
+	display: flex;
+    justify-content: space-between;
+    width: 60vw;
+    margin: 0 auto;
+    margin-bottom: 3px;
+    border-bottom: 1px solid #d3d3d3
+}
+.searchresult{
+    width: 20vw;
+    margin-left: 10vw;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.dontResult{
+	width: 60vw;
+    margin: 0 auto;
+	margin-top: 15px;
+    margin-bottom: 15px;
+}
+.item1, .item2, .item3 {
+    width: 60vw;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
