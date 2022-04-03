@@ -25,18 +25,15 @@
     <span id="page_title"><%=msg %></span>
 </header>
 <div id="input_container">
-    <form id="input_box" method="post">
+    <form id="input_box" action="<%=request.getContextPath()%>/pwdChange" method="post">
         <div class="content_box">
-        <%if(name != null) {%>
+        <%if(msg2.equals("회원가입")) {%>
             <span class="content_text"><p class="sign-up_name">"<%=name %>"님의</p>회원가입이 정상적으로 되었습니다</span>
             <button type="button" class="button" onclick="location.href='/loginPage'">로그인 하기</button>
-        <% return; } %>
-        
-        
-		<%if(IdUser != null) {%>
+        <%} else if(msg2.equals("아이디")) {%>
 			<span class="content_text"><p class="sign-up_name">"<%=IdUser.getUserName()%>"님의</p>아이디는 <%=IdUser.getUserId() %>입니다.</span>
 			<button type="button" class="button" onclick="location.href='/loginPage'">로그인 하기</button>
-		<%} else if(msg.equals("비밀번호 수정")) {%>
+		<%} else if(msg2.equals("비밀번호")) {%>
 			<input id="userNo" type="hidden" name="userNo" value="<%=pwdUser.getUserNo()%>">
 			<div>
                 <input class="userPwd" type="password" name="userPwd" placeholder="비밀번호 6자리~12자리" maxlength="12" autocomplete="off" required>
@@ -44,14 +41,12 @@
             <div>
                 <input class="userPwdCheck" type="password" name="userPwdCheck" placeholder="비밀번호확인 6자리~12자리" maxlength="12" autocomplete="off" required>
             </div>
-           	<button id="button" type="submit" class="button">변경하기</button>
-            <%--
-        <%} else if(result.equals("true")){ %>
-        	<span class="content_text">비멸번호 변경이 정상적으로 되었습니다</span>
-            <button type="button" class="button" onclick="location.href='/loginPage'">로그인 하기</button>
-         --%>   
-		<%} else {%>
-			<span class="content_text"><%=msg2 %></span>
+           	<button id="pwd_button" type="submit" class="button">변경하기</button>
+        <%} else if(msg2.equals("비밀번호변경")){ %>
+        	<span class="content_text">비밀번호 변경이 정상적으로 되었습니다</span>
+            <button type="button" class="button" onclick="location.href='/loginPage'">로그인 하기</button> 
+		<%} else if(msg2.equals("false")) {%>
+			<span class="content_text"><%=result %></span>
 			<button type="button" class="button" onclick="history.back()">다시 입력</button>
 		<%} %>
 		

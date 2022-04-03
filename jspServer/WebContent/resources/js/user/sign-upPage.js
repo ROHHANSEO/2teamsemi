@@ -23,6 +23,13 @@ $(function() {
 			$(".userPwdCheck").val("");
 			$(".userPwd").focus();
 		}
+		
+		if($(".userPwdCheck").val().length < 6){
+			alert("비밀번호는 6자리 이상이여야 합니다");
+			$(".userPwd").val("");
+			$(".userPwdCheck").val("");
+			$(".userPwd").focus();
+		}
 
         if(check_spc.test($("input[name=userPwd]").val()) || check_kor.test($("input[name=userPwd]").val())) {
             alert("비밀번호는 특수문자, 한글은 사용불가합니다.");
@@ -31,28 +38,37 @@ $(function() {
 			$(".userPwd").focus();
         }
 
-		if($(".userPwdCheck").val().length < 6){
-			alert("비밀번호는 6자리 이상이여야 합니다");
-            $(".userPwd").val("");
-			$(".userPwdCheck").val("");
-			$(".userPwd").focus();
-		}
         
 	})
 
 	$(".button").click(function() {
 		if ($("#consent").is(":checked") == false) {
 			alert("개인정보이용동의를 체크해주셔야 합니다");
-            return;
+            return false;
 		}
 
         if($("input[name=userPwd]").val().length < 6 && $("input[name=userPwdCheck]").val().length < 6){
             alert("비밀번호는 6자리 이상으로 해주세요");
-            return;
+            return false;
         }
 
-        $("form").submit();
+
 	})
+
+	$("input[type=text]").keyup(function(){
+		var str_space = /\s/;               // 공백 체크
+		if(str_space.exec($(this).val())) {     // 공백 체크
+			alert("해당 항목에는 공백을 사용할 수 없습니다.");
+			$(this).focus(function(){
+				$(this).val("");
+			});
+			
+		}
+	})              
+        
+
+
+
 
 })
 
