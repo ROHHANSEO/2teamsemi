@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+.id_input .input[name="userId"] {
+    width: 300px;
+}
+
+#input_box .content_box {
+    height: 400px;
+}
+
+#input_container .button {
+    margin-top: 50px;
+}
+
+.content_box div {
+    margin: 30px auto;
+}
+
+#input_container {
+	height: 500px;
+}

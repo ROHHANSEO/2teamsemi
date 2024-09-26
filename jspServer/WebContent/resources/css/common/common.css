@@ -1,0 +1,275 @@
+@charset "utf-8";
+
+/* 초기화 */
+
+* {
+    margin: 0; padding: 0;
+    font-family: 'Montserrat', 'san-serif';
+}
+a { text-decoration: none !important; color: black;}
+img { border: 0; }
+ul { list-style: none; }
+body { overflow-x:hidden}
+
+/* header */
+#main_header {
+    position: relative;
+    border-bottom: 1px solid gray;
+    width: 100vw;
+    background-color: #fff;
+    z-index: 99;
+}
+
+#header {
+    display: flex;
+    justify-content: center;
+    height: 150px;
+}
+
+#main_header #logo {
+    width: 180px;
+    height: 180px;
+    position: absolute;
+    left: 50px;
+}
+
+#main_header #logo img{
+    width: 180px;
+    height: 180px;
+}
+
+#main_header #search {
+    width: 640px;
+    height: 40px;
+    margin-top: 20px;
+    background-color: white;
+    border: 0;
+    border-bottom: 1px solid #993333;
+}
+
+#main_header #header_top_right {
+    position: absolute;
+    margin-right: 50px;
+    margin-top: 30px;
+    right: 0px;
+}
+
+#header .login_page:hover {
+    color: #993333;
+    font-weight: 900;
+}
+
+#header .insert_user:hover {
+    color: #993333;
+    font-weight: 900;
+}
+
+/*로그인 후 header_top_right*/
+#header_top_right span {
+	display: inherit;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+/* header > nav */
+#main_nav {
+    margin-bottom: 10px;
+    margin-top: -50px;
+    position: relative;
+    z-index: 99;
+}
+
+#main_nav ul {
+    text-align: center;
+}
+
+#main_nav ul li {
+    display: inline-block;
+    margin : 0 5%;
+}
+
+#main_nav a {
+    font-size: 16px;
+    line-height: 30px;
+}
+
+#main_nav a div {
+    width: 8vw;
+    height: 30px;
+    border-radius: 20px;
+    
+}
+
+/* header > nav : event js와 연계 */
+#main_nav .nav ul .active {
+    background-color: #993333;
+    color: #fff;
+}
+
+/* header > nav > category */
+
+#main_nav .category{
+    position: relative;
+    display: block;
+    float: left;
+    margin-top: 40px;
+    width: 15vw;
+}
+
+#main_nav .category_box {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+    cursor: pointer;
+}
+
+.category .berger1::after {
+    content: ' ';
+    position: absolute;
+    top: 10px;
+    left: 20%;
+    height: 1px;
+    width: 25px;
+    background-color: gray;
+    display: block;
+}
+
+.category .berger2::after {
+    content: ' ';
+    position: absolute;
+    top: 17px;
+    left: 20%;
+    height: 1px;
+    width: 25px;
+    background-color: black;
+    display: block;
+}
+
+.category .berger3::after {
+    content: ' ';
+    position: absolute;
+    top: 24px;
+    left: 20%;
+    height: 1px;
+    width: 25px;
+    background-color: gray;
+    display: block;
+}
+
+
+/* footer */
+#footer{
+    border-top: 1px solid gray;
+    position: absolute;
+    height: 20vh;
+    width: 100vw;
+    font-size: 8px;
+}
+
+#footer_content {
+    float: left;
+    position: absolute;
+    top: 25px;
+    left: 200px;
+}
+
+#footer #logo {
+    width: 150px;
+    height: 150px;
+    float: right;
+    position: relative;
+    right: 200px;
+    top: 30px;
+}
+
+#footer #logo img {
+    width: 150px;
+    height: 150px;
+}
+
+/*공유 버튼 */
+
+ /* 글 작성 버튼 */
+.commonwritebutton{
+ 	background-color:antiquewhite;
+	text-align:center;
+	border-radius:15px;
+	border:0;
+	font-size: 16px;
+ }
+/* 글작성 버튼을 hover 했을시 적용*/
+.commonwritebutton:hover{
+	background-color: #993333;
+	color:white;
+}
+
+/*게시글 등록 중 등록하기(수정하기), 취소하기 버튼 통합*/
+.commonsubmit{
+    padding: 10px 15px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+   	border: 2px solid #993333;
+   	color: black;
+    cursor: pointer;
+}
+.commonsubmit:hover{
+	background-color: #993333;
+ 	color: white;
+}
+
+/*header 검색 부분*/
+#searchform {
+    display: flex;
+    position: relative;
+}
+/*header 검색 부분의 x버튼 부분*/
+#cancelbutton {
+    position: absolute;
+    transform: translate(550px, 19.15px);
+    background: white;
+    padding: 5.7px;
+    padding-right: 14px;
+    border: 0px;
+}
+img#cancel {
+    width: 25px;
+    height: 25px;
+    position: absolute;	
+    transform: translate(640px, 77px);
+    background: white;
+}
+/*돋보기 아이콘*/
+a#searchbutton {
+    display: block;
+    position: absolute;
+    transform: translate(590px, 20.5px);
+    background: white;
+    padding: 3px;
+    padding-bottom: 0;
+    padding-right: 8.4px;
+}
+
+/*검색 x버튼 가리기*/
+input::-ms-clear,
+input::-ms-reveal{
+	display:none;width:0;height:0;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+	display:none;
+}
+#opercity{
+    border: 0;
+    background-color: white;
+}
+/*서치 바탕색 제거*/
+input[type = search]:focus{
+    outline: none;
+}

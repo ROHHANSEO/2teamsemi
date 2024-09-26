@@ -1,0 +1,247 @@
+@charset "utf-8";
+
+#salescontent_box{
+    width: 50%;
+    float: left;
+}
+
+.salescontent {
+    width: 160%;
+    height: 250px;
+    position: relative;
+}
+
+.salescontent_title_box{
+    font-size: 30px;
+    margin-top: 30px;
+    width: 180%;
+    margin-bottom: 30px;
+    margin-left: 70%;
+}
+
+.button_box {
+    float: right;
+    position: relative;
+    top: -58px;
+    right: 10%;
+}
+
+#salescontent_box .content_box{
+    border: 1px solid black;
+    height: 100%;
+    margin: 30px;
+}
+
+#salescontent_box .like_content_box{
+    height: 100%;
+}
+
+.select_delete_checkbox{
+    position: absolute;
+    top: 11px;
+    left: 15px;
+    zoom: 1.3;
+    display: none;
+    z-index: 99;
+}
+
+
+.content_box .date_box {
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+}
+
+.content_box .main_box{
+    width: 100%;
+    height: 40px;
+    position: relative;
+}
+
+.content_box .del_up_box{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    right: 40px;
+    position: absolute;
+}
+
+.main_content_box {
+    clear: both;
+}
+
+.main_content_box{
+    border: 1px solid black;
+    width: 98%;
+    height: 80%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.status_swap{
+    float: right;
+    /* right: 10px; */
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.status{
+    float: left;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.content_title{
+    clear: both;
+    height: 80%;
+    float: left;
+}
+
+.img_box {
+    width: 300px;
+    height: 100%;
+    position: relative;
+    float: left;
+}
+
+.img_box .content_img {
+    background: blue;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.title_name_box{
+    float: left;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.title_name_box .content_title_name {
+    display: block;
+    font-size: 20px;
+}
+
+.content_update:hover{
+    color: #993333;
+    cursor: pointer;
+}
+
+.content_update:hover a{
+    color: #993333;
+    cursor: pointer;
+}
+
+.content_delete:hover{
+    color: #993333;
+    cursor: pointer;
+}
+
+.status_swap:hover{
+    color: #993333;
+    cursor: pointer;
+}
+
+.status_level_box {
+    width: 100px;
+    border: 1px solid black;
+    text-align: center;
+    position: absolute;
+    right: 90px;
+    top: 10px;
+    display: none;
+}
+
+.status_level_box.action{
+    display: block;
+}
+
+.status_level_box .status_level:not(:last-child){
+    border-bottom: 1px solid black;
+}
+
+.status_level{
+    height: 30px;
+    line-height: 30px;
+}
+
+.status_level:hover{
+    background-color: #993333;
+    cursor: pointer;
+    color: #fff;
+}
+
+.statuss {
+    position: relative;
+}
+
+.content_price .price {
+    color: #e9aae9;
+}
+
+#delete_btn_box {
+    display: none;
+}
+
+.void_text_box{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100px;
+}
+
+.void_text_box .void_view{
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.like_content_box .heart_img_box{
+    background: url(../../images/heart.png) no-repeat center;
+    background-size: cover;
+    width: 50px;
+    position: absolute;
+    height: 50px;
+    right: 150px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.heart_img_box.colorchange{
+    background: url(../../images/heartRed.png) no-repeat center;
+    background-size: cover;
+}
+
+.bid_content_box .title_name_box{
+    float: left;
+    margin-left: 50px;
+    margin-top: 15px;
+    line-height: 30px;
+}
+
+.bid_content_box .bid_content_price{
+    display: block;
+}
+
+.bid_content_box{
+    position: relative;
+}
+
+.my_bid_record,.my_action_post{
+    font-size: 30px;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.action_void_list {
+    text-align: center;
+    height: 300px;
+    line-height: 300px;
+}
+
+.action_void_list span{
+    font-size: 20px;
+}
+

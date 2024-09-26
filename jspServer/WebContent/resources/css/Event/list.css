@@ -1,0 +1,146 @@
+@charset "UTF-8";
+
+.normal{
+	width:70%;
+	margin:0 auto;
+}
+
+	
+	.listArea{
+		border-top:1px solid #993333;
+		text-align:center;
+		width:100%;
+		float:center;
+		margin:0 auto;
+		margin-top: 5px;
+		margin-bottom:300px;
+		border-collapse: collapse;
+	}
+	.searchArea{
+		margin-top:500px;
+	}
+	
+	.listArea>tbody>tr:hover{
+		background:#993333;
+		color:white;
+		cursor:pointer
+	}
+
+	.menubar{
+		background: rgb(192, 192, 192)333;
+	}
+	
+	.bts{
+		width: 100px;
+		height:30px;
+	
+	}
+	
+	.bts2{
+		width: 60px;
+		height:25px;
+		margin:0 auto;
+		float:right;	
+	}
+	
+	.bts3{
+		width: 60px;
+		height:25px;
+	
+	}
+
+	h2{
+	color: #993333;
+}
+	
+thead{
+	background-color: #993333;
+	color: white;
+}
+
+.searchl{
+	width:100px;
+	height:25px;
+}
+
+.sear{
+	margin:0 auto;
+	margin-right:540px;
+	margin-top:25px;
+}
+
+.keyword{
+	width:150px;
+}
+
+.btt{
+	width:60px;
+	height:28px;
+}
+
+.pagingArea{
+	margin:0 auto;
+	margin-bottom: 100px;
+}
+
+.bbc{
+	width:80px;
+	height:35px;
+}
+
+ .formgroupmiddle{
+        	width:80%;
+        	margin-top:3%;
+ 			margin-bottom:3%;
+ 			left:50%;
+ 			transform:translateX(-50%);
+ 			position:relative;
+        	height:50px;
+        }
+        .seacrchidichinput{
+        	display: inline-block ;
+        	position:absolute;
+        	left:50%;
+        	transform:translateX(-50%);
+        	line-height:50px;
+        	height:35px;
+			width:550px;
+        }
+		.optionserachCList{
+        	height:30px;
+        	width:50px;
+        	
+        }
+        .seacrchinput{
+        	height:30px;
+			width:400px;
+        }
+        .form-controlsearchbutton{
+        	height:33px;
+        	width:60px;
+        }
+
+        .serviceCentermiddle{
+            display: flex;
+            flex-wrap: wrap;
+            margin: 80px auto 0 auto;
+            text-align: center;
+            width: 70%;
+
+        }
+        .serviceCentermiddle .all{
+        	cursor: pointer;
+            border-width: 1px;
+            border-color: black;
+            border-style: solid;
+            line-height: 70px;
+            flex: 1 1 15%;
+            height: 70px;
+            width: 50px;
+        }
+        .serviceCentermiddle .all:hover{
+        	background-color:#993333;
+        	color:white;
+        }
+        
+        

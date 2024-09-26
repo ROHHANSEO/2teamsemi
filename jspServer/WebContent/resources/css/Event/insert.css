@@ -1,0 +1,118 @@
+@charset "UTF-8";
+.container{
+	display: flex;
+	width: 100vw;
+}
+form{
+	margin: 0 auto;
+   	width: 70vw;
+}
+.whole{
+	display: flex;
+	padding: 15px;
+	border-bottom: 1px solid black;
+}
+.info{
+	margin-right: 30px;
+}
+#imagin{
+    width: 60vw;
+    border: 1px solid;
+}
+#camera{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #efefef;
+    width: 59vw;
+    height: 200px;
+    text-align: center;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+.article{
+	display: flex;
+}
+.article1{
+	margin: 10px;
+}
+
+.previewImg {
+    margin: 10px;
+    margin-right: 0px;
+    margin-top: 0px;
+    position: relative;
+    background: #000000;
+    height: 200px;
+
+}
+#sortimg {
+	list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#title{
+	width: 15em;
+}
+.titleline{
+	margin-right: 94px;
+}
+.priceline{
+	margin-right: 89px;
+}
+.productline{
+	margin-right: 47px;
+}
+.categoryline{
+	margin-right: 55px;
+}
+.itempline{
+	margin-right: 45px;
+}
+.but{
+	text-align: end;
+}
+input[type = "file"]{
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	position: absolute;
+}
+.checkarea{
+	width: 50vw;
+	display: flex;
+	justify-content: space-between;
+}
+.product{
+	font-size: 11px;
+}
+.count{
+	display: flex;
+	flex-direction: column-reverse;
+}
+#content{
+	resize: none;
+	width: 40vw;
+}
+
+/* li 호버시 어두워짐 */
+ul .previewImg:hover img {
+    opacity: 0.7;
+}
+ul>.previewImg:hover .del{ 
+	opacity: 1;
+    color: white;
+    font-size: 70px;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.del{
+	position:absolute;
+	opacity: 0;
+}

@@ -1,0 +1,79 @@
+.comname{
+	color:#993333;
+}
+
+.bts4{
+	width:100px;
+	height:25px;
+}
+
+ #wrap {
+            width: 800px;
+            margin: 0 auto 0 auto;
+        }
+#topForm{
+           text-align :right;
+}
+#board, #pageForm, #searchForm{
+            text-align :center;
+}
+        
+#bList{
+            text-align :center;
+}
+        
+#button{
+        	color:#993333;
+        }
+
+
+ #topMenu {            
+                        height: 50px; 
+                        width: 2000px; 
+                }
+                #topMenu ul li {                      
+                        list-style: none;           
+                        color: white;              
+                        background-color: #c0c0c0; 
+                        float: left;                
+                        line-height: 40px;          
+                        vertical-align: middle;    
+                        text-align: center;         
+                }
+                #topMenu .menuLink {                              
+                        text-decoration:none;                     
+                        color: white;                             
+                        display: block;                            
+                        width: 200px;                              
+                        font-size: 15px;  
+                }
+                #topMenu .menuLink:hover {           
+                        color: white;                   
+                        background-color: #993333;    
+                }
+
+.btslist{
+	color:#993333; 
+}
+
+
+
+
+
+h2 {
+
+	text-align: center;
+
+}
+
+
+
+
+.gto1{
+	width:100px;
+	height:40px;
+}
+.gto2{
+	width:100px;
+	height:40px;
+}

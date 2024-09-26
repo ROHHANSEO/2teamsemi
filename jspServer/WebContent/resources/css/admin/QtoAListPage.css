@@ -1,0 +1,62 @@
+@charset "utf-8";
+
+.testadmin{
+    border:1px solid black;
+    width: 70%;
+    margin: 30px auto;
+}
+
+.questionList thead{
+   width:100%;
+   border-bottom: 1.5px solid black;
+}
+/*th 번호 부분*/
+.questionList .SCQNo{
+
+   width:2%;
+}
+/*th 질문 부분 */
+.questionList .SCQTitle{
+   
+   width:20%;
+}
+.questionList .SCQWriter{
+   
+   width:5%;
+}
+.questionList .SCQDatere{
+   
+   width:5%;
+}
+.questionList{
+   border-collapse: collapse;
+}
+.QtoAlistpoint:hover{
+   cursor: pointer;
+   color:white;
+   background-color:#993333;
+}
+
+.questionList thead tr{
+   height: 40px;
+}
+
+.QtoAlistpoint{
+   height: 30px;
+}
+
+#QtoAListPage{
+   color: #993333;
+   border-bottom: 1px solid #993333;
+   font-weight: 600;
+}
+
+#title_box {
+   margin: 30px 0;
+   margin-left: 200px;
+}
+
+#title_box .title_name{
+   font-size: 20px;
+}
+

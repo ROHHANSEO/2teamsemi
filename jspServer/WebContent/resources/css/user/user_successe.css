@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+#header {
+    border-bottom: 0;
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#header #page_title {
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    font-size: 30px;
+    font-weight: 600;
+    transform: translateX(-60%);
+}
+
+#header #logo {
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    transform: translateX(-60%);
+}
+
+#header #logo img{
+    width: 200px;
+    height: 200px;
+}
+
+input[type="text"],input[type="password"]{
+    width: 300px;
+    height: 30px;
+    display: block;
+}
+
+#input_container {
+    width: 400px;
+    margin: 200px auto 0 auto;
+    height: 520px;
+}
+
+.id_input .input[name="userId"]{
+    width: 230px;
+}
+
+.id_input .input {
+    display: inline-block;
+}
+
+.content_box div{
+    width: 300px;
+    margin: 20px auto;
+}
+
+input[name="gender"]{
+    margin-left: 60px;
+}
+
+textarea {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+#input_box {
+    width: 100%;
+    height: 100%;
+}
+
+#input_container .button {
+    width: 250px;
+    height: 30px;
+    position: absolute;
+    left: 50%;
+    top: 300px;
+    transform: translateX(-50%);
+}
+
+.content_box {
+    border: 1px solid black;
+    height: 400px;
+    width: 350px;
+    position: relative;
+    text-align: center;
+}
+
+input[type="text"]:focus,input[type="password"]:focus{
+    outline: 2px solid #993333;
+}
+
+.pwd_check{
+    outline: 2px solid blue !important;
+}
+
+.content_text {
+    font-size: 20px;
+    position: relative;
+    top: 100px;
+}
+
+.sign-up_name .name {
+    color: pink;
+}
+
+
